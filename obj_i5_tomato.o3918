@@ -1,0 +1,37 @@
+
+########################################################################
+#      Date:           Sun Mar  1 23:30:15 PST 2020
+#    Job ID:           3918.v-qsvr-1.devcloud-edge
+#      User:           u37452
+# Resources:           neednodes=1:idc001skl:tank-870:i5-6500te,nodes=1:idc001skl:tank-870:i5-6500te,walltime=01:00:00
+########################################################################
+
+[setupvars.sh] OpenVINO environment initialized
+[ INFO ] Creating Inference Engine
+[ INFO ] Loading network files:
+	m_tomato_tensorflowmodel.xml
+	m_tomato_tensorflowmodel.bin
+[ INFO ] Preparing input blobs
+[ WARNING ] Image TLB.JPG is resized from (256, 256) to (32, 32)
+[ INFO ] Batch size is 1
+[ INFO ] Loading model to the plugin
+[ INFO ] Starting inference in synchronous mode
+[ INFO ] Processing output blob
+[ INFO ] Top 10 results: 
+Image TLB.JPG
+
+classid probability
+------- -----------
+   1      0.9993267
+   0     0.0006714
+   2     0.0000017
+   3     0.0000002
+   4     0.0000000
+
+
+
+########################################################################
+# End of output for job 3918.v-qsvr-1.devcloud-edge
+# Date: Sun Mar  1 23:30:23 PST 2020
+########################################################################
+

@@ -1,0 +1,36 @@
+
+########################################################################
+#      Date:           Sun Mar  1 23:30:23 PST 2020
+#    Job ID:           3920.v-qsvr-1.devcloud-edge
+#      User:           u37452
+# Resources:           neednodes=3:idc001skl:tank-870:i5-6500te,nodes=3:idc001skl:tank-870:i5-6500te,walltime=01:00:00
+########################################################################
+
+[setupvars.sh] OpenVINO environment initialized
+[ INFO ] Creating Inference Engine
+[ INFO ] Loading network files:
+	m_maize_tensorflowmodel.xml
+	m_maize_tensorflowmodel.bin
+[ INFO ] Preparing input blobs
+[ WARNING ] Image MHL.JPG is resized from (256, 256) to (32, 32)
+[ INFO ] Batch size is 1
+[ INFO ] Loading model to the plugin
+[ INFO ] Starting inference in synchronous mode
+[ INFO ] Processing output blob
+[ INFO ] Top 10 results: 
+Image MHL.JPG
+
+classid probability
+------- -----------
+   3         1.0000000
+   0       0.0000000
+   1       0.0000000
+   2         0.0000000
+
+
+
+########################################################################
+# End of output for job 3920.v-qsvr-1.devcloud-edge
+# Date: Sun Mar  1 23:30:31 PST 2020
+########################################################################
+
