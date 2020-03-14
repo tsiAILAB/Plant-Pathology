@@ -27,6 +27,6 @@ Please start reading in the folowing order to understand the project and executi
 For any query, please contact
 MD fakrul Islam
 General Manager, Technology
-fakrul.islam@grameen-intel.com
+fakrul.islam@grameen-intel.com,
 fakrul.islam@tsi.com.bd
 Technology for social impact
