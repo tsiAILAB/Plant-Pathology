@@ -1,6 +1,6 @@
 {
-    "name": "plantpathology",
-    "short_name": "plantpathology",
+    "name": "demo2_flutterapp",
+    "short_name": "demo2_flutterapp",
     "start_url": ".",
     "display": "minimal-ui",
     "background_color": "#0175C2",
