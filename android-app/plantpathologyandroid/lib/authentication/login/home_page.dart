@@ -14,7 +14,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
   var value;
-  var appbarTitle;
+  var appbarTitle = "";
 
   signOut() {
     setState(() {
@@ -68,8 +68,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return SafeArea(
       child: Scaffold(
-          body: Center(
-        child: ListView(
+          body: SingleChildScrollView(
+        child: Column(
           children: <Widget>[
             AppBar(
               title: new Text(appbarTitle),
@@ -85,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
             CurvedTabBar(
                 tabsColor: Colors.blue[50],
                 tabSelectedColor: Colors.orange,
-                iconSelectedColor: Colors.blue[50],
+//                iconSelectedColor: Colors.blue[50],
                 iconsColor: Colors.orange,
                 numberOfTabs: 5,
                 icons: [
@@ -110,6 +110,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _screen0() {
     String plantName = "Potato";
     appbarTitle = "Plant Disease $plantName";
+    setState(() {
+      appbarTitle = appbarTitle;
+    });
     return Container(
       height: MediaQuery.of(context).size.height - 73,
       color: Colors.white,
@@ -120,6 +123,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _screen1() {
     String plantName = "Tomato";
     appbarTitle = "Plant Disease $plantName";
+    setState(() {
+      appbarTitle = appbarTitle;
+    });
     return Container(
       height: MediaQuery.of(context).size.height - 73,
       color: Colors.white,
@@ -130,6 +136,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _screen2() {
     String plantName = "Tomato";
     appbarTitle = "Plant Disease $plantName";
+    setState(() {
+      appbarTitle = appbarTitle;
+    });
     return Container(
       height: MediaQuery.of(context).size.height - 73,
       color: Colors.white,
@@ -140,6 +149,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _screen3() {
     String plantName = "Maize";
     appbarTitle = "Plant Disease $plantName";
+    setState(() {
+      appbarTitle = appbarTitle;
+    });
     return Container(
       height: MediaQuery.of(context).size.height - 73,
       color: Colors.white,
@@ -150,6 +162,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _screen4() {
     String plantName = "Config";
     appbarTitle = "Plant Disease $plantName";
+    setState(() {
+      appbarTitle = appbarTitle;
+    });
     return Container(
       height: MediaQuery.of(context).size.height - 73,
       color: Colors.white,

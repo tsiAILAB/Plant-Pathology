@@ -61,6 +61,13 @@ flutter:
     - data/flutter.db
     - assets/data/flutter.db
     - assets/images/apple.png
+    - assets/images/coconut.jpg
+    - assets/images/fertilizerCalculator.PNG
+    - assets/images/healthCheck.jpg
+    - assets/images/healthCheck2.jpg
+    - assets/images/mango.png
+    - assets/images/orange.jpg
+    - assets/images/pestsAndDiseases.PNG
   # assets:
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
