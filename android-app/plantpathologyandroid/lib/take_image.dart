@@ -6,20 +6,24 @@ import 'package:flutterapp/upload_image.dart';
 import 'package:image_picker/image_picker.dart';
 
 class TakeImage extends StatefulWidget {
+  final String plantName;
+  TakeImage(this.plantName);
   @override
-  _TakeImageState createState() => _TakeImageState();
+  _TakeImageState createState() => _TakeImageState(plantName);
 }
 
 class _TakeImageState extends State<TakeImage> {
   File imageFile;
+  final String plantName;
+  _TakeImageState(this.plantName);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.amber[400],
-      appBar: AppBar(
-        title: Text("Plant disease"),
-      ),
+//      appBar: AppBar(
+//        title: Text("Plant disease"),
+//      ),
       body: Center(
         child: Column(
           children: <Widget>[
@@ -57,9 +61,9 @@ class _TakeImageState extends State<TakeImage> {
               child: Text("Upload Image"),
               onPressed: () {
                 UploadImage uploadImage = new UploadImage();
-                if (imageFile != null)
-                  uploadImage.uploadImage(imageFile);
-                else {
+                if (imageFile != null) {
+                  uploadImage.uploadImage(imageFile, this.plantName);
+                } else {
                   showDialog<void>(
                     context: context,
 //                    barrierDismissible: barrierDismissible,
