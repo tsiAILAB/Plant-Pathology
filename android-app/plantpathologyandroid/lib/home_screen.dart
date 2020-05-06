@@ -1,12 +1,16 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_curved_tab_bar/flutter_curved_tab_bar.dart';
-import 'package:flutterapp/planttabs/plant_1.dart';
-import 'package:flutterapp/take_image.dart';
+import 'package:flutterapp/planttabs/config_screen.dart';
+import 'package:flutterapp/take_image_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   final VoidCallback signOut;
+
   HomeScreen(this.signOut);
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -14,7 +18,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
   var value;
-  var appbarTitle = "";
+  var appbarTitle = new Text("");
+  var appbarTitleList = ["Potato", "Tomato", "Maze", "Config"];
 
   signOut() {
     setState(() {
@@ -62,9 +67,11 @@ class _HomeScreenState extends State<HomeScreen> {
       _screen0(),
       _screen1(),
       _screen2(),
-      _screen3(),
-      _screen4()
+      _screen3()
     ];
+//      _screen4()
+//    ];
+    var plantName = appbarTitleList[0];
 
     return SafeArea(
       child: Scaffold(
@@ -72,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           children: <Widget>[
             AppBar(
-              title: new Text(appbarTitle),
+              title: appbarTitle,
               actions: <Widget>[
                 IconButton(
                   onPressed: () {
@@ -87,17 +94,22 @@ class _HomeScreenState extends State<HomeScreen> {
                 tabSelectedColor: Colors.orange,
 //                iconSelectedColor: Colors.blue[50],
                 iconsColor: Colors.orange,
-                numberOfTabs: 5,
+                numberOfTabs: 4,
                 icons: [
                   Icons.ac_unit,
                   Icons.widgets,
                   Icons.bookmark,
-                  Icons.adb,
-                  Icons.style
+                  Icons.adb
+//                  Icons.style
                 ],
                 onTabSelected: (_index) {
                   setState(() {
                     _currentIndex = _index;
+
+                    plantName = appbarTitleList[_index];
+                    appbarTitle = Text("Plant Disease $plantName");
+                    log('plantName: $plantName');
+                    log('appbarTitle: $appbarTitle');
                   });
                 }),
             _screens[_currentIndex]
@@ -108,67 +120,52 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _screen0() {
-    String plantName = "Potato";
-    appbarTitle = "Plant Disease $plantName";
-    setState(() {
-      appbarTitle = appbarTitle;
-    });
+    var plantName = appbarTitleList[0];
+    appbarTitle = Text("Plant Disease $plantName");
     return Container(
       height: MediaQuery.of(context).size.height - 73,
       color: Colors.white,
-      child: TakeImage(plantName),
+      child: TakeImage(appbarTitleList[0]),
     );
   }
 
   Widget _screen1() {
-    String plantName = "Tomato";
-    appbarTitle = "Plant Disease $plantName";
-    setState(() {
-      appbarTitle = appbarTitle;
-    });
+//    String plantName = "Tomato";
+//    appbarTitle = "Plant Disease $plantName";
     return Container(
       height: MediaQuery.of(context).size.height - 73,
       color: Colors.white,
-      child: TakeImage(plantName),
+      child: TakeImage(appbarTitleList[1]),
     );
   }
 
   Widget _screen2() {
-    String plantName = "Tomato";
-    appbarTitle = "Plant Disease $plantName";
-    setState(() {
-      appbarTitle = appbarTitle;
-    });
+//    String plantName = "Maize";
+//    appbarTitle = "Plant Disease $plantName";
     return Container(
       height: MediaQuery.of(context).size.height - 73,
       color: Colors.white,
-      child: TakeImage(plantName),
+      child: TakeImage(appbarTitleList[2]),
     );
   }
 
   Widget _screen3() {
-    String plantName = "Maize";
-    appbarTitle = "Plant Disease $plantName";
-    setState(() {
-      appbarTitle = appbarTitle;
-    });
+//    String plantName = "Config";
+//    appbarTitle = "Plant Disease $plantName";
     return Container(
       height: MediaQuery.of(context).size.height - 73,
       color: Colors.white,
-      child: TakeImage(plantName),
+      child: ConfigScreen(),
     );
   }
 
-  Widget _screen4() {
-    String plantName = "Config";
-    appbarTitle = "Plant Disease $plantName";
-    setState(() {
-      appbarTitle = appbarTitle;
-    });
-    return Container(
-      height: MediaQuery.of(context).size.height - 73,
-      color: Colors.white,
-      child: Plant1(),
-    );
-  }
+//  Widget _screen4() {
+//    String plantName = "Tomato";
+//    appbarTitle = "Plant Disease $plantName";
+//    return Container(
+//      height: MediaQuery.of(context).size.height - 73,
+//      color: Colors.white,
+//      child: TakeImage(plantName),
+//    );
+//  }
 }

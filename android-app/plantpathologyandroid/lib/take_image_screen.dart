@@ -1,13 +1,17 @@
 import 'dart:io';
 
+import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterapp/planttabs/take_picture_screen.dart';
 import 'package:flutterapp/upload_image.dart';
 import 'package:image_picker/image_picker.dart';
 
 class TakeImage extends StatefulWidget {
   final String plantName;
+
   TakeImage(this.plantName);
+
   @override
   _TakeImageState createState() => _TakeImageState(plantName);
 }
@@ -15,6 +19,7 @@ class TakeImage extends StatefulWidget {
 class _TakeImageState extends State<TakeImage> {
   File imageFile;
   final String plantName;
+
   _TakeImageState(this.plantName);
 
   @override
@@ -28,37 +33,69 @@ class _TakeImageState extends State<TakeImage> {
         child: Column(
           children: <Widget>[
             SizedBox(height: 20),
-            decideImageView(),
+            Card(
+              child: Column(
+                children: <Widget>[
+                  decideImageView(),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Text("Size - 100.0"),
+                        Text('Height : 200.0'),
+                        Text('Widtht : 400.0'),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
             SizedBox(height: 30),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                RaisedButton(
-                  padding: const EdgeInsets.all(8.0),
+                RaisedButton.icon(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0)),
+                  icon: Icon(
+                    Icons.camera,
+                    color: Colors.white,
+                  ),
+                  color: Colors.teal[900],
                   textColor: Colors.white,
-                  color: Colors.blue,
-                  child: Text("Camera"),
+                  label: Text("Camera"),
                   onPressed: () {
                     openCamera();
                   },
                 ),
                 SizedBox(width: 30),
-                RaisedButton(
-                  padding: const EdgeInsets.all(8.0),
+                RaisedButton.icon(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0)),
+                  icon: Icon(
+                    Icons.image,
+                    color: Colors.white,
+                  ),
+                  color: Colors.teal[900],
                   textColor: Colors.white,
-                  color: Colors.blue[800],
-                  child: Text("Gallery"),
+                  label: Text("Gallery"),
                   onPressed: () {
                     openGallery();
                   },
                 ),
               ],
             ),
-            RaisedButton(
-              padding: const EdgeInsets.all(8.0),
+            RaisedButton.icon(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0)),
+              icon: Icon(
+                Icons.cloud_upload,
+                color: Colors.white,
+              ),
+              color: Colors.teal[900],
               textColor: Colors.white,
-              color: Colors.green[800],
-              child: Text("Upload Image"),
+              label: Text("Upload Image"),
               onPressed: () {
                 UploadImage uploadImage = new UploadImage();
                 if (imageFile != null) {
@@ -93,15 +130,47 @@ class _TakeImageState extends State<TakeImage> {
                 }
               },
             ),
+            RaisedButton.icon(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0)),
+              onPressed: () {
+                openHighResolutionsCamera();
+              },
+              icon: Icon(
+                Icons.add_a_photo,
+                color: Colors.white,
+              ),
+              color: Colors.teal[900],
+              textColor: Colors.white,
+              label: Text(
+                'High Resulation Picture',
+                style: TextStyle(color: Colors.white),
+              ),
+            )
           ],
         ),
       ),
     );
   }
 
+  openHighResolutionsCamera() async {
+    // Obtain a list of the available cameras on the device.
+    final cameras = await availableCameras();
+
+    // Get a specific camera from the list of available cameras.
+    final firstCamera = cameras.first;
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => TakePictureScreen(
+                camera: firstCamera,
+              )),
+    );
+  }
+
   openGallery() async {
     var picture = await ImagePicker.pickImage(
-        source: ImageSource.gallery, maxHeight: 200, maxWidth: 600);
+        source: ImageSource.gallery, maxHeight: 800, maxWidth: 600);
     this.setState(() {
       imageFile = picture;
     });
@@ -109,7 +178,7 @@ class _TakeImageState extends State<TakeImage> {
 
   openCamera() async {
     var picture = await ImagePicker.pickImage(
-        source: ImageSource.camera, maxHeight: 200, maxWidth: 600);
+        source: ImageSource.camera, maxHeight: 800, maxWidth: 600);
     this.setState(() {
       imageFile = picture;
     });

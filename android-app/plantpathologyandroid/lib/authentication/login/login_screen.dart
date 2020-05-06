@@ -3,7 +3,7 @@ import 'package:flutterapp/models/user.dart';
 import 'package:flutterapp/services/response/login_response.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'home_page.dart';
+import '../../home_screen.dart';
 
 class LoginPage extends StatefulWidget {
   @override

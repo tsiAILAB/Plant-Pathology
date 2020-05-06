@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Plant1 extends StatefulWidget {
+class ConfigScreen extends StatefulWidget {
   @override
-  _Plant1State createState() => _Plant1State();
+  _ConfigScreenState createState() => _ConfigScreenState();
 }
 
-class _Plant1State extends State<Plant1> {
+class _ConfigScreenState extends State<ConfigScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,7 +14,7 @@ class _Plant1State extends State<Plant1> {
 
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[healthCheckSection()],
+        children: <Widget>[HealthCheckSection()],
       ),
 //      body: Center(
 //        child: Column(
@@ -51,12 +51,12 @@ class _Plant1State extends State<Plant1> {
   }
 }
 
-class plantTopSection extends StatefulWidget {
+class PlantTopSection extends StatefulWidget {
   @override
-  _plantTopSectionState createState() => _plantTopSectionState();
+  _PlantTopSectionState createState() => _PlantTopSectionState();
 }
 
-class _plantTopSectionState extends State<plantTopSection> {
+class _PlantTopSectionState extends State<PlantTopSection> {
   var plantName = 'Apple';
 
   @override
@@ -127,12 +127,12 @@ class _plantTopSectionState extends State<plantTopSection> {
   }
 }
 
-class locationPermission extends StatefulWidget {
+class LocationPermission extends StatefulWidget {
   @override
-  _locationPermissionState createState() => _locationPermissionState();
+  _LocationPermissionState createState() => _LocationPermissionState();
 }
 
-class _locationPermissionState extends State<locationPermission> {
+class _LocationPermissionState extends State<LocationPermission> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -141,12 +141,12 @@ class _locationPermissionState extends State<locationPermission> {
   }
 }
 
-class healthCheckSection extends StatefulWidget {
+class HealthCheckSection extends StatefulWidget {
   @override
-  _healthCheckSectionState createState() => _healthCheckSectionState();
+  _HealthCheckSectionState createState() => _HealthCheckSectionState();
 }
 
-class _healthCheckSectionState extends State<healthCheckSection> {
+class _HealthCheckSectionState extends State<HealthCheckSection> {
   @override
   Widget build(BuildContext context) {
     return Opacity(
