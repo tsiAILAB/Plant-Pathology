@@ -107,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     _currentIndex = _index;
 
                     plantName = appbarTitleList[_index];
-                    appbarTitle = Text("Plant Disease $plantName");
+                    appbarTitle = Text("Plant Disease"); // $plantName");
                     log('plantName: $plantName');
                     log('appbarTitle: $appbarTitle');
                   });
@@ -121,7 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _screen0() {
     var plantName = appbarTitleList[0];
-    appbarTitle = Text("Plant Disease $plantName");
+    appbarTitle = Text("Plant Disease"); // $plantName");
     return Container(
       height: MediaQuery.of(context).size.height - 73,
       color: Colors.white,

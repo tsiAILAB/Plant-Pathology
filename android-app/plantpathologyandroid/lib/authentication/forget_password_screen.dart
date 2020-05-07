@@ -31,7 +31,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                           if (verifyCode.isEmpty) {
                             return 'Please enter the Code';
                           }
-                          return "";
+//                          return "";
                         },
                         decoration: InputDecoration(
                             border: OutlineInputBorder(),
@@ -50,7 +50,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                               MaterialPageRoute(
                                   builder: (context) => ResetPassword()),
                             );
-                            return "";
+//                            return "";
                           } else {
                             return 'Please enter the code';
                           }
@@ -92,7 +92,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                     if (userName.isEmpty) {
                       return 'Please enter your Name..!';
                     }
-                    return "";
+//                    return "";
                   },
                   decoration: InputDecoration(
                       prefixIcon: Icon(Icons.settings_cell),
