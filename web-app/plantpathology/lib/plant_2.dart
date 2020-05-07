@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterapp/plants_details_page.dart';
 
 class Plant2 extends StatefulWidget {
   @override
@@ -14,11 +15,11 @@ class _Plant2State extends State<Plant2> {
         title: Text("Plant 2"),
       ),
       body: Center(
-        child: Text(
-          "Under Construction!",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-        ),
+        child: PlantsDetailsPage(),
       ),
     );
   }
 }
+
+
+
