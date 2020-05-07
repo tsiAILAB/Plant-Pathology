@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutterapp/authentication/forget_password_screen.dart';
 import 'package:flutterapp/models/user.dart';
 import 'package:flutterapp/services/response/login_response.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../home_screen.dart';
+import '../../screens/home_screen.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -31,13 +32,13 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
   void _submit() {
     final form = formKey.currentState;
 
-    if (form.validate()) {
-      setState(() {
-        _isLoading = true;
-        form.save();
-        _response.doLogin(_username, _password);
-      });
-    }
+//    if (form.validate()) {
+    setState(() {
+      _isLoading = true;
+      form.save();
+      _response.doLogin(_username, _password);
+    });
+//    }
   }
 
   void _showSnackBar(String text) {
@@ -189,49 +190,67 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
                       prefixIcon: Icon(Icons.account_circle),
                       border: OutlineInputBorder(),
                       labelText: "Enter your name"),
+                  validator: (String value) {
+                    if (value.trim().isEmpty) {
+                      return 'User name is required';
+                    }
+                    return "";
+                  },
                 ),
                 SizedBox(height: 25.0),
                 TextFormField(
+                  obscureText: true,
                   onSaved: (val) => _password = val,
                   decoration: InputDecoration(
                       prefixIcon: Icon(Icons.phone_android),
                       border: OutlineInputBorder(),
                       labelText: "password"),
+                  validator: (String value) {
+                    if (value.trim().isEmpty) {
+                      return 'Password is required';
+                    }
+                    return "";
+                  },
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Checkbox(
-                        value: rememberMeValue,
-                        onChanged: (bool value) {
-                          print(value);
-                          setState(() {
-                            rememberMeValue = value;
-                          });
-                        }),
-                    Text('Remember me')
-                  ],
-                ),
+//                Row(
+//                  mainAxisAlignment: MainAxisAlignment.center,
+//                  children: <Widget>[
+//                    Checkbox(
+//                        value: rememberMeValue,
+//                        onChanged: (bool value) {
+//                          print(value);
+//                          setState(() {
+//                            rememberMeValue = value;
+//                          });
+//                        }),
+//                    Text('Remember me')
+//                  ],
+//                ),
+                SizedBox(height: 15.0),
                 Text('Already have an App Account?'),
                 FlatButton(
                   onPressed: _submit,
                   child: Text(
                     'Sign in',
-                    style: TextStyle(color: Colors.teal[800]),
+                    style: TextStyle(
+                        color: Colors.green,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20.0),
                   ),
                 ),
                 FlatButton(
                   onPressed: () {
-//                    Navigator.push(context,
-//                      MaterialPageRoute(builder: (context)=>ForgetPassword()),
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ForgetPassword()),
 //                    Navigator.push(
 //                      context,
 //                      MaterialPageRoute(
 //                          builder: (context) => SocialMediaLogin()),
-//                    );
+                    );
                   },
                   child: Text(
-                    'Forget password..? Get a new.',
+                    'Forget password? Get a new.',
                     style: TextStyle(color: Colors.blue),
                   ),
                 ),

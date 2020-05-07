@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutterapp/services/apis/all_apis.dart';
 import 'package:flutterapp/utils/utils.dart';
 import 'package:http/http.dart' as http;
 
@@ -16,7 +17,7 @@ class UploadImage extends StatefulWidget {
 }
 
 class _UploadImageState extends State<UploadImage> {
-  String uploadImageAPI = "https://localhost:44379/uploadimage";
+  String uploadImageAPI = AllApis.UPLOAD_IMAGE_API;
 
   @override
   Widget build(BuildContext context) {

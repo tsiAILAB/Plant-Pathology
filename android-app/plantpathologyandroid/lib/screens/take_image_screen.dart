@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterapp/planttabs/take_picture_screen.dart';
-import 'package:flutterapp/upload_image.dart';
+import 'package:flutterapp/screens/camerascreen/take_picture_screen.dart';
+import 'package:flutterapp/services/request/upload_image.dart';
 import 'package:image_picker/image_picker.dart';
 
 class TakeImage extends StatefulWidget {

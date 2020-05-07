@@ -2,8 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_curved_tab_bar/flutter_curved_tab_bar.dart';
-import 'package:flutterapp/planttabs/config_screen.dart';
-import 'package:flutterapp/take_image_screen.dart';
+import 'package:flutterapp/screens/config_screen.dart';
+import 'package:flutterapp/screens/take_image_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {

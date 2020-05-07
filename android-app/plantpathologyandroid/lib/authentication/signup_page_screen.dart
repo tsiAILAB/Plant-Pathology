@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'file:///D:/Firoz/Android%20Studio/tsiFlutter/plant-pathology/android-app/plantpathologyandroid/lib/authentication/socicon_icons.dart';
+import 'package:flutterapp/authentication/socialmedia/socicon_icons.dart';
 
 void main() => runApp(SignUpPage());
 
