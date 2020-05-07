@@ -44,9 +44,6 @@ class _PlantsDetailsPageState extends State<PlantsDetailsPage> {
                       children: <Widget>[
                         Image.asset(
                             "assets/images/potato.jpg",
-//                        Image.file(
-//                            imagefile
-
                           key: _imageKey,
                         ),
                         Padding(
