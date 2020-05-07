@@ -5,6 +5,8 @@ import 'package:flutterapp/plant_2.dart';
 import 'package:flutterapp/plant_3.dart';
 import 'package:flutterapp/plant_4.dart';
 import 'package:flutterapp/take_image.dart';
+import 'login_page.dart';
+import 'plants_details_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -16,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.orange,
       ),
-      home: MyHomePage(),
+      home: LoginPage(),
     );
   }
 }

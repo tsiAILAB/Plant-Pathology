@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'forget_password.dart';
+import 'main.dart';
 import 'reset_password.dart';
 
 void main() => runApp(LoginPage());
@@ -97,6 +98,9 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 FlatButton(
                   onPressed: (){
+                    Navigator.push(context,
+                      MaterialPageRoute(builder: (context)=>MyHomePage()),
+                    );
                     setState(() {
                       if (_formKey.currentState.validate()){
                         print('Sign In Completed...');
