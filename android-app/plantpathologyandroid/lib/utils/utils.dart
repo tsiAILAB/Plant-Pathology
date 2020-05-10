@@ -19,4 +19,8 @@ class Utils {
     }
     return true;
   }
+
+  Future<int> generateRandomNumberOTP() {
+    return randomNumeric(5);
+  }
 }

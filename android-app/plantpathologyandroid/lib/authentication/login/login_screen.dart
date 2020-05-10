@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/authentication/forget_password_screen.dart';
+import 'package:flutterapp/authentication/signup_page_screen.dart';
 import 'package:flutterapp/models/user.dart';
+import 'package:flutterapp/screens/landing_screen.dart';
 import 'package:flutterapp/services/response/login_response.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -80,7 +82,7 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
         return loginUiTwo();
         break;
       case LoginStatus.signIn:
-        return HomeScreen(signOut);
+        return LandingScreen(signOut);
 //        return MyHomePage(signOut);
         break;
       default:
@@ -100,7 +102,7 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
 
   @override
   void onLoginError(String error) {
-    _showSnackBar(error);
+    _showSnackBar("error $error");
     setState(() {
       _isLoading = false;
     });
@@ -112,7 +114,7 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
       savePref(1, user.username, user.password);
       _loginStatus = LoginStatus.signIn;
     } else {
-      _showSnackBar("Login: user1 password: 12345");
+      _showSnackBar("Wrong username or password");
       setState(() {
         _isLoading = false;
       });
@@ -252,6 +254,21 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
                   child: Text(
                     'Forget password? Get a new.',
                     style: TextStyle(color: Colors.blue),
+                  ),
+                ),
+                SizedBox(height: 15.0),
+                Text('Want to join?'),
+                FlatButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => SignUpPage()));
+                  },
+                  child: Text(
+                    'Sign up',
+                    style: TextStyle(
+                        color: Colors.green,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20.0),
                   ),
                 ),
               ],

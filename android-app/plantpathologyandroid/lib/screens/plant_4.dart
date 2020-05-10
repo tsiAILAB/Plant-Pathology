@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../authentication/signup_page_screen.dart';
 
-import '../authentication/login_page.dart';
-
 class Plant4 extends StatefulWidget {
   @override
   _Plant4State createState() => _Plant4State();
@@ -25,15 +23,15 @@ class _Plant4State extends State<Plant4> {
               "Under Construction!",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
             ),
-            RaisedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginPage()),
-                );
-              },
-              child: Text('Login Page'),
-            ),
+//            RaisedButton(
+//              onPressed: () {
+//                Navigator.push(
+//                  context,
+//                  MaterialPageRoute(builder: (context) => LoginPage()),
+//                );
+//              },
+//              child: Text('Login Page'),
+//            ),
             RaisedButton(
               onPressed: () {
                 Navigator.push(

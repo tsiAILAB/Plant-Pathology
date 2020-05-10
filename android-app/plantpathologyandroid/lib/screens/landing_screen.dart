@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 
+import 'home_screen.dart';
 
 class LandingScreen extends StatefulWidget {
+  final VoidCallback signOut;
+  LandingScreen(this.signOut);
+
   @override
-  _LandingScreenState createState() => _LandingScreenState();
+  _LandingScreenState createState() => _LandingScreenState(this.signOut);
 }
 
 class _LandingScreenState extends State<LandingScreen> {
+  final VoidCallback signOut;
+  _LandingScreenState(this.signOut);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,10 +33,9 @@ class _LandingScreenState extends State<LandingScreen> {
                           Text(
                             'Please select a Plant',
                             style: TextStyle(
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 1.5
-                            ),
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 1.5),
                           ),
                         ],
                       ),
@@ -37,8 +43,14 @@ class _LandingScreenState extends State<LandingScreen> {
                   ),
                   SizedBox(height: 20),
                   FlatButton(
-                    onPressed: (){
+                    onPressed: () {
                       print("I'm Tomato");
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => HomeScreen(this.signOut)),
+                      );
+//                      HomeScreen(signOut);
                     },
                     child: CircleAvatar(
                       backgroundImage: AssetImage('assets/images/tomato.jpg'),
@@ -46,12 +58,11 @@ class _LandingScreenState extends State<LandingScreen> {
                     ),
                   ),
                   Text(
-                      "Tomato",
+                    "Tomato",
                     style: TextStyle(
-                      fontSize: 15.0,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 1.0
-                    ),
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1.0),
                   ),
                 ],
               ),
@@ -61,7 +72,7 @@ class _LandingScreenState extends State<LandingScreen> {
               child: Column(
                 children: <Widget>[
                   FlatButton(
-                    onPressed: (){
+                    onPressed: () {
                       print("I'm Potato");
                     },
                     child: CircleAvatar(
@@ -70,12 +81,11 @@ class _LandingScreenState extends State<LandingScreen> {
                     ),
                   ),
                   Text(
-                      "Potato",
+                    "Potato",
                     style: TextStyle(
                         fontSize: 15.0,
                         fontWeight: FontWeight.bold,
-                        letterSpacing: 1.0
-                    ),
+                        letterSpacing: 1.0),
                   ),
                 ],
               ),
@@ -85,7 +95,7 @@ class _LandingScreenState extends State<LandingScreen> {
               child: Column(
                 children: <Widget>[
                   FlatButton(
-                    onPressed: (){
+                    onPressed: () {
                       print("I'm Maze");
                     },
                     child: CircleAvatar(
@@ -94,12 +104,11 @@ class _LandingScreenState extends State<LandingScreen> {
                     ),
                   ),
                   Text(
-                      "Maze",
+                    "Maze",
                     style: TextStyle(
                         fontSize: 15.0,
                         fontWeight: FontWeight.bold,
-                        letterSpacing: 1.0
-                    ),
+                        letterSpacing: 1.0),
                   ),
                 ],
               ),

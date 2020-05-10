@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutterapp/authentication/socialmedia/socicon_icons.dart';
 
 void main() => runApp(SignUpPage());
 
@@ -11,10 +10,11 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   var _formKey = GlobalKey<FormState>();
   bool rememberMeValue = false;
-  var _onPresedjk;
   bool _signInButtonEnable = false;
   @override
   Widget build(BuildContext context) {
+    String _username;
+    String _password;
     return Scaffold(
       backgroundColor: Colors.amber[200],
       appBar: AppBar(
@@ -28,84 +28,38 @@ class _SignUpPageState extends State<SignUpPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                RaisedButton.icon(
-                  color: Colors.blue[900],
-                  onPressed: () {},
-                  icon: Icon(
-                    Socicon.facebook,
-                    color: Colors.white,
-                  ),
-                  label: Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 40.0, 0),
-                    child: Text(
-                      'SIGN UP WITH FACEBOOK',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
+                TextFormField(
+                  onSaved: (val) => _username = val,
+                  decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.account_circle),
+                      border: OutlineInputBorder(),
+                      labelText: "Enter your name"),
+                  validator: (String value) {
+                    if (value.trim().isEmpty) {
+                      return 'User name is required';
+                    }
+                    return "";
+                  },
                 ),
-                RaisedButton.icon(
-                  color: Colors.white,
-                  elevation: 2,
-                  onPressed: () {},
-                  icon: Icon(
-                    Socicon.google,
-                    color: Colors.green[800],
-                  ),
-                  label: Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 57.0, 0),
-                    child: Text('SIGN UP WITH GOOGLE'),
-                  ),
-                ),
-                RaisedButton.icon(
-                  color: Colors.teal[800],
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.phone_android,
-                    color: Colors.white,
-                  ),
-                  label: Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 5.0, 0),
-                    child: Text(
-                      'SIGN UP WITH PHONE NUMBER',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ),
-                RaisedButton.icon(
-                  color: Colors.white,
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.email,
-                    color: Colors.red[900],
-                  ),
-                  label: Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 75.0, 0),
-                    child: Text('SIGN IN WITH EMAIL'),
-                  ),
+                SizedBox(height: 25.0),
+                TextFormField(
+                  obscureText: true,
+                  onSaved: (val) => _password = val,
+                  decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.phone_android),
+                      border: OutlineInputBorder(),
+                      labelText: "password"),
+                  validator: (String value) {
+                    if (value.trim().isEmpty) {
+                      return 'Password is required';
+                    }
+                    return "";
+                  },
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[],
                 ),
-//                SizedBox(height: 8.0),
-//                Text(
-//                  "You'll receive an SMS shortly with the verification code.",
-//                  style: TextStyle(
-//                      fontSize: 12.0
-//                  ),
-//                ),
-//                SizedBox(height: 15.0),
-//                RaisedButton(
-//                  onPressed: (){},
-//                  child: Text(
-//                    'Send verification code',
-//                    style: TextStyle(color: Colors.white),
-//                  ),
-//                  shape: RoundedRectangleBorder(
-//                    borderRadius: BorderRadius.circular(20),
-//                  ),
-//                ),
-//                SizedBox(height: 15.0),
                 Text('New at Plantix?'),
                 FlatButton(
                   onPressed: () {
