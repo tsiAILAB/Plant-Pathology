@@ -78,9 +78,10 @@ class _ForgetPasswordState extends State<ForgetPassword> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: Colors.amber[200],
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text("Verify that it's you"),
+        backgroundColor: Colors.white,
       ),
       body: Card(
         child: Padding(
