@@ -1,18 +1,30 @@
 import 'package:flutter/material.dart';
-
-void main() => runApp(ResetPassword());
+import 'package:flutterapp/models/user.dart';
+import 'package:flutterapp/services/response/change_password_response.dart';
+import 'package:flutterapp/utils/utils.dart';
 
 class ResetPassword extends StatefulWidget {
+  static String userEmail;
+  ResetPassword(this.userEmail);
   @override
   _ResetPasswordState createState() => _ResetPasswordState();
 }
 
-class _ResetPasswordState extends State<ResetPassword> {
-  var _formKey = GlobalKey<FormState>();
+class _ResetPasswordState extends State<ResetPassword>
+    implements ChangePasswordCallBack {
+  _ResetPasswordState() {
+    _response = new ChangePasswordResponse(this);
+  }
+
+  String _password;
+  ChangePasswordResponse _response;
+  final scaffoldKey = new GlobalKey<ScaffoldState>();
+  var formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       backgroundColor: Colors.amber[200],
       appBar: AppBar(
         title: Text("Reset Password"),
@@ -21,58 +33,79 @@ class _ResetPasswordState extends State<ResetPassword> {
         child: Padding(
           padding: EdgeInsets.all(30.0),
           child: Form(
-            key: _formKey,
+            key: formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 TextFormField(
-                  validator: (String newPassword){
-                    if(newPassword.isEmpty){
+                  onSaved: (val) => _password = val,
+                  validator: (String newPassword) {
+                    if (newPassword.isEmpty) {
                       return 'please enter your new password';
                     }
                   },
                   decoration: InputDecoration(
                       prefixIcon: Icon(Icons.security),
                       border: OutlineInputBorder(),
-                      labelText: "New password"
-                  ),
+                      labelText: "New password"),
                 ),
-                SizedBox(height: 20,),
+                SizedBox(
+                  height: 20,
+                ),
                 TextFormField(
-                  validator: (String confirmPassword){
-                    if(confirmPassword.isEmpty){
+                  validator: (String confirmPassword) {
+                    if (confirmPassword.isEmpty) {
                       return 'Please enter confirm password';
                     }
                   },
                   decoration: InputDecoration(
                       prefixIcon: Icon(Icons.security),
                       border: OutlineInputBorder(),
-                      labelText: "Confirm password"
-                  ),
+                      labelText: "Confirm password"),
                 ),
                 SizedBox(height: 20.0),
                 OutlineButton(
-                  onPressed: (){
-                    setState(() {
-
-                    });
-                  },
+                  onPressed: _updatePassword,
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0)
-                  ),
+                      borderRadius: BorderRadius.circular(20.0)),
                   child: Text(
                     'Set New Password',
-                    style: TextStyle(
-                        color: Colors.teal[800]
-                    ),
+                    style: TextStyle(color: Colors.teal[800]),
                   ),
                 ),
-
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  void _updatePassword() {
+    final form = formKey.currentState;
+
+//    if (form.validate()) {
+    setState(() {
+      form.save();
+      _response.doChangePassword(ResetPassword.userEmail, _password);
+    });
+//    }
+  }
+
+  @override
+  void onChangePasswordError(String error) {
+    Utils.showSnackBar("error $error", scaffoldKey);
+    setState(() {});
+  }
+
+  @override
+  void onChangePasswordSuccess(User user) async {
+    if (user != null) {
+      Utils.showSnackBar("Password changed!", scaffoldKey);
+      setState(() {});
+    } else {
+      Utils.showSnackBar("Password not changed!", scaffoldKey);
+      setState(() {});
+    }
   }
 }

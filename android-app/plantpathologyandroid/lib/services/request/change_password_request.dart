@@ -1,0 +1,11 @@
+import 'package:flutterapp/data/CtrQuery/login_ctr.dart';
+import 'package:flutterapp/models/user.dart';
+
+class ChangePasswordRequest {
+  LoginCtr con = new LoginCtr();
+
+  Future<User> getChangePassword(String username, String password) async {
+    var result = await con.changePassword(username, password);
+    return result;
+  }
+}

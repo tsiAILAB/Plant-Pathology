@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutterapp/utils/utils.dart';
 
 import 'reset_password_screen.dart';
-
-void main() => runApp(ForgetPassword());
 
 class ForgetPassword extends StatefulWidget {
   @override
@@ -10,15 +9,17 @@ class ForgetPassword extends StatefulWidget {
 }
 
 class _ForgetPasswordState extends State<ForgetPassword> {
-  var _formKey = GlobalKey<FormState>();
+  var formKey = GlobalKey<FormState>();
   var _forgetPasswordFormKey = GlobalKey<FormState>();
+  final scaffoldKey = new GlobalKey<ScaffoldState>();
+  String _userEmail;
 
   Future<void> _showVerificationDialog(BuildContext context) {
     return showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Verify Email/Phone'),
+            title: Text('Verify Email'),
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
@@ -48,7 +49,8 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => ResetPassword()),
+                                  builder: (context) =>
+                                      ResetPassword(_userEmail)),
                             );
 //                            return "";
                           } else {
@@ -75,6 +77,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       backgroundColor: Colors.amber[200],
       appBar: AppBar(
         title: Text("Verify that it's you"),
@@ -83,28 +86,39 @@ class _ForgetPasswordState extends State<ForgetPassword> {
         child: Padding(
           padding: EdgeInsets.all(30.0),
           child: Form(
-            key: _formKey,
+            key: formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 TextFormField(
+                  onSaved: (val) => _userEmail = val,
                   validator: (String userName) {
                     if (userName.isEmpty) {
-                      return 'Please enter your Name..!';
+                      return 'Enter your Email address';
                     }
-//                    return "";
                   },
                   decoration: InputDecoration(
                       prefixIcon: Icon(Icons.settings_cell),
                       border: OutlineInputBorder(),
-                      labelText: "Enter your Phone or Email"),
+                      labelText: "Enter your Email"),
                 ),
                 SizedBox(
                   height: 20,
                 ),
                 OutlineButton(
-                  onPressed: () {
-                    _showVerificationDialog(context);
+                  onPressed: () async {
+                    bool isValidOtp =
+                        await Utils.verifyOtpAlertDialog(context, _userEmail);
+                    if (isValidOtp) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ResetPassword(_userEmail)),
+                      );
+                    } else {
+                      Utils.showSnackBar(
+                          "Wrong verification code!", scaffoldKey);
+                    }
                     setState(() {});
                   },
                   shape: RoundedRectangleBorder(

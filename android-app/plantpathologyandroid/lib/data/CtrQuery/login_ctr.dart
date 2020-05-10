@@ -86,16 +86,15 @@ class LoginCtr {
     return null;
   }
 
-  Future<User> changePassword(
-      String userEmail, String password, String otp) async {
+  Future<User> changePassword(String userEmail, String password) async {
     var dbClient = await con.db;
-    var res = await dbClient.rawQuery(
-        "SELECT * FROM user WHERE username = '$userEmail' and otp = '$otp'");
+    var res = await dbClient
+        .rawQuery("SELECT * FROM user WHERE username = '$userEmail'");
 
     if (res.length > 0) {
       User savedUser = new User.fromMap(res.first);
       var res2 = await dbClient.rawUpdate(
-          "UPDATE user SET password = '$password' WHERE username = '$userEmail' and otp = '$otp'");
+          "UPDATE user SET password = '$password' WHERE username = '$userEmail'");
 
       var res3 = await dbClient
           .rawQuery("SELECT * FROM user WHERE username = '$userEmail'");
