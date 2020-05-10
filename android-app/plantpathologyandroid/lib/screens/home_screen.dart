@@ -64,10 +64,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> _screens = <Widget>[
-      _screen0(),
-      _screen1(),
-      _screen2(),
-      _screen3()
+      _screen0()
+//      _screen1(),
+//      _screen2(),
+//      _screen3()
     ];
 //      _screen4()
 //    ];
@@ -94,12 +94,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 tabSelectedColor: Colors.orange,
 //                iconSelectedColor: Colors.blue[50],
                 iconsColor: Colors.orange,
-                numberOfTabs: 4,
+                numberOfTabs: 1,
                 icons: [
-                  Icons.ac_unit,
-                  Icons.widgets,
-                  Icons.bookmark,
-                  Icons.adb
+                  Icons.ac_unit
+//                  Icons.widgets,
+//                  Icons.bookmark,
+//                  Icons.adb
 //                  Icons.style
                 ],
                 onTabSelected: (_index) {

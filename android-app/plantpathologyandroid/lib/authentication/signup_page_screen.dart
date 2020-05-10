@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(SignUpPage());
+void main() => runApp(SignUpSocialMediaPage());
 
-class SignUpPage extends StatefulWidget {
+class SignUpSocialMediaPage extends StatefulWidget {
   @override
-  _SignUpPageState createState() => _SignUpPageState();
+  _SignUpSocialMediaPageState createState() => _SignUpSocialMediaPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _SignUpSocialMediaPageState extends State<SignUpSocialMediaPage> {
   var _formKey = GlobalKey<FormState>();
   bool rememberMeValue = false;
   bool _signInButtonEnable = false;

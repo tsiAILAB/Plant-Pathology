@@ -36,7 +36,8 @@ class _Plant4State extends State<Plant4> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SignUpPage()),
+                  MaterialPageRoute(
+                      builder: (context) => SignUpSocialMediaPage()),
                 );
               },
               child: Text('SignUp Page'),

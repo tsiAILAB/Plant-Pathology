@@ -3,7 +3,7 @@ import 'package:mailer/smtp_server.dart';
 
 class EmailServerSMTP {
   static Future<void> sendEmailViaSMTP(
-      String recipientsEmail, int randomOtp) async {
+      String recipientsEmail, String randomOtp) async {
     String username = 'plant.diagnosis.system@gmail.com';
     String password = 'lostmypassword';
 
@@ -15,7 +15,7 @@ class EmailServerSMTP {
 
     // Create our message.
     final message = Message()
-      ..from = Address(username, 'Your name')
+      ..from = Address(username, 'Plant Diagnostis')
       ..recipients.add(recipientsEmail)
 //      ..ccRecipients.addAll(['destCc1@example.com', 'destCc2@example.com'])
 //      ..bccRecipients.add(Address('bccAddress@example.com'))

@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/authentication/forget_password_screen.dart';
-import 'package:flutterapp/authentication/signup_page_screen.dart';
+import 'package:flutterapp/authentication/signup_page.dart';
 import 'package:flutterapp/models/user.dart';
 import 'package:flutterapp/screens/landing_screen.dart';
 import 'package:flutterapp/services/response/login_response.dart';
+import 'package:flutterapp/utils/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../screens/home_screen.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -111,8 +110,20 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
   @override
   void onLoginSuccess(User user) async {
     if (user != null) {
-      savePref(1, user.username, user.password);
-      _loginStatus = LoginStatus.signIn;
+      if (user.isVerified == "true") {
+        savePref(1, user.username, user.password);
+        _loginStatus = LoginStatus.signIn;
+      } else {
+        if (await Utils.verifyOtpAlertDialog(context, user.username)) {
+          savePref(1, user.username, user.password);
+          _loginStatus = LoginStatus.signIn;
+        } else {
+          _showSnackBar("Re enter OTP");
+          setState(() {
+            _isLoading = false;
+          });
+        }
+      }
     } else {
       _showSnackBar("Wrong username or password");
       setState(() {
@@ -173,6 +184,7 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
     _ctx = context;
     return Scrollbar(
         child: Scaffold(
+      key: scaffoldKey,
       resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.amber[200],
       appBar: AppBar(

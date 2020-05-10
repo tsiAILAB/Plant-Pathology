@@ -3,12 +3,9 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterapp/authentication/signup_page.dart';
 import 'package:flutterapp/screens/camerascreen/take_picture_screen.dart';
 import 'package:flutterapp/services/request/upload_image.dart';
 import 'package:image_picker/image_picker.dart';
-
-import 'landing_screen.dart';
 
 class TakeImage extends StatefulWidget {
   final String plantName;
@@ -150,23 +147,24 @@ class _TakeImageState extends State<TakeImage> {
                 style: TextStyle(color: Colors.white),
               ),
             ),
-            FlatButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => LandingScreen()),
-                );
-              },
-              child: Text('Landing Screen'),
-            ),
-            FlatButton(
-              onPressed: (){
-                Navigator.push(context,
-                  MaterialPageRoute(builder: (context)=>SignUpPage()),
-                );
-              },
-              child: Text('Sign Up Screen'),
-            )
+//            FlatButton(
+//              onPressed: () {
+//                Navigator.push(
+//                  context,
+//                  MaterialPageRoute(builder: (context) => LandingScreen()),
+//                );
+//              },
+//              child: Text('Landing Screen'),
+//            ),
+//            FlatButton(
+//              onPressed: () {
+//                Navigator.push(
+//                  context,
+//                  MaterialPageRoute(builder: (context) => SignUpPage()),
+//                );
+//              },
+//              child: Text('Sign Up Screen'),
+//            )
           ],
         ),
       ),

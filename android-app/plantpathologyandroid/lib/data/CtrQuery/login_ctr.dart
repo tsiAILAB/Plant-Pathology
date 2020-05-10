@@ -20,10 +20,22 @@ class LoginCtr {
     return res;
   }
 
+  Future<User> getUser(String user) async {
+    var dbClient = await con.db;
+    var res =
+        await dbClient.rawQuery("SELECT * FROM user WHERE username = '$user'");
+
+    if (res.length > 0) {
+      return new User.fromMap(res.first);
+    }
+
+    return null;
+  }
+
   Future<User> getLogin(String user, String password) async {
     var dbClient = await con.db;
     var res = await dbClient.rawQuery(
-        "SELECT * FROM user WHERE username = '$user' and password = '$password' and is_verified = 'true'");
+        "SELECT * FROM user WHERE username = '$user' and password = '$password'");
 
     if (res.length > 0) {
       return new User.fromMap(res.first);
@@ -35,13 +47,15 @@ class LoginCtr {
   Future<User> saveNewUserWithOTP(
       String userEmail, String password, String otp) async {
     var dbClient = await con.db;
-    var res = await dbClient.rawQuery(
-        "INSERT INTO user (username, password, otp, is_verified) VALUES ('$userEmail', '$password', '$otp', 'false'");
+    var result = await dbClient.rawInsert(
+        "INSERT INTO user (username, password, otp, is_verified) VALUES ('$userEmail', '$password', '$otp', 'false')");
+
+    var res = await dbClient
+        .rawQuery("SELECT * FROM user WHERE username = '$userEmail'");
 
     if (res.length > 0) {
       return new User.fromMap(res.first);
     }
-
     return null;
   }
 
@@ -52,10 +66,20 @@ class LoginCtr {
 
     if (res.length > 0) {
       User savedUser = new User.fromMap(res.first);
-      var res2 = await dbClient.rawQuery(
-          "UPDATE user SET is_valid = 'true' WHERE username = '$userEmail' and otp = '$otp'");
-      if (res2.length > 0) {
-        return new User.fromMap(res2.first);
+      var res2 = await dbClient.rawUpdate(
+          "UPDATE user SET is_verified = 'true', otp = '' WHERE username = '$userEmail'");
+//      await dbClient.rawUpdate('''
+//    UPDATE user
+//    SET is_verified = ?, otp = ?
+//    WHERE username = ?
+//    ''',);
+//          ['true', '', '$userEmail']);
+      var res3 = await dbClient
+          .rawQuery("SELECT * FROM user WHERE username = '$userEmail'");
+      var res4 = await dbClient.rawQuery("SELECT * FROM user");
+
+      if (res3.length > 0) {
+        return new User.fromMap(res3.first);
       }
     }
 
@@ -70,10 +94,14 @@ class LoginCtr {
 
     if (res.length > 0) {
       User savedUser = new User.fromMap(res.first);
-      var res2 = await dbClient.rawQuery(
+      var res2 = await dbClient.rawUpdate(
           "UPDATE user SET password = '$password' WHERE username = '$userEmail' and otp = '$otp'");
-      if (res2.length > 0) {
-        return new User.fromMap(res2.first);
+
+      var res3 = await dbClient
+          .rawQuery("SELECT * FROM user WHERE username = '$userEmail'");
+
+      if (res3.length > 0) {
+        return new User.fromMap(res.first);
       }
     }
 
