@@ -186,9 +186,10 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
         child: Scaffold(
       key: scaffoldKey,
       resizeToAvoidBottomPadding: false,
-      backgroundColor: Colors.amber[200],
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text("Login Page"),
+        backgroundColor: Colors.white,
       ),
       body: Card(
         child: Padding(

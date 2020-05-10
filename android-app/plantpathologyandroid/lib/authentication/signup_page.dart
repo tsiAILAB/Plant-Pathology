@@ -31,9 +31,10 @@ class _SignUpPageState extends State<SignUpPage> implements SignUpCallBack {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: Colors.amber[200],
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text("Sign Up Page"),
+        backgroundColor: Colors.white,
       ),
       body: Card(
         child: Padding(
@@ -84,7 +85,7 @@ class _SignUpPageState extends State<SignUpPage> implements SignUpCallBack {
                 FlatButton(
                   onPressed: _signUp,
                   child: Text(
-                    'Sign up',
+                    'Submit',
                     style: TextStyle(color: Colors.teal[800]),
                   ),
                 ),

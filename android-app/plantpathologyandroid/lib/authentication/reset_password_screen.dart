@@ -22,14 +22,17 @@ class _ResetPasswordState extends State<ResetPassword>
   ChangePasswordResponse _response;
   final scaffoldKey = new GlobalKey<ScaffoldState>();
   var formKey = GlobalKey<FormState>();
+  final TextEditingController _newPass = TextEditingController();
+  final TextEditingController _newConfirmPass = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: Colors.amber[200],
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text("Reset Password"),
+        backgroundColor: Colors.white,
       ),
       body: Card(
         child: Padding(
@@ -41,10 +44,10 @@ class _ResetPasswordState extends State<ResetPassword>
               children: <Widget>[
                 TextFormField(
                   onSaved: (val) => _password = val,
-                  validator: (String newPassword) {
-                    if (newPassword.isEmpty) {
-                      return 'please enter your new password';
-                    }
+                  controller: _newPass,
+                  validator: (val) {
+                    if (val.isEmpty) return 'Please Enter new Password.';
+                    return null;
                   },
                   decoration: InputDecoration(
                       prefixIcon: Icon(Icons.security),
@@ -55,10 +58,11 @@ class _ResetPasswordState extends State<ResetPassword>
                   height: 20,
                 ),
                 TextFormField(
-                  validator: (String confirmPassword) {
-                    if (confirmPassword.isEmpty) {
-                      return 'Please enter confirm password';
-                    }
+                  controller: _newConfirmPass,
+                  validator: (val) {
+                    if (val.isEmpty) return 'Please Enter a Password...!!';
+                    if (val != _newPass.text) return 'Password did not Match';
+                    return null;
                   },
                   decoration: InputDecoration(
                       prefixIcon: Icon(Icons.security),
