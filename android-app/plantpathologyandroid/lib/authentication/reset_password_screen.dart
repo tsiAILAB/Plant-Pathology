@@ -5,7 +5,9 @@ import 'package:flutterapp/utils/utils.dart';
 
 class ResetPassword extends StatefulWidget {
   static String userEmail;
-  ResetPassword(this.userEmail);
+  ResetPassword(String userMail) {
+    userEmail = userMail;
+  }
   @override
   _ResetPasswordState createState() => _ResetPasswordState();
 }
