@@ -65,7 +65,7 @@ class LoginCtr {
         "SELECT * FROM user WHERE username = '$userEmail' and otp = '$otp'");
 
     if (res.length > 0) {
-      User savedUser = new User.fromMap(res.first);
+//      User savedUser = new User.fromMap(res.first);
       var res2 = await dbClient.rawUpdate(
           "UPDATE user SET is_verified = 'true', otp = '' WHERE username = '$userEmail'");
 //      await dbClient.rawUpdate('''
