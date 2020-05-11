@@ -30,6 +30,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                     child: Form(
                       key: _forgetPasswordFormKey,
                       child: TextFormField(
+                        onSaved: (val) => _userEmail = val,
                         maxLength: 5,
                         validator: (String verifyCode) {
                           if (verifyCode.isEmpty) {
@@ -138,10 +139,11 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                         }
                       } else {
                         Utils.showSnackBar(
-                            "Please check internet connection!", scaffoldKey);
+                            "Invalid Email address!", scaffoldKey);
                       }
                     } else {
-                      Utils.showSnackBar("Invalid Email address!", scaffoldKey);
+                      Utils.showSnackBar(
+                          "Please check internet connection!", scaffoldKey);
                     }
 
                     setState(() {});

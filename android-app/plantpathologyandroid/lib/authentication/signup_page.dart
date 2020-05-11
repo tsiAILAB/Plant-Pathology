@@ -111,7 +111,8 @@ class _SignUpPageState extends State<SignUpPage> implements SignUpCallBack {
 
   @override
   void onSignUpError(String error) {
-    Utils.showSnackBar("error $error", scaffoldKey);
+    Utils.showSnackBar(
+        "This email is already registered. Please go to login.", scaffoldKey);
     setState(() {});
   }
 
@@ -121,7 +122,9 @@ class _SignUpPageState extends State<SignUpPage> implements SignUpCallBack {
       if (await Utils.checkInternetConnection()) {
         EmailServerSMTP.sendEmailViaSMTP(user.username, user.otp);
         Utils.showSnackBar("Please check your mail for otp", scaffoldKey);
-        if (await Utils.verifyOtpAlertDialog(context, user.username)) {
+        bool isValidOtp =
+            await Utils.verifyOtpAlertDialog(context, user.username);
+        if (isValidOtp) {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => LoginPage()),

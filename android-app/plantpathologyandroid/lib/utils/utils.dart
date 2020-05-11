@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutterapp/models/user.dart';
 import 'package:flutterapp/services/emailservice/email_server_smtp.dart';
 import 'package:flutterapp/services/request/sign_up_request.dart';
@@ -158,5 +159,13 @@ class Utils {
         return alert;
       },
     );
+  }
+
+  static void gotoHomeUi(BuildContext context) {
+    if (Navigator.canPop(context)) {
+      Navigator.pop(context);
+    } else {
+      SystemNavigator.pop();
+    }
   }
 }

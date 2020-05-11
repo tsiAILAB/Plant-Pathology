@@ -14,6 +14,12 @@ class _LandingScreenState extends State<LandingScreen> {
   final VoidCallback signOut;
   _LandingScreenState(this.signOut);
 
+//  signOut() {
+//    setState(() {
+//      widget.signOut();
+//    });
+//  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,6 +43,12 @@ class _LandingScreenState extends State<LandingScreen> {
                                 fontWeight: FontWeight.bold,
                                 letterSpacing: 1.5),
                           ),
+                          IconButton(
+                            onPressed: () {
+                              signOut();
+                            },
+                            icon: Icon(Icons.power_settings_new),
+                          )
                         ],
                       ),
                     ),
