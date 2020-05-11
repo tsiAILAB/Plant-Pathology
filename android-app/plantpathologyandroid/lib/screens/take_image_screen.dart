@@ -1,9 +1,7 @@
 import 'dart:io';
 
-import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterapp/screens/camerascreen/take_picture_screen.dart';
 import 'package:flutterapp/services/request/upload_image.dart';
 import 'package:flutterapp/utils/utils.dart';
 import 'package:image_picker/image_picker.dart';
@@ -172,23 +170,23 @@ class _TakeImageState extends State<TakeImage> {
                 }
               },
             ),
-            RaisedButton.icon(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.0)),
-              onPressed: () {
-                openHighResolutionsCamera();
-              },
-              icon: Icon(
-                Icons.add_a_photo,
-                color: Colors.white,
-              ),
-              color: Colors.teal[900],
-              textColor: Colors.white,
-              label: Text(
-                'High Resulation Picture',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
+//            RaisedButton.icon(
+//              shape: RoundedRectangleBorder(
+//                  borderRadius: BorderRadius.circular(20.0)),
+//              onPressed: () {
+//                openHighResolutionsCamera();
+//              },
+//              icon: Icon(
+//                Icons.add_a_photo,
+//                color: Colors.white,
+//              ),
+//              color: Colors.teal[900],
+//              textColor: Colors.white,
+//              label: Text(
+//                'High Resulation Picture',
+//                style: TextStyle(color: Colors.white),
+//              ),
+//            ),
 //            FlatButton(
 //              onPressed: () {
 //                Navigator.push(
@@ -215,17 +213,17 @@ class _TakeImageState extends State<TakeImage> {
 
   openHighResolutionsCamera() async {
     // Obtain a list of the available cameras on the device.
-    final cameras = await availableCameras();
+//    final cameras = await availableCameras();
 
     // Get a specific camera from the list of available cameras.
-    final firstCamera = cameras.first;
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => TakePictureScreen(
-                camera: firstCamera,
-              )),
-    );
+//    final firstCamera = cameras.first;
+//    Navigator.push(
+//      context,
+//      MaterialPageRoute(
+//          builder: (context) => TakePictureScreen(
+//                camera: firstCamera,
+//              )),
+//    );
   }
 
 //  EmailServerSMTP.sendEmailViaSMTP("firozsujan@gmail.com", 33446);
