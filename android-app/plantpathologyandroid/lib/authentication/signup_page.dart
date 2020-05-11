@@ -46,13 +46,13 @@ class _SignUpPageState extends State<SignUpPage> implements SignUpCallBack {
                   onSaved: (val) => _username = val,
                   validator: (String userName) {
                     if (userName.isEmpty) {
-                      return 'Please enter your Email.';
+                      return 'Please enter your Email/Gmail.';
                     }
                   },
                   decoration: InputDecoration(
                       prefixIcon: Icon(Icons.email),
                       border: OutlineInputBorder(),
-                      labelText: "Enter your Email"),
+                      labelText: "Enter your Email/Gmail"),
                 ),
                 SizedBox(height: 25.0),
                 TextFormField(

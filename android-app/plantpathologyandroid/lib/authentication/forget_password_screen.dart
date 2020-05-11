@@ -99,13 +99,13 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   onSaved: (val) => _userEmail = val,
                   validator: (String userName) {
                     if (userName.isEmpty) {
-                      return 'Enter your Email address';
+                      return 'Enter your Email/Gmail address';
                     }
                   },
                   decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.settings_cell),
+                      prefixIcon: Icon(Icons.email),
                       border: OutlineInputBorder(),
-                      labelText: "Enter your Email"),
+                      labelText: "Enter your verified Email/Gmail"),
                 ),
                 SizedBox(
                   height: 20,

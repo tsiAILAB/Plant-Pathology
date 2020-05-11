@@ -19,6 +19,8 @@ class TakeImage extends StatefulWidget {
 class _TakeImageState extends State<TakeImage> {
   File imageFile;
   final String plantName;
+  String selectedPlantName = 'Maze';
+  String selectedPlantImageLink = 'assets/images/maze.jpg';
 
   _TakeImageState(this.plantName);
 
@@ -32,6 +34,29 @@ class _TakeImageState extends State<TakeImage> {
       body: Center(
         child: Column(
           children: <Widget>[
+            SizedBox(height: 20),
+            Container(
+              child: Column(
+                children: <Widget>[
+                  FlatButton(
+                    onPressed: () {
+                      print("I'm Maze");
+                    },
+                    child: CircleAvatar(
+                      backgroundImage: AssetImage('$selectedPlantImageLink'),
+                      radius: 40,
+                    ),
+                  ),
+                  Text(
+                    "$selectedPlantName",
+                    style: TextStyle(
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1.0),
+                  ),
+                ],
+              ),
+            ),
             SizedBox(height: 20),
             Card(
               child: Column(
