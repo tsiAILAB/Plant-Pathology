@@ -202,12 +202,12 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
                 TextFormField(
                   onSaved: (val) => _username = val,
                   decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.account_circle),
+                      prefixIcon: Icon(Icons.mail),
                       border: OutlineInputBorder(),
-                      labelText: "Enter your name"),
+                      labelText: "Enter your Email/Gmail"),
                   validator: (String value) {
                     if (value.trim().isEmpty) {
-                      return 'User name is required';
+                      return 'Email/Gmail is required';
                     }
                     return "";
                   },
@@ -217,9 +217,9 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
                   obscureText: true,
                   onSaved: (val) => _password = val,
                   decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.phone_android),
+                      prefixIcon: Icon(Icons.security),
                       border: OutlineInputBorder(),
-                      labelText: "password"),
+                      labelText: "Enter your password"),
                   validator: (String value) {
                     if (value.trim().isEmpty) {
                       return 'Password is required';
