@@ -18,10 +18,13 @@ class UploadImage extends StatefulWidget {
 
 class _UploadImageState extends State<UploadImage> {
   String uploadImageAPI = AllApis.UPLOAD_IMAGE_API;
+  final scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+      key: scaffoldKey,
+    );
   }
 
   void _upload(File imageFileForUpload, String plantName) async {
@@ -51,6 +54,7 @@ class _UploadImageState extends State<UploadImage> {
       print(res.statusCode);
 //      Utils utils = new Utils();
       utils.saveImage(imageFileForUpload, fileName, plantName);
+      Utils.showSnackBar("Image upload sucessful!", scaffoldKey);
     }).catchError((err) {
       print(err);
     });
