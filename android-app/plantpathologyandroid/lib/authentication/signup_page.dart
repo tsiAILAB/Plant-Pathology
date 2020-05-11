@@ -82,10 +82,10 @@ class _SignUpPageState extends State<SignUpPage> implements SignUpCallBack {
                       border: OutlineInputBorder(),
                       labelText: "Confirm Password"),
                 ),
-                FlatButton(
+                OutlineButton(
                   onPressed: _signUp,
                   child: Text(
-                    'Submit',
+                    ' Submit ',
                     style: TextStyle(color: Colors.teal[800]),
                   ),
                 ),

@@ -100,10 +100,25 @@ class LoginCtr {
           .rawQuery("SELECT * FROM user WHERE username = '$userEmail'");
 
       if (res3.length > 0) {
-        return new User.fromMap(res.first);
+        return new User.fromMap(res3.first);
       }
     }
 
+    return null;
+  }
+
+  Future<User> updateUserOtp(String userEmail, String otp) async {
+    var dbClient = await con.db;
+
+    var res2 = await dbClient.rawUpdate(
+        "UPDATE user SET otp = '$otp' WHERE username = '$userEmail'");
+
+    var res3 = await dbClient
+        .rawQuery("SELECT * FROM user WHERE username = '$userEmail'");
+
+    if (res3.length > 0) {
+      return new User.fromMap(res3.first);
+    }
     return null;
   }
 

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutterapp/data/CtrQuery/login_ctr.dart';
+import 'package:flutterapp/models/user.dart';
+import 'package:flutterapp/services/emailservice/email_server_smtp.dart';
 import 'package:flutterapp/utils/utils.dart';
 
 import 'reset_password_screen.dart';
@@ -108,18 +111,39 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 ),
                 OutlineButton(
                   onPressed: () async {
-                    bool isValidOtp =
-                        await Utils.verifyOtpAlertDialog(context, _userEmail);
-                    if (isValidOtp) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ResetPassword(_userEmail)),
-                      );
+                    if (await Utils.checkInternetConnection()) {
+                      String _otp = Utils.generateRandomNumberOTP();
+                      LoginCtr con = new LoginCtr();
+
+                      User userFromDb =
+                          await con.updateUserOtp(_userEmail, _otp);
+
+                      if (userFromDb != null) {
+                        EmailServerSMTP.sendEmailViaSMTP(
+                            userFromDb.username, userFromDb.otp);
+                        Utils.showSnackBar(
+                            "Please check your mail for otp", scaffoldKey);
+                        bool isValidOtp = await Utils.verifyOtpAlertDialog(
+                            context, _userEmail);
+                        if (isValidOtp) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    ResetPassword(_userEmail)),
+                          );
+                        } else {
+                          Utils.showSnackBar(
+                              "Wrong verification code!", scaffoldKey);
+                        }
+                      } else {
+                        Utils.showSnackBar(
+                            "Please check internet connection!", scaffoldKey);
+                      }
                     } else {
-                      Utils.showSnackBar(
-                          "Wrong verification code!", scaffoldKey);
+                      Utils.showSnackBar("Invalid Email address!", scaffoldKey);
                     }
+
                     setState(() {});
                   },
                   shape: RoundedRectangleBorder(

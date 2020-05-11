@@ -270,18 +270,15 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
                   ),
                 ),
                 SizedBox(height: 15.0),
-                Text('Want to join?'),
                 FlatButton(
                   onPressed: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => SignUpPage()));
                   },
                   child: Text(
-                    'Sign up',
+                    'New to Plant Diagnosis? Sign up now',
                     style: TextStyle(
-                        color: Colors.green,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20.0),
+                        color: Colors.green, fontWeight: FontWeight.bold),
                   ),
                 ),
               ],
