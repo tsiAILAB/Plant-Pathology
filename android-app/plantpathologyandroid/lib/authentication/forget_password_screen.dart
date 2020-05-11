@@ -116,6 +116,11 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                       String _otp = Utils.generateRandomNumberOTP();
                       LoginCtr con = new LoginCtr();
 
+                      final form = formKey.currentState;
+                      setState(() {
+                        form.save();
+                      });
+
                       User userFromDb =
                           await con.updateUserOtp(_userEmail, _otp);
 

@@ -44,6 +44,7 @@ class _ResetPasswordState extends State<ResetPassword>
               children: <Widget>[
                 TextFormField(
                   onSaved: (val) => _password = val,
+                  obscureText: true,
                   controller: _newPass,
                   validator: (val) {
                     if (val.isEmpty) return 'Please Enter new Password.';
@@ -59,8 +60,9 @@ class _ResetPasswordState extends State<ResetPassword>
                 ),
                 TextFormField(
                   controller: _newConfirmPass,
+                  obscureText: true,
                   validator: (val) {
-                    if (val.isEmpty) return 'Please Enter a Password...!!';
+                    if (val.isEmpty) return 'Please Enter a Password!';
                     if (val != _newPass.text) return 'Password did not Match';
                     return null;
                   },

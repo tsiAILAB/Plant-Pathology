@@ -4,8 +4,6 @@ import 'package:flutterapp/services/emailservice/email_server_smtp.dart';
 import 'package:flutterapp/services/response/sign_up_response.dart';
 import 'package:flutterapp/utils/utils.dart';
 
-import 'login/login_screen.dart';
-
 //void main() => runApp(SignUpPage());
 
 class SignUpPage extends StatefulWidget {
@@ -59,6 +57,7 @@ class _SignUpPageState extends State<SignUpPage> implements SignUpCallBack {
                 SizedBox(height: 25.0),
                 TextFormField(
                   onSaved: (val) => _password = val,
+                  obscureText: true,
                   controller: _pass,
                   validator: (val) {
                     if (val.isEmpty) return 'Please Enter a Password.';
@@ -71,6 +70,7 @@ class _SignUpPageState extends State<SignUpPage> implements SignUpCallBack {
                 ),
                 SizedBox(height: 25.0),
                 TextFormField(
+                  obscureText: true,
                   controller: _confirmPass,
                   validator: (val) {
                     if (val.isEmpty) return 'Please Enter a Password...!!';
@@ -125,10 +125,9 @@ class _SignUpPageState extends State<SignUpPage> implements SignUpCallBack {
         bool isValidOtp =
             await Utils.verifyOtpAlertDialog(context, user.username);
         if (isValidOtp) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => LoginPage()),
-          );
+          Utils.gotoHomeUi(context);
+        } else {
+          Utils.showSnackBar("Wrong OTP!", scaffoldKey);
         }
       } else {
         Utils.showSnackBar(
