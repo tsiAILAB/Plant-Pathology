@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp/screens/camerascreen/take_picture_screen.dart';
 import 'package:flutterapp/services/request/upload_image.dart';
+import 'package:flutterapp/utils/utils.dart';
 import 'package:image_picker/image_picker.dart';
 
 class TakeImage extends StatefulWidget {
@@ -18,15 +19,31 @@ class TakeImage extends StatefulWidget {
 
 class _TakeImageState extends State<TakeImage> {
   File imageFile;
-  final String plantName;
-  String selectedPlantName = 'Maze';
-  String selectedPlantImageLink = 'assets/images/maze.jpg';
+  String plantName;
+
+  final scaffoldKey = new GlobalKey<ScaffoldState>();
 
   _TakeImageState(this.plantName);
 
+  String selectedPlantName;
+  String selectedPlantImageLink = 'assets/images/maze.jpg';
+
   @override
   Widget build(BuildContext context) {
+    selectedPlantName = this.plantName;
+    switch (selectedPlantName) {
+      case "Potato":
+        selectedPlantImageLink = 'assets/images/potato.jpg';
+        break;
+      case "Tomato":
+        selectedPlantImageLink = 'assets/images/tomato.jpg';
+        break;
+      case "Maize":
+        selectedPlantImageLink = 'assets/images/maze.jpg';
+        break;
+    }
     return Scaffold(
+      key: scaffoldKey,
       backgroundColor: Colors.amber[400],
 //      appBar: AppBar(
 //        title: Text("Plant disease"),
@@ -69,7 +86,7 @@ class _TakeImageState extends State<TakeImage> {
 //                      children: <Widget>[
 //                        Text("Size - 100.0"),
 //                        Text('Height : 200.0'),
-//                        Text('Widtht : 400.0'),
+//                        Text('Width : 400.0'),
 //                      ],
 //                    ),
                   ),
@@ -213,16 +230,26 @@ class _TakeImageState extends State<TakeImage> {
 
 //  EmailServerSMTP.sendEmailViaSMTP("firozsujan@gmail.com", 33446);
   openGallery() async {
-    var picture = await ImagePicker.pickImage(
-        source: ImageSource.gallery, maxHeight: 200, maxWidth: 600);
+    var picture;
+    try {
+      picture = await ImagePicker.pickImage(
+          source: ImageSource.gallery, maxHeight: 200, maxWidth: 600);
+    } catch (e) {
+      Utils.showSnackBar("Please try again!", scaffoldKey);
+    }
     this.setState(() {
       imageFile = picture;
     });
   }
 
   openCamera() async {
-    var picture = await ImagePicker.pickImage(
-        source: ImageSource.camera, maxHeight: 200, maxWidth: 600);
+    var picture;
+    try {
+      picture = await ImagePicker.pickImage(
+          source: ImageSource.camera, maxHeight: 200, maxWidth: 600);
+    } catch (e) {
+      Utils.showSnackBar("Please try again!", scaffoldKey);
+    }
     this.setState(() {
       imageFile = picture;
     });

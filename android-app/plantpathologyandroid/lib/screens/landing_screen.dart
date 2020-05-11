@@ -4,6 +4,7 @@ import 'home_screen.dart';
 
 class LandingScreen extends StatefulWidget {
   final VoidCallback signOut;
+
   LandingScreen(this.signOut);
 
   @override
@@ -12,7 +13,10 @@ class LandingScreen extends StatefulWidget {
 
 class _LandingScreenState extends State<LandingScreen> {
   final VoidCallback signOut;
+
   _LandingScreenState(this.signOut);
+
+  String plantName;
 
 //  signOut() {
 //    setState(() {
@@ -56,13 +60,7 @@ class _LandingScreenState extends State<LandingScreen> {
                   SizedBox(height: 20),
                   FlatButton(
                     onPressed: () {
-                      print("I'm Tomato");
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => HomeScreen(this.signOut)),
-                      );
-//                      HomeScreen(signOut);
+                      goToPlantUi("Tomato");
                     },
                     child: CircleAvatar(
                       backgroundImage: AssetImage('assets/images/tomato.jpg'),
@@ -86,6 +84,7 @@ class _LandingScreenState extends State<LandingScreen> {
                   FlatButton(
                     onPressed: () {
                       print("I'm Potato");
+                      goToPlantUi("Potato");
                     },
                     child: CircleAvatar(
                       backgroundImage: AssetImage('assets/images/potato.jpg'),
@@ -108,7 +107,8 @@ class _LandingScreenState extends State<LandingScreen> {
                 children: <Widget>[
                   FlatButton(
                     onPressed: () {
-                      print("I'm Maze");
+                      print("I'm Maize");
+                      goToPlantUi("Maize");
                     },
                     child: CircleAvatar(
                       backgroundImage: AssetImage('assets/images/maze.jpg'),
@@ -129,5 +129,15 @@ class _LandingScreenState extends State<LandingScreen> {
         ),
       ),
     );
+  }
+
+  void goToPlantUi(String plantName) {
+    print("I'm Tomato");
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => HomeScreen(this.signOut, plantName)),
+    );
+//                      HomeScreen(signOut);
   }
 }

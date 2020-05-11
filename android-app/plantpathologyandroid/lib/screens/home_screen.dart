@@ -9,14 +9,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   final VoidCallback signOut;
+  String plantName;
 
-  HomeScreen(this.signOut);
+  HomeScreen(this.signOut, this.plantName);
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _HomeScreenState createState() => _HomeScreenState(this.plantName);
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  String plantName;
+  _HomeScreenState(this.plantName);
+
   int _currentIndex = 0;
   var value;
   var appbarTitle = new Text("");
@@ -73,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
     ];
 //      _screen4()
 //    ];
-    var plantName = appbarTitleList[0];
+//    var plantName = appbarTitleList[0];
 
     return SafeArea(
       child: Scaffold(
@@ -108,10 +112,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   setState(() {
                     _currentIndex = _index;
 
-                    plantName = appbarTitleList[_index];
-                    appbarTitle = Text("Plant Disease"); // $plantName");
-                    log('plantName: $plantName');
-                    log('appbarTitle: $appbarTitle');
+                    var plantNameText = this.plantName;
+                    appbarTitle = Text("Plant Disease $plantNameText");
+                    log('plantName: $plantNameText');
+                    log('appbarTitle: $plantNameText');
                   });
                 }),
             _screens[_currentIndex]
@@ -122,22 +126,22 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _screen0() {
-    var plantName = appbarTitleList[0];
-    appbarTitle = Text("Plant Disease"); // $plantName");
+    var plantNameText = this.plantName;
+    appbarTitle = Text("Plant Disease $plantNameText");
     return Container(
       height: MediaQuery.of(context).size.height - 73,
       color: Colors.white,
-      child: TakeImage(appbarTitleList[0]),
+      child: TakeImage(plantNameText),
     );
   }
 
   Widget _screen1() {
-//    String plantName = "Tomato";
-//    appbarTitle = "Plant Disease $plantName";
+    String plantNameText = this.plantName;
+    appbarTitle = Text("Plant Disease $plantNameText");
     return Container(
       height: MediaQuery.of(context).size.height - 73,
       color: Colors.white,
-      child: TakeImage(appbarTitleList[1]),
+      child: TakeImage(plantNameText),
     );
   }
 

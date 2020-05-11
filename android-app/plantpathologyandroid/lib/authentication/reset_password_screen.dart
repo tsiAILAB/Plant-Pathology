@@ -110,6 +110,7 @@ class _ResetPasswordState extends State<ResetPassword>
   void onChangePasswordSuccess(User user) async {
     if (user != null) {
       Utils.showSnackBar("Password changed!", scaffoldKey);
+      Utils.gotoHomeUi(context);
       setState(() {});
     } else {
       Utils.showSnackBar("Password not changed!", scaffoldKey);

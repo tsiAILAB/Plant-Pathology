@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/models/user.dart';
 import 'package:flutterapp/services/emailservice/email_server_smtp.dart';
+import 'package:flutterapp/services/request/sign_up_request.dart';
 import 'package:flutterapp/services/response/sign_up_response.dart';
 import 'package:flutterapp/utils/utils.dart';
 
@@ -122,13 +123,7 @@ class _SignUpPageState extends State<SignUpPage> implements SignUpCallBack {
       if (await Utils.checkInternetConnection()) {
         EmailServerSMTP.sendEmailViaSMTP(user.username, user.otp);
         Utils.showSnackBar("Please check your mail for otp", scaffoldKey);
-        bool isValidOtp =
-            await Utils.verifyOtpAlertDialog(context, user.username);
-        if (isValidOtp) {
-          Utils.gotoHomeUi(context);
-        } else {
-          Utils.showSnackBar("Wrong OTP!", scaffoldKey);
-        }
+        verifyOtpAlertDialog(context, user.username);
       } else {
         Utils.showSnackBar(
             "Please check your internet connection and resend otp",
@@ -138,5 +133,90 @@ class _SignUpPageState extends State<SignUpPage> implements SignUpCallBack {
       Utils.showSnackBar("Wrong username or password", scaffoldKey);
       setState(() {});
     }
+  }
+
+  void verifyOtpAlertDialog(BuildContext context, String userName) async {
+    String _otp;
+    var _forgetPasswordFormKey = GlobalKey<FormState>();
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Verify Email'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  GestureDetector(
+                    child: Form(
+                      key: _forgetPasswordFormKey,
+                      child: TextFormField(
+                        onSaved: (val) => _otp = val,
+                        maxLength: 5,
+                        validator: (String verifyCode) {
+                          if (verifyCode.isEmpty) {
+                            return 'Please enter the Code';
+                          }
+                        },
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: "Enter Verification Code"),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  GestureDetector(
+                    child: OutlineButton(
+                      onPressed: () async {
+//                        setState(() {
+//                          _isLoading = true;
+                        final form = _forgetPasswordFormKey.currentState;
+                        form.save();
+//                          _response.doLogin(_username, _password);
+//                        });
+                        SignUpRequest signUpReq = new SignUpRequest();
+                        User user = await signUpReq.isValidOTP(userName, _otp);
+                        if (user != null) {
+                          Navigator.pop(context);
+                          Utils.gotoHomeUi(context);
+                        } else {
+                          Utils.showSnackBar("Wrong OTP!", scaffoldKey);
+                        }
+                      },
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0)),
+                      child: Text(
+                        'Submit',
+                        style: TextStyle(color: Colors.teal[800]),
+                      ),
+                    ),
+                    onTap: () {},
+                  ),
+                  GestureDetector(
+                    child: OutlineButton(
+                      onPressed: () async {
+                        SignUpRequest signUpReq = new SignUpRequest();
+                        User user = await signUpReq.getUser(userName);
+                        if (user != null) {
+                          EmailServerSMTP.sendEmailViaSMTP(
+                              user.username, user.otp);
+//                          Navigator.pop(context);
+                          return false;
+                        } else
+                          return false;
+                      },
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0)),
+                      child: Text(
+                        'Re-send OTP',
+                        style: TextStyle(color: Colors.teal[800]),
+                      ),
+                    ),
+                    onTap: () {},
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
   }
 }
