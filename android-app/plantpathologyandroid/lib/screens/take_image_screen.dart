@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterapp/screens/config_screen.dart';
 import 'package:flutterapp/services/request/upload_image.dart';
 import 'package:flutterapp/utils/utils.dart';
 import 'package:image_picker/image_picker.dart';
@@ -126,50 +127,65 @@ class _TakeImageState extends State<TakeImage> {
                 ),
               ],
             ),
-            RaisedButton.icon(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.0)),
-              icon: Icon(
-                Icons.cloud_upload,
-                color: Colors.white,
-              ),
-              color: Colors.teal[900],
-              textColor: Colors.white,
-              label: Text("Upload Image"),
-              onPressed: () {
-                UploadImage uploadImage = new UploadImage();
-                if (imageFile != null) {
-                  uploadImage.uploadImage(imageFile, this.plantName);
-                } else {
-                  showDialog<void>(
-                    context: context,
-//                    barrierDismissible: barrierDismissible,
-                    // false = user must tap button, true = tap outside dialog
-                    builder: (BuildContext dialogContext) {
-                      return AlertDialog(
-                        backgroundColor: Colors.amber[100],
-                        title: Text('Alert!'),
-                        content:
-                            Text('Please pic an image from Camera or Gallery.'),
-                        actions: <Widget>[
-                          FlatButton(
-                            child: Text(
-                              'Ok',
-                              style: TextStyle(color: Colors.black),
-                            ),
-                            color: Colors.amber[200],
-                            onPressed: () {
-                              Navigator.of(dialogContext)
-                                  .pop(); // Dismiss alert dialog
-                            },
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                }
+            FlatButton(
+              onPressed: (){
+                _showDecisionDialog(context);
               },
+              child: Text('alert'),
             ),
+            FlatButton(
+              onPressed: (){
+                Navigator.push(context,
+                  MaterialPageRoute(builder: (context)=>ConfigScreen()),
+                );
+
+              },
+              child: Text('config_screen'),
+            )
+//            RaisedButton.icon(
+//              shape: RoundedRectangleBorder(
+//                  borderRadius: BorderRadius.circular(20.0)),
+//              icon: Icon(
+//                Icons.cloud_upload,
+//                color: Colors.white,
+//              ),
+//              color: Colors.teal[900],
+//              textColor: Colors.white,
+//              label: Text("Upload Image"),
+//              onPressed: () {
+//                UploadImage uploadImage = new UploadImage();
+//                if (imageFile != null) {
+//                  uploadImage.uploadImage(imageFile, this.plantName);
+//                } else {
+//                  showDialog<void>(
+//                    context: context,
+////                    barrierDismissible: barrierDismissible,
+//                    // false = user must tap button, true = tap outside dialog
+//                    builder: (BuildContext dialogContext) {
+//                      return AlertDialog(
+//                        backgroundColor: Colors.amber[100],
+//                        title: Text('Alert!'),
+//                        content:
+//                            Text('Please pic an image from Camera or Gallery.'),
+//                        actions: <Widget>[
+//                          FlatButton(
+//                            child: Text(
+//                              'Ok',
+//                              style: TextStyle(color: Colors.black),
+//                            ),
+//                            color: Colors.amber[200],
+//                            onPressed: () {
+//                              Navigator.of(dialogContext)
+//                                  .pop(); // Dismiss alert dialog
+//                            },
+//                          ),
+//                        ],
+//                      );
+//                    },
+//                  );
+//                }
+//              },
+//            ),
 //            RaisedButton.icon(
 //              shape: RoundedRectangleBorder(
 //                  borderRadius: BorderRadius.circular(20.0)),
@@ -262,4 +278,57 @@ class _TakeImageState extends State<TakeImage> {
         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
       );
   }
+}
+
+Future<void> _showDecisionDialog(BuildContext context) {
+  return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0)
+          ),
+          title: Text('Do you want to Diagnosis of this Image ?'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    GestureDetector(
+                      child: OutlineButton(
+                        onPressed: () {
+
+                        },
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0)),
+                        child: Text(
+                          'Ok',
+                          style: TextStyle(color: Colors.teal[800]),
+                        ),
+                      ),
+                      onTap: () {},
+                    ),
+                    GestureDetector(
+                      child: OutlineButton(
+                        onPressed: () {
+
+                        },
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0)),
+                        child: Text(
+                          'Cancel',
+                          style: TextStyle(color: Colors.teal[800]),
+                        ),
+                      ),
+                      onTap: () {},
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      });
 }
