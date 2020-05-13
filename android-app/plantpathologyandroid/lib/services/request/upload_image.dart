@@ -17,7 +17,7 @@ class UploadImage extends StatefulWidget {
 }
 
 class _UploadImageState extends State<UploadImage> {
-  String uploadImageAPI = AllApis.UPLOAD_IMAGE_API;
+  String uploadImageAPI = AllApis.uploadImageUrl;
   final scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override

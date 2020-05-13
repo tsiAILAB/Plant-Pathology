@@ -2,8 +2,11 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_curved_tab_bar/flutter_curved_tab_bar.dart';
+import 'package:flutterapp/data/CtrQuery/api_url_ctr.dart';
+import 'package:flutterapp/models/ApiUrl.dart';
 import 'package:flutterapp/screens/config_screen.dart';
 import 'package:flutterapp/screens/take_image_screen.dart';
+import 'package:flutterapp/services/apis/all_apis.dart';
 import 'package:flutterapp/utils/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -40,6 +43,15 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       value = preferences.getInt("value");
       userRole = preferences.getString("role");
+    });
+  }
+
+  getApi() async {
+    String apiName = "uploadImageApi";
+    ApiUrlCtr apiUrlCtr = new ApiUrlCtr();
+    ApiUrl apiUrl = await apiUrlCtr.getApiUrl(apiName);
+    setState(() {
+      AllApis.uploadImageUrl = apiUrl.apiUrl;
     });
   }
 
