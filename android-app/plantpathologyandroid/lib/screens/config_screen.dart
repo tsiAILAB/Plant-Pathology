@@ -2,6 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterapp/models/ApiUrl.dart';
+import 'package:flutterapp/models/PlantImage.dart';
+import 'package:flutterapp/services/response/api_url_response.dart';
+import 'package:flutterapp/services/response/plant_image_response.dart';
 import 'package:flutterapp/utils/utils.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -10,7 +14,15 @@ class ConfigScreen extends StatefulWidget {
   _ConfigScreenState createState() => _ConfigScreenState();
 }
 
-class _ConfigScreenState extends State<ConfigScreen> {
+class _ConfigScreenState extends State<ConfigScreen>
+    implements ApiUrlCallBack, PlantImageCallBack {
+  ApiUrlResponse _apiUrlResponse;
+  PlantImageResponse _plantImageResponse;
+  _ConfigScreenState() {
+    _apiUrlResponse = new ApiUrlResponse(this);
+    _plantImageResponse = new PlantImageResponse(this);
+  }
+
   File imageFile;
   final scaffoldKey = new GlobalKey<ScaffoldState>();
 
@@ -182,6 +194,31 @@ class _ConfigScreenState extends State<ConfigScreen> {
         style: TextStyle(
             fontWeight: FontWeight.bold, fontSize: 25, color: Colors.red),
       );
+  }
+
+  @override
+  void onApiUrlError(String error) {
+    // TODO: implement onApiUrlError
+  }
+
+  @override
+  void onApiUrlSuccess(ApiUrl apiUrl) {
+    // TODO: implement onApiUrlSuccess
+  }
+
+  @override
+  void onPlantImageError(String error) {
+    // TODO: implement onPlantImageError
+  }
+
+  @override
+  void onPlantImageSuccess(PlantImage plantImage) {
+    // TODO: implement onPlantImageSuccess
+  }
+
+  @override
+  void onPlantImagesSuccess(List<PlantImage> plantImage) {
+    // TODO: implement onPlantImagesSuccess
   }
 }
 
