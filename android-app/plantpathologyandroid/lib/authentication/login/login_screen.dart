@@ -243,7 +243,9 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
 //                  ],
 //                ),
                 SizedBox(height: 15.0),
-                Text('Already have an App Account?'),
+                Text(
+                    'Already have an App Account?',
+                ),
                 FlatButton(
                   onPressed: _submit,
                   child: Text(
@@ -267,7 +269,10 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
                   },
                   child: Text(
                     'Forget password? Get a new.',
-                    style: TextStyle(color: Colors.blue),
+                    style: TextStyle(
+                        color: Colors.blue,
+                        fontSize: 16.0
+                    ),
                   ),
                 ),
                 SizedBox(height: 15.0),
@@ -279,7 +284,9 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
                   child: Text(
                     'New to Plant Diagnosis? Sign up now',
                     style: TextStyle(
-                        color: Colors.green, fontWeight: FontWeight.bold),
+                        color: Colors.blue,
+                        fontSize: 16.0
+                    ),
                   ),
                 ),
               ],
