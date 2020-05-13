@@ -113,8 +113,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 iconsColor: Colors.orange,
                 numberOfTabs: numberOfTabs,
                 icons: [
-                  Icons.ac_unit
-//                  Icons.widgets,
+                  Icons.ac_unit,
+                  Icons.widgets
 //                  Icons.bookmark,
 //                  Icons.adb
 //                  Icons.style

@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterapp/screens/config_screen.dart';
 import 'package:flutterapp/utils/utils.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -126,21 +125,6 @@ class _TakeImageState extends State<TakeImage> {
                 ),
               ],
             ),
-            FlatButton(
-              onPressed: () {
-                _showDecisionDialog(context);
-              },
-              child: Text('alert'),
-            ),
-            FlatButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ConfigScreen()),
-                );
-              },
-              child: Text('config_screen'),
-            )
 //            RaisedButton.icon(
 //              shape: RoundedRectangleBorder(
 //                  borderRadius: BorderRadius.circular(20.0)),
@@ -332,14 +316,11 @@ Future<void> _showImageUploadSuccessfullyDialog(BuildContext context) {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0)
-          ),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
           title: Text(
-              'Image Uploaded Successfully',
-              style: TextStyle(
-                color: Colors.green
-              ),
+            'Image Uploaded Successfully',
+            style: TextStyle(color: Colors.green),
           ),
           content: SingleChildScrollView(
             child: ListBody(
@@ -348,7 +329,11 @@ Future<void> _showImageUploadSuccessfullyDialog(BuildContext context) {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    Icon(Icons.check_circle, size: 50.0, color: Colors.green,)
+                    Icon(
+                      Icons.check_circle,
+                      size: 50.0,
+                      color: Colors.green,
+                    )
                   ],
                 ),
               ],
