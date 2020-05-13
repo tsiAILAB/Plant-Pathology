@@ -23,6 +23,9 @@ class _ForgetPasswordState extends State<ForgetPassword> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0)
+            ),
             title: Text('Verify Email'),
             content: SingleChildScrollView(
               child: ListBody(
