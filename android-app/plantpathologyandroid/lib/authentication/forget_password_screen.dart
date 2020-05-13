@@ -77,7 +77,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
     return Scaffold(
       backgroundColor: Colors.amber[200],
       appBar: AppBar(
-        title: Text("Verify that it's you"),
+        title: Text("Recover Password"),
       ),
       body: Card(
         child: Padding(
@@ -110,7 +110,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0)),
                   child: Text(
-                    'Get verification Code',
+                    'Get Verification Code',
                     style: TextStyle(color: Colors.teal[800]),
                   ),
                 ),

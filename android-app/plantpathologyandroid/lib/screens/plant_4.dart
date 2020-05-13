@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'file:///D:/Firoz/Android%20Studio/tsiFlutter/plant-pathology/android-app/plantpathologyandroid/lib/authentication/signup_page_screen.dart';
+import '../authentication/signup_page_screen.dart';
 
 import '../authentication/login_page.dart';
 
