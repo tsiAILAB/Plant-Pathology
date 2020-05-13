@@ -41,7 +41,7 @@ class _LandingScreenState extends State<LandingScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Text(
-                            'Please select a Plant',
+                            'Select a Plant',
                             style: TextStyle(
                                 fontSize: 20.0,
                                 fontWeight: FontWeight.bold,
