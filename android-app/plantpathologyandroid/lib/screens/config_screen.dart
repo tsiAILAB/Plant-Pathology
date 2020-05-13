@@ -22,13 +22,6 @@ class _ConfigScreenState extends State<ConfigScreen> {
           key: scaffoldKey,
           resizeToAvoidBottomPadding: false,
           backgroundColor: Colors.white,
-//          appBar: AppBar(
-//            backgroundColor: Colors.white,
-//            title: Text(
-//              'Configuration',
-//            ),
-//          ),
-
           body: ListView(
             children: <Widget>[
               Card(
@@ -60,7 +53,9 @@ class _ConfigScreenState extends State<ConfigScreen> {
                                   border: OutlineInputBorder(),
                                   labelText: "API Name"),
                             ),
-                            SizedBox(height: 15.0,),
+                            SizedBox(
+                              height: 15.0,
+                            ),
                             TextFormField(
                               validator: (String inputedApi) {
                                 if (inputedApi.isEmpty) {
@@ -158,40 +153,8 @@ class _ConfigScreenState extends State<ConfigScreen> {
                   ),
                 ),
               ),
-//          HealthCheckSection(),
             ],
           ),
-//      body: Center(
-//        child: Column(
-//          mainAxisAlignment: MainAxisAlignment.center,
-//          children: <Widget>[
-//            Text(
-//              "Under Construction!",
-//              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-//            ),
-//            RaisedButton(
-//              onPressed: (){
-//                Navigator.push(context,
-//                MaterialPageRoute(builder: (context)=>LoginPage()),
-//                );
-//              },
-//              child: Text('Login Page'),
-//            )
-//          ],
-//        ),
-//      ),
-//          floatingActionButton: FloatingActionButton.extended(
-//            onPressed: () {},
-//            backgroundColor: Colors.teal[800],
-//            icon: Icon(
-//              Icons.camera_alt,
-//              color: Colors.white,
-//            ),
-//            label: Text(
-//              'Health Check',
-//              style: TextStyle(color: Colors.white),
-//            ),
-//          ),
         ),
       ),
     );

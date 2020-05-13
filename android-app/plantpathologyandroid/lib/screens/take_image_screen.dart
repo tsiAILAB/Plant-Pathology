@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterapp/services/request/upload_image.dart';
 import 'package:flutterapp/utils/utils.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -253,17 +254,23 @@ class _TakeImageState extends State<TakeImage> {
   }
 
   Widget decideImageView() {
-    if (imageFile != null)
+    if (imageFile != null) {
+      Utils.showSnackBar("Image loaded", scaffoldKey);
+      _showDecisionDialog(context, imageFile, plantName);
       return Image.file(imageFile);
-    else
-      return Text(
-        "Please pic an image",
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-      );
+    } else
+      Utils.showSnackBar("Please try again!", scaffoldKey);
+    return Text(
+      "Pick an image",
+      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+    );
   }
 }
 
-Future<void> _showDecisionDialog(BuildContext context) {
+Future<void> _showDecisionDialog(
+    BuildContext context, File imageFile, String plantName) {
+  UploadImage uploadImage = new UploadImage();
+
   return showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -280,7 +287,11 @@ Future<void> _showDecisionDialog(BuildContext context) {
                   children: <Widget>[
                     GestureDetector(
                       child: OutlineButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          if (imageFile != null) {
+                            uploadImage.uploadImage(imageFile, plantName);
+                          }
+                        },
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20.0)),
                         child: Text(
