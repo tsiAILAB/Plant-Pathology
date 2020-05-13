@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:flutterapp/utils/utils.dart';
 
 class ConfigScreen extends StatefulWidget {
   @override
@@ -7,15 +11,147 @@ class ConfigScreen extends StatefulWidget {
 }
 
 class _ConfigScreenState extends State<ConfigScreen> {
+  File imageFile;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Scrollbar(
+      child: SafeArea(
+        child: Scaffold(
+          resizeToAvoidBottomPadding: false,
 //      backgroundColor: Colors.amber,
+          appBar: AppBar(
+            title: Text(
+              'Configuration',
+            ),
+          ),
 
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[HealthCheckSection()],
-      ),
+          body: Column(
+            children: <Widget>[
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        'Update API',
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          color: Colors.teal[800],
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      SizedBox(height: 20.0,),
+                      Form(
+                        child: Column(
+                          children: <Widget>[
+                            TextFormField(
+                              validator: (String inputedApi) {
+                                if (inputedApi.isEmpty) {
+                                  return 'Please enter your Api.';
+                                }
+                              },
+                              decoration: InputDecoration(
+                                  prefixIcon: Icon(Icons.art_track),
+                                  border: OutlineInputBorder(),
+                                  labelText: "Enter your API"),
+                            ),
+                            SizedBox(height: 15.0,),
+                            OutlineButton(
+                              onPressed: (){},
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 150.0),
+                                child: Text(
+                                  ' Submit ',
+                                  style: TextStyle(
+                                      color: Colors.teal[800],
+                                      fontSize: 16.0
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      'Add new Crop',
+                       style: TextStyle(
+                           fontSize: 20.0,
+                           fontWeight: FontWeight.bold,
+                           color: Colors.teal[800]
+                       ),
+                    ),
+                    SizedBox(height: 15.0,),
+                    OutlineButton(
+                      onPressed: (){
+                        openGallery();
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 86.0),
+                        child: Text(
+                          'Upload crop iconic Image',
+                          style: TextStyle(
+                              color: Colors.teal[800],
+                              fontSize: 16.0
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 15.0,),
+                    decideImageView(),
+
+//                    CircleAvatar(
+//                     backgroundImage: Image.file(imageFile),
+//                      radius: 60,
+//                    ),
+                    SizedBox(height: 15.0,),
+                    Form(
+                      child: Column(
+                        children: <Widget>[
+                          TextFormField(
+                            validator: (String inputedApi) {
+                              if (inputedApi.isEmpty) {
+                                return 'Please enter crop name.';
+                              }
+                            },
+                            decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.extension),
+                                border: OutlineInputBorder(),
+                                labelText: "Enter crop name"),
+                          ),
+                          SizedBox(height: 15.0,),
+                          OutlineButton(
+                            onPressed: (){},
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 150.0),
+                              child: Text(
+                                  'Submit',
+                                style: TextStyle(
+                                    color: Colors.teal[800],
+                                    fontSize: 16.0
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+//          HealthCheckSection(),
+            ],
+          ),
 //      body: Center(
 //        child: Column(
 //          mainAxisAlignment: MainAxisAlignment.center,
@@ -35,19 +171,38 @@ class _ConfigScreenState extends State<ConfigScreen> {
 //          ],
 //        ),
 //      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
-        backgroundColor: Colors.teal[800],
-        icon: Icon(
-          Icons.camera_alt,
-          color: Colors.white,
-        ),
-        label: Text(
-          'Health Check',
-          style: TextStyle(color: Colors.white),
+//          floatingActionButton: FloatingActionButton.extended(
+//            onPressed: () {},
+//            backgroundColor: Colors.teal[800],
+//            icon: Icon(
+//              Icons.camera_alt,
+//              color: Colors.white,
+//            ),
+//            label: Text(
+//              'Health Check',
+//              style: TextStyle(color: Colors.white),
+//            ),
+//          ),
         ),
       ),
     );
+  }
+  openGallery() async {
+    var picture = await ImagePicker.pickImage(
+        source: ImageSource.gallery, maxHeight: 150, maxWidth: 400);
+    this.setState(() {
+      imageFile = picture;
+    });
+  }
+
+  Widget decideImageView() {
+    if (imageFile != null)
+      return Image.file(imageFile);
+    else
+      return Text(
+        "Please pic an image",
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+      );
   }
 }
 
