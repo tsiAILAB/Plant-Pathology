@@ -2,11 +2,11 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_curved_tab_bar/flutter_curved_tab_bar.dart';
-import 'package:flutterapp/data/CtrQuery/api_url_ctr.dart';
 import 'package:flutterapp/models/ApiUrl.dart';
 import 'package:flutterapp/screens/config_screen.dart';
 import 'package:flutterapp/screens/take_image_screen.dart';
 import 'package:flutterapp/services/apis/all_apis.dart';
+import 'package:flutterapp/services/response/api_url_response.dart';
 import 'package:flutterapp/utils/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -20,10 +20,15 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState(this.plantName);
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> implements ApiUrlCallBack {
   String plantName;
-  _HomeScreenState(this.plantName);
-
+  ApiUrlResponse _apiUrlResponse;
+  final scaffoldKey = new GlobalKey<ScaffoldState>();
+//  _HomeScreenState(this.plantName);
+  _HomeScreenState(plantName) {
+    this.plantName = plantName;
+    _apiUrlResponse = new ApiUrlResponse(this);
+  }
   int _currentIndex = 0;
   var value;
   var userRole;
@@ -48,8 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   getApi() async {
     String apiName = "uploadImageApi";
-    ApiUrlCtr apiUrlCtr = new ApiUrlCtr();
-    ApiUrl apiUrl = await apiUrlCtr.getApiUrl(apiName);
+    ApiUrl apiUrl = await _apiUrlResponse.getApi(apiName);
     setState(() {
       AllApis.uploadImageUrl = apiUrl.apiUrl;
     });
@@ -103,48 +107,49 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return SafeArea(
       child: Scaffold(
+          key: scaffoldKey,
           body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            AppBar(
-              title: appbarTitle,
-              backgroundColor: Colors.white,
-              actions: <Widget>[
-                IconButton(
-                  onPressed: () {
-                    signOut();
-                  },
-                  icon: Icon(Icons.power_settings_new),
-                )
-              ],
-            ),
-            CurvedTabBar(
-                tabsColor: Colors.blue[50],
-                tabSelectedColor: Colors.orange,
+            child: Column(
+              children: <Widget>[
+                AppBar(
+                  title: appbarTitle,
+                  backgroundColor: Colors.white,
+                  actions: <Widget>[
+                    IconButton(
+                      onPressed: () {
+                        signOut();
+                      },
+                      icon: Icon(Icons.power_settings_new),
+                    )
+                  ],
+                ),
+                CurvedTabBar(
+                    tabsColor: Colors.blue[50],
+                    tabSelectedColor: Colors.orange,
 //                iconSelectedColor: Colors.blue[50],
-                iconsColor: Colors.orange,
-                numberOfTabs: numberOfTabs,
-                icons: [
-                  Icons.ac_unit,
-                  Icons.widgets
+                    iconsColor: Colors.orange,
+                    numberOfTabs: numberOfTabs,
+                    icons: [
+                      Icons.ac_unit,
+                      Icons.widgets
 //                  Icons.bookmark,
 //                  Icons.adb
 //                  Icons.style
-                ],
-                onTabSelected: (_index) {
-                  setState(() {
-                    _currentIndex = _index;
+                    ],
+                    onTabSelected: (_index) {
+                      setState(() {
+                        _currentIndex = _index;
 
-                    var plantNameText = this.plantName;
-                    appbarTitle = Text("Plant Disease $plantNameText");
-                    log('plantName: $plantNameText');
-                    log('appbarTitle: $plantNameText');
-                  });
-                }),
-            _screens[_currentIndex]
-          ],
-        ),
-      )),
+                        var plantNameText = this.plantName;
+                        appbarTitle = Text("Plant Disease $plantNameText");
+                        log('plantName: $plantNameText');
+                        log('appbarTitle: $plantNameText');
+                      });
+                    }),
+                _screens[_currentIndex]
+              ],
+            ),
+          )),
     );
   }
 
@@ -189,6 +194,21 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  @override
+  void onApiUrlError(String error) {
+    Utils.showSnackBar("Api update failed", scaffoldKey);
+    setState(() {});
+  }
+
+  @override
+  void onApiUrlSuccess(ApiUrl apiUri) async {
+    if (apiUri != null) {
+      Utils.showSnackBar("Api Updated", scaffoldKey);
+    } else {
+      Utils.showSnackBar("Api update failed", scaffoldKey);
+      setState(() {});
+    }
+  }
 //  Widget _screen4() {
 //    String plantName = "Tomato";
 //    appbarTitle = "Plant Disease $plantName";

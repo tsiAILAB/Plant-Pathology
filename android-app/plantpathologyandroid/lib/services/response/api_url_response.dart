@@ -1,0 +1,27 @@
+import 'package:flutterapp/models/ApiUrl.dart';
+import 'package:flutterapp/services/request/api_url_request.dart';
+
+abstract class ApiUrlCallBack {
+  void onApiUrlSuccess(ApiUrl apiUrl);
+  void onApiUrlError(String error);
+}
+
+class ApiUrlResponse {
+  ApiUrlCallBack _callBack;
+  ApiUrlRequest apiUrlRequest = new ApiUrlRequest();
+  ApiUrlResponse(this._callBack);
+
+  uploadNewPlant(String apiName, String url) {
+    apiUrlRequest
+        .uploadApiUrl(apiName, url)
+        .then((apiUrl) => _callBack.onApiUrlSuccess(apiUrl))
+        .catchError((onError) => _callBack.onApiUrlError(onError.toString()));
+  }
+
+  getApi(String apiName) {
+    apiUrlRequest
+        .getApiUrl(apiName)
+        .then((apiUrl) => _callBack.onApiUrlSuccess(apiUrl))
+        .catchError((onError) => _callBack.onApiUrlError(onError.toString()));
+  }
+}
