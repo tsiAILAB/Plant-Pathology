@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp/screens/config_screen.dart';
-import 'package:flutterapp/services/request/upload_image.dart';
 import 'package:flutterapp/utils/utils.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -43,7 +42,7 @@ class _TakeImageState extends State<TakeImage> {
     }
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: Colors.amber[400],
+      backgroundColor: Colors.white,
 //      appBar: AppBar(
 //        title: Text("Plant disease"),
 //      ),
@@ -128,17 +127,17 @@ class _TakeImageState extends State<TakeImage> {
               ],
             ),
             FlatButton(
-              onPressed: (){
+              onPressed: () {
                 _showDecisionDialog(context);
               },
               child: Text('alert'),
             ),
             FlatButton(
-              onPressed: (){
-                Navigator.push(context,
-                  MaterialPageRoute(builder: (context)=>ConfigScreen()),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ConfigScreen()),
                 );
-
               },
               child: Text('config_screen'),
             )
@@ -285,9 +284,8 @@ Future<void> _showDecisionDialog(BuildContext context) {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0)
-          ),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
           title: Text('Do you want to Diagnosis of this Image ?'),
           content: SingleChildScrollView(
             child: ListBody(
@@ -298,9 +296,7 @@ Future<void> _showDecisionDialog(BuildContext context) {
                   children: <Widget>[
                     GestureDetector(
                       child: OutlineButton(
-                        onPressed: () {
-
-                        },
+                        onPressed: () {},
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20.0)),
                         child: Text(
@@ -312,9 +308,7 @@ Future<void> _showDecisionDialog(BuildContext context) {
                     ),
                     GestureDetector(
                       child: OutlineButton(
-                        onPressed: () {
-
-                        },
+                        onPressed: () {},
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20.0)),
                         child: Text(

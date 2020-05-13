@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:flutterapp/utils/utils.dart';
 
 class ConfigScreen extends StatefulWidget {
   @override
@@ -24,6 +23,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
             title: Text(
               'Configuration',
             ),
+            backgroundColor: Colors.white,
           ),
 
           body: Column(
@@ -36,12 +36,13 @@ class _ConfigScreenState extends State<ConfigScreen> {
                       Text(
                         'Update API',
                         style: TextStyle(
-                          fontSize: 20.0,
-                          color: Colors.teal[800],
-                          fontWeight: FontWeight.bold
-                        ),
+                            fontSize: 20.0,
+                            color: Colors.teal[800],
+                            fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(height: 20.0,),
+                      SizedBox(
+                        height: 20.0,
+                      ),
                       Form(
                         child: Column(
                           children: <Widget>[
@@ -56,17 +57,18 @@ class _ConfigScreenState extends State<ConfigScreen> {
                                   border: OutlineInputBorder(),
                                   labelText: "Enter your API"),
                             ),
-                            SizedBox(height: 15.0,),
+                            SizedBox(
+                              height: 15.0,
+                            ),
                             OutlineButton(
-                              onPressed: (){},
+                              onPressed: () {},
                               child: Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 150.0),
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 0.0, horizontal: 150.0),
                                 child: Text(
                                   ' Submit ',
                                   style: TextStyle(
-                                      color: Colors.teal[800],
-                                      fontSize: 16.0
-                                  ),
+                                      color: Colors.teal[800], fontSize: 16.0),
                                 ),
                               ),
                             ),
@@ -77,78 +79,83 @@ class _ConfigScreenState extends State<ConfigScreen> {
                   ),
                 ),
               ),
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: <Widget>[
-                    Text(
-                      'Add new Crop',
-                       style: TextStyle(
-                           fontSize: 20.0,
-                           fontWeight: FontWeight.bold,
-                           color: Colors.teal[800]
-                       ),
-                    ),
-                    SizedBox(height: 15.0,),
-                    OutlineButton(
-                      onPressed: (){
-                        openGallery();
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 86.0),
-                        child: Text(
-                          'Upload crop iconic Image',
-                          style: TextStyle(
-                              color: Colors.teal[800],
-                              fontSize: 16.0
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        'Add new Crop',
+                        style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.teal[800]),
+                      ),
+                      SizedBox(
+                        height: 15.0,
+                      ),
+                      OutlineButton(
+                        onPressed: () {
+                          openGallery();
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 0.0, horizontal: 86.0),
+                          child: Text(
+                            'Upload crop iconic Image',
+                            style: TextStyle(
+                                color: Colors.teal[800], fontSize: 16.0),
                           ),
                         ),
                       ),
-                    ),
-                    SizedBox(height: 15.0,),
-                    decideImageView(),
+                      SizedBox(
+                        height: 15.0,
+                      ),
+                      decideImageView(),
 
 //                    CircleAvatar(
 //                     backgroundImage: Image.file(imageFile),
 //                      radius: 60,
 //                    ),
-                    SizedBox(height: 15.0,),
-                    Form(
-                      child: Column(
-                        children: <Widget>[
-                          TextFormField(
-                            validator: (String inputedApi) {
-                              if (inputedApi.isEmpty) {
-                                return 'Please enter crop name.';
-                              }
-                            },
-                            decoration: InputDecoration(
-                                prefixIcon: Icon(Icons.extension),
-                                border: OutlineInputBorder(),
-                                labelText: "Enter crop name"),
-                          ),
-                          SizedBox(height: 15.0,),
-                          OutlineButton(
-                            onPressed: (){},
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 150.0),
-                              child: Text(
+                      SizedBox(
+                        height: 15.0,
+                      ),
+                      Form(
+                        child: Column(
+                          children: <Widget>[
+                            TextFormField(
+                              validator: (String inputedApi) {
+                                if (inputedApi.isEmpty) {
+                                  return 'Please enter crop name.';
+                                }
+                              },
+                              decoration: InputDecoration(
+                                  prefixIcon: Icon(Icons.extension),
+                                  border: OutlineInputBorder(),
+                                  labelText: "Enter crop name"),
+                            ),
+                            SizedBox(
+                              height: 15.0,
+                            ),
+                            OutlineButton(
+                              onPressed: () {},
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 0.0, horizontal: 150.0),
+                                child: Text(
                                   'Submit',
-                                style: TextStyle(
-                                    color: Colors.teal[800],
-                                    fontSize: 16.0
+                                  style: TextStyle(
+                                      color: Colors.teal[800], fontSize: 16.0),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
 //          HealthCheckSection(),
             ],
           ),
@@ -187,6 +194,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
       ),
     );
   }
+
   openGallery() async {
     var picture = await ImagePicker.pickImage(
         source: ImageSource.gallery, maxHeight: 150, maxWidth: 400);

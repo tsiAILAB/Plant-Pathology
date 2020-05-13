@@ -23,6 +23,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   int _currentIndex = 0;
   var value;
+  var userRole;
+  int numberOfTabs;
   var appbarTitle = new Text("");
   var appbarTitleList = ["Potato", "Tomato", "Maze", "Config"];
 
@@ -37,6 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
       value = preferences.getInt("value");
+      userRole = preferences.getString("role");
     });
   }
 
@@ -70,11 +73,18 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> _screens = <Widget>[
-      _screen0()
+      _screen0(),
 //      _screen1(),
 //      _screen2(),
-//      _screen3()
+      _screen3()
     ];
+    setState(() {
+      if (userRole == "ADMIN") {
+        numberOfTabs = 2;
+      } else {
+        numberOfTabs = 1;
+      }
+    });
 //      _screen4()
 //    ];
 //    var plantName = appbarTitleList[0];
@@ -86,6 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
           children: <Widget>[
             AppBar(
               title: appbarTitle,
+              backgroundColor: Colors.white,
               actions: <Widget>[
                 IconButton(
                   onPressed: () {
@@ -100,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 tabSelectedColor: Colors.orange,
 //                iconSelectedColor: Colors.blue[50],
                 iconsColor: Colors.orange,
-                numberOfTabs: 1,
+                numberOfTabs: numberOfTabs,
                 icons: [
                   Icons.ac_unit
 //                  Icons.widgets,
@@ -156,6 +167,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _screen3() {
+    appbarTitle = Text("Plant Disease Configurations");
 //    String plantName = "Config";
 //    appbarTitle = "Plant Disease $plantName";
     return Container(

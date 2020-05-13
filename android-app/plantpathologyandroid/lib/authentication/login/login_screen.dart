@@ -89,12 +89,13 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
     }
   }
 
-  savePref(int value, String user, String pass) async {
+  savePref(int value, String user, String pass, String role) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
       preferences.setInt("value", value);
       preferences.setString("user", user);
       preferences.setString("pass", pass);
+      preferences.setString("role", role);
       preferences.commit();
     });
   }
@@ -111,11 +112,11 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
   void onLoginSuccess(User user) async {
     if (user != null) {
       if (user.isVerified == "true") {
-        savePref(1, user.username, user.password);
+        savePref(1, user.username, user.password, user.role);
         _loginStatus = LoginStatus.signIn;
       } else {
         if (await Utils.verifyOtpAlertDialog(context, user.username)) {
-          savePref(1, user.username, user.password);
+          savePref(1, user.username, user.password, user.role);
           _loginStatus = LoginStatus.signIn;
         } else {
           _showSnackBar("Re enter OTP");
