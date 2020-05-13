@@ -326,3 +326,34 @@ Future<void> _showDecisionDialog(BuildContext context) {
         );
       });
 }
+
+Future<void> _showImageUploadSuccessfullyDialog(BuildContext context) {
+  return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0)
+          ),
+          title: Text(
+              'Image Uploaded Successfully',
+              style: TextStyle(
+                color: Colors.green
+              ),
+          ),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Icon(Icons.check_circle, size: 50.0, color: Colors.green,)
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      });
+}
