@@ -103,6 +103,7 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
   @override
   void onLoginError(String error) {
     _showSnackBar("error $error");
+    _showSnackBar("Invalid username or password");
     setState(() {
       _isLoading = false;
     });
@@ -126,7 +127,7 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
         }
       }
     } else {
-      _showSnackBar("Wrong username or password");
+      _showSnackBar("Invalid username or password");
       setState(() {
         _isLoading = false;
       });
@@ -244,7 +245,7 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
 //                ),
                 SizedBox(height: 15.0),
                 Text(
-                    'Already have an App Account?',
+                  'Already have an App Account?',
                 ),
                 FlatButton(
                   onPressed: _submit,
@@ -269,10 +270,7 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
                   },
                   child: Text(
                     'Forget password? Get a new.',
-                    style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: 16.0
-                    ),
+                    style: TextStyle(color: Colors.blue, fontSize: 16.0),
                   ),
                 ),
                 SizedBox(height: 15.0),
@@ -283,10 +281,7 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
                   },
                   child: Text(
                     'New to Plant Diagnosis? Sign up now',
-                    style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: 16.0
-                    ),
+                    style: TextStyle(color: Colors.blue, fontSize: 16.0),
                   ),
                 ),
               ],
