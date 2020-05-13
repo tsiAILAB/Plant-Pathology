@@ -78,7 +78,10 @@ class _ResetPasswordState extends State<ResetPassword>
                       borderRadius: BorderRadius.circular(20.0)),
                   child: Text(
                     'Set New Password',
-                    style: TextStyle(color: Colors.teal[800]),
+                    style: TextStyle(
+                        color: Colors.teal[800],
+                        fontSize: 16.0
+                    ),
                   ),
                 ),
               ],
