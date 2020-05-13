@@ -25,6 +25,8 @@ class _ConfigScreenState extends State<ConfigScreen>
 
   File imageFile;
   final scaffoldKey = new GlobalKey<ScaffoldState>();
+  final configformKey = new GlobalKey<FormState>();
+  String  _apiName, _apiUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -52,13 +54,15 @@ class _ConfigScreenState extends State<ConfigScreen>
                         height: 20.0,
                       ),
                       Form(
+                        key: configformKey,
                         child: Column(
                           children: <Widget>[
                             TextFormField(
-                              validator: (String inputedApiName) {
-                                if (inputedApiName.isEmpty) {
-                                  return 'Please enter an Api Name.';
+                              validator: (String value) {
+                                if (value.trim().isEmpty) {
+                                  return 'API Name is required';
                                 }
+                                return "";
                               },
                               decoration: InputDecoration(
                                   prefixIcon: Icon(Icons.art_track),
@@ -69,10 +73,11 @@ class _ConfigScreenState extends State<ConfigScreen>
                               height: 15.0,
                             ),
                             TextFormField(
-                              validator: (String inputedApi) {
-                                if (inputedApi.isEmpty) {
-                                  return 'Please enter Api Url.';
+                              validator: (String value) {
+                                if (value.trim().isEmpty) {
+                                  return 'API Url is required';
                                 }
+                                return "";
                               },
                               decoration: InputDecoration(
                                   prefixIcon: Icon(Icons.art_track),
