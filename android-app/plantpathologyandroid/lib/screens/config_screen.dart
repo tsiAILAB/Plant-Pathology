@@ -50,29 +50,37 @@ class _ConfigScreenState extends State<ConfigScreen> {
                         child: Column(
                           children: <Widget>[
                             TextFormField(
-                              validator: (String inputedApi) {
-                                if (inputedApi.isEmpty) {
-                                  return 'Please enter your Api.';
+                              validator: (String inputedApiName) {
+                                if (inputedApiName.isEmpty) {
+                                  return 'Please enter an Api Name.';
                                 }
                               },
                               decoration: InputDecoration(
                                   prefixIcon: Icon(Icons.art_track),
                                   border: OutlineInputBorder(),
-                                  labelText: "Enter your API"),
+                                  labelText: "Enter API name"),
+                            ),
+                            SizedBox(height: 15.0,),
+                            TextFormField(
+                              validator: (String inputedApi) {
+                                if (inputedApi.isEmpty) {
+                                  return 'Please enter Api Url.';
+                                }
+                              },
+                              decoration: InputDecoration(
+                                  prefixIcon: Icon(Icons.art_track),
+                                  border: OutlineInputBorder(),
+                                  labelText: "Enter API Url"),
                             ),
                             SizedBox(
                               height: 15.0,
                             ),
                             OutlineButton(
                               onPressed: () {},
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 0.0, horizontal: 150.0),
-                                child: Text(
-                                  ' Submit ',
-                                  style: TextStyle(
-                                      color: Colors.teal[800], fontSize: 16.0),
-                                ),
+                              child: Text(
+                                ' Submit ',
+                                style: TextStyle(
+                                    color: Colors.teal[800], fontSize: 16.0),
                               ),
                             ),
                           ],
@@ -101,14 +109,10 @@ class _ConfigScreenState extends State<ConfigScreen> {
                         onPressed: () {
                           openGallery();
                         },
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 0.0, horizontal: 86.0),
-                          child: Text(
-                            'Upload crop iconic Image',
-                            style: TextStyle(
-                                color: Colors.teal[800], fontSize: 16.0),
-                          ),
+                        child: Text(
+                          'Upload crop iconic Image',
+                          style: TextStyle(
+                              color: Colors.teal[800], fontSize: 16.0),
                         ),
                       ),
                       SizedBox(
@@ -137,21 +141,16 @@ class _ConfigScreenState extends State<ConfigScreen> {
                                   border: OutlineInputBorder(),
                                   labelText: "Enter crop name"),
                             ),
-                            SizedBox(
-                              height: 15.0,
-                            ),
+                            SizedBox(height: 15.0),
                             OutlineButton(
                               onPressed: () {},
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 0.0, horizontal: 150.0),
-                                child: Text(
-                                  'Submit',
-                                  style: TextStyle(
-                                      color: Colors.teal[800], fontSize: 16.0),
-                                ),
+                              child: Text(
+                                'Submit',
+                                style: TextStyle(
+                                    color: Colors.teal[800], fontSize: 16.0),
                               ),
                             ),
+                            SizedBox(height: 50.0),
                           ],
                         ),
                       ),

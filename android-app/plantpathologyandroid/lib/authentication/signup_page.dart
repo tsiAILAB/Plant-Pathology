@@ -32,7 +32,7 @@ class _SignUpPageState extends State<SignUpPage> implements SignUpCallBack {
       key: scaffoldKey,
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("Sign Up Page"),
+        title: Text("Sign Up"),
         backgroundColor: Colors.white,
       ),
       body: Card(
@@ -53,7 +53,7 @@ class _SignUpPageState extends State<SignUpPage> implements SignUpCallBack {
                   decoration: InputDecoration(
                       prefixIcon: Icon(Icons.email),
                       border: OutlineInputBorder(),
-                      labelText: "Enter your Email/Gmail"),
+                      labelText: "Email"),
                 ),
                 SizedBox(height: 25.0),
                 TextFormField(
@@ -67,7 +67,7 @@ class _SignUpPageState extends State<SignUpPage> implements SignUpCallBack {
                   decoration: InputDecoration(
                       prefixIcon: Icon(Icons.security),
                       border: OutlineInputBorder(),
-                      labelText: "Enter Password"),
+                      labelText: "Password"),
                 ),
                 SizedBox(height: 25.0),
                 TextFormField(

@@ -190,8 +190,9 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
       resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("Login Page"),
+        title: Text("Plant Diagnosis System"),
         backgroundColor: Colors.white,
+        centerTitle: true,
       ),
       body: Card(
         child: Padding(
@@ -206,10 +207,10 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
                   decoration: InputDecoration(
                       prefixIcon: Icon(Icons.mail),
                       border: OutlineInputBorder(),
-                      labelText: "Enter your Email/Gmail"),
+                      labelText: "Email"),
                   validator: (String value) {
                     if (value.trim().isEmpty) {
-                      return 'Email/Gmail is required';
+                      return 'Email is required';
                     }
                     return "";
                   },
@@ -221,7 +222,7 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
                   decoration: InputDecoration(
                       prefixIcon: Icon(Icons.security),
                       border: OutlineInputBorder(),
-                      labelText: "Enter your password"),
+                      labelText: "Password"),
                   validator: (String value) {
                     if (value.trim().isEmpty) {
                       return 'Password is required';
@@ -245,7 +246,7 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
 //                ),
                 SizedBox(height: 15.0),
                 Text(
-                  'Already have an App Account?',
+                    'Already Registered?',
                 ),
                 FlatButton(
                   onPressed: _submit,
@@ -269,8 +270,11 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
                     );
                   },
                   child: Text(
-                    'Forget password? Get a new.',
-                    style: TextStyle(color: Colors.blue, fontSize: 16.0),
+                    'Forgot Password?',
+                    style: TextStyle(
+                        color: Colors.blue,
+                        fontSize: 16.0
+                    ),
                   ),
                 ),
                 SizedBox(height: 15.0),
@@ -280,8 +284,11 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
                         MaterialPageRoute(builder: (context) => SignUpPage()));
                   },
                   child: Text(
-                    'New to Plant Diagnosis? Sign up now',
-                    style: TextStyle(color: Colors.blue, fontSize: 16.0),
+                    'New to Plan Diagnosis System? Sign Up',
+                    style: TextStyle(
+                        color: Colors.blue,
+                        fontSize: 16.0
+                    ),
                   ),
                 ),
               ],
