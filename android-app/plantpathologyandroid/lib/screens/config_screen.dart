@@ -58,7 +58,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
                               decoration: InputDecoration(
                                   prefixIcon: Icon(Icons.art_track),
                                   border: OutlineInputBorder(),
-                                  labelText: "Enter API name"),
+                                  labelText: "API Name"),
                             ),
                             SizedBox(height: 15.0,),
                             TextFormField(
@@ -70,7 +70,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
                               decoration: InputDecoration(
                                   prefixIcon: Icon(Icons.art_track),
                                   border: OutlineInputBorder(),
-                                  labelText: "Enter API Url"),
+                                  labelText: "API URL"),
                             ),
                             SizedBox(
                               height: 15.0,
@@ -110,7 +110,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
                           openGallery();
                         },
                         child: Text(
-                          'Upload crop iconic Image',
+                          'Upload image icon',
                           style: TextStyle(
                               color: Colors.teal[800], fontSize: 16.0),
                         ),
