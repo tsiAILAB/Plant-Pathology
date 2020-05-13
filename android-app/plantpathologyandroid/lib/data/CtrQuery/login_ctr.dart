@@ -48,7 +48,7 @@ class LoginCtr {
       String userEmail, String password, String otp) async {
     var dbClient = await con.db;
     var result = await dbClient.rawInsert(
-        "INSERT INTO user (username, password, otp, is_verified) VALUES ('$userEmail', '$password', '$otp', 'false')");
+        "INSERT INTO user (username, password, otp, is_verified, role) VALUES ('$userEmail', '$password', '$otp', 'false', 'USER')");
 
     var res = await dbClient
         .rawQuery("SELECT * FROM user WHERE username = '$userEmail'");
