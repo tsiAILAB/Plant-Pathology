@@ -259,16 +259,13 @@ class _TakeImageState extends State<TakeImage> {
       if (imageFile != null) {
 //      Utils.showSnackBar("Image loaded", scaffoldKey);
         Utils.showLongToast("Image loaded");
-//        verifyOtpAlertDialog(context, plantName);
 //      _showImageUploadSuccessfullyDialog(context);
-//      showLongToast("Image loaded!");
         return Image.file(imageFile);
       } else {
         return Text(
           "Pick an image",
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
         );
-//      Utils.showSnackBar("Please try again!", scaffoldKey);
       }
     } catch (e) {
       return Text(
@@ -289,33 +286,6 @@ class _TakeImageState extends State<TakeImage> {
     scaffoldKey.currentState.showSnackBar(new SnackBar(
       content: new Text(text),
     ));
-  }
-
-  void verifyOtpAlertDialog(BuildContext context, String userName) async {
-    return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Verify Email'),
-            content: SingleChildScrollView(
-              child: ListBody(
-                children: <Widget>[
-                  GestureDetector(
-                    child: Form(
-                      child: TextFormField(
-                        maxLength: 5,
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: "Enter Verification Code"),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                ],
-              ),
-            ),
-          );
-        });
   }
 }
 
