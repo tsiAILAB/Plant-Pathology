@@ -28,8 +28,8 @@ class _LandingScreenState extends State<LandingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: ListView(
+//          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Container(
               child: Column(

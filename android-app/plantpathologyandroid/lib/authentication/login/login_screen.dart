@@ -102,8 +102,8 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
 
   @override
   void onLoginError(String error) {
-    _showSnackBar("error $error");
-    _showSnackBar("Invalid username or password");
+    Utils.showLongToast("error $error");
+    Utils.showLongToast("Invalid username or password");
     setState(() {
       _isLoading = false;
     });
@@ -120,14 +120,14 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
           savePref(1, user.username, user.password, user.role);
           _loginStatus = LoginStatus.signIn;
         } else {
-          _showSnackBar("Re enter OTP");
+          Utils.showLongToast("Re enter OTP");
           setState(() {
             _isLoading = false;
           });
         }
       }
     } else {
-      _showSnackBar("Invalid username or password");
+      Utils.showLongToast("Invalid username or password");
       setState(() {
         _isLoading = false;
       });
@@ -246,7 +246,7 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
 //                ),
                 SizedBox(height: 15.0),
                 Text(
-                    'Already Registered?',
+                  'Already Registered?',
                 ),
                 FlatButton(
                   onPressed: _submit,
@@ -271,10 +271,7 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
                   },
                   child: Text(
                     'Forgot Password?',
-                    style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: 16.0
-                    ),
+                    style: TextStyle(color: Colors.blue, fontSize: 16.0),
                   ),
                 ),
                 SizedBox(height: 15.0),
@@ -285,10 +282,7 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
                   },
                   child: Text(
                     'New to Plan Diagnosis System? Sign Up',
-                    style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: 16.0
-                    ),
+                    style: TextStyle(color: Colors.blue, fontSize: 16.0),
                   ),
                 ),
               ],

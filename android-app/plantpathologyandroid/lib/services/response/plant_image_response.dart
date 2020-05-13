@@ -12,6 +12,14 @@ class PlantImageResponse {
   PlantImageRequest plantImageRequest = new PlantImageRequest();
   PlantImageResponse(this._callBack);
 
+  saveNewPlantImage(String plantName, String url) {
+    plantImageRequest
+        .saveNewPlantImage(plantName, url)
+        .then((plantImage) => _callBack.onPlantImageSuccess(plantImage))
+        .catchError(
+            (onError) => _callBack.onPlantImageError(onError.toString()));
+  }
+
   uploadNewPlant(String plantName, String url) {
     plantImageRequest
         .uploadPlantImage(plantName, url)

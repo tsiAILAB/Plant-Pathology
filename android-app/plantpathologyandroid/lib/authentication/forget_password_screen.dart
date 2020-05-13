@@ -24,8 +24,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
         builder: (BuildContext context) {
           return AlertDialog(
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0)
-            ),
+                borderRadius: BorderRadius.circular(10.0)),
             title: Text('Verify Email'),
             content: SingleChildScrollView(
               child: ListBody(
@@ -89,7 +88,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
-            "Verify that it's you",
+          "Verify that it's you",
         ),
         backgroundColor: Colors.white,
       ),
@@ -133,16 +132,13 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                       if (userFromDb != null) {
                         EmailServerSMTP.sendEmailViaSMTP(
                             userFromDb.username, userFromDb.otp);
-                        Utils.showSnackBar(
-                            "Please check your mail for otp", scaffoldKey);
+                        Utils.showLongToast("Please check your mail for otp");
                         verifyOtpAlertDialog(context, _userEmail);
                       } else {
-                        Utils.showSnackBar(
-                            "Invalid Email address!", scaffoldKey);
+                        Utils.showLongToast("Invalid Email address!");
                       }
                     } else {
-                      Utils.showSnackBar(
-                          "Please check internet connection!", scaffoldKey);
+                      Utils.showLongToast("Please check internet connection!");
                     }
 
                     setState(() {});
@@ -151,10 +147,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                       borderRadius: BorderRadius.circular(20.0)),
                   child: Text(
                     'Get verification Code',
-                    style: TextStyle(
-                        color: Colors.teal[800],
-                        fontSize: 16.0
-                    ),
+                    style: TextStyle(color: Colors.teal[800], fontSize: 16.0),
                   ),
                 ),
               ],
@@ -215,7 +208,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                                     ResetPassword(_userEmail)),
                           );
                         } else {
-                          Utils.showSnackBar("Wrong OTP!", scaffoldKey);
+                          Utils.showLongToast("Wrong OTP!");
                         }
                       },
                       shape: RoundedRectangleBorder(

@@ -78,10 +78,7 @@ class _ResetPasswordState extends State<ResetPassword>
                       borderRadius: BorderRadius.circular(20.0)),
                   child: Text(
                     'Set New Password',
-                    style: TextStyle(
-                        color: Colors.teal[800],
-                        fontSize: 16.0
-                    ),
+                    style: TextStyle(color: Colors.teal[800], fontSize: 16.0),
                   ),
                 ),
               ],
@@ -105,18 +102,18 @@ class _ResetPasswordState extends State<ResetPassword>
 
   @override
   void onChangePasswordError(String error) {
-    Utils.showSnackBar("error $error", scaffoldKey);
+    Utils.showLongToast("error $error");
     setState(() {});
   }
 
   @override
   void onChangePasswordSuccess(User user) async {
     if (user != null) {
-      Utils.showSnackBar("Password changed!", scaffoldKey);
+      Utils.showLongToast("Password changed!");
       Utils.gotoHomeUi(context);
       setState(() {});
     } else {
-      Utils.showSnackBar("Password not changed!", scaffoldKey);
+      Utils.showLongToast("Password not changed!");
       setState(() {});
     }
   }

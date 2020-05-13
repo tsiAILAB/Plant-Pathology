@@ -6,8 +6,8 @@ class ApiUrl {
   ApiUrl(this._apiName, this._apiUrl);
 
   ApiUrl.fromMap(dynamic obj) {
-    this._apiName = obj['apiName'];
-    this._apiUrl = obj['apiUrl'];
+    this._apiName = obj['name'];
+    this._apiUrl = obj['url'];
   }
 
   String get apiName => _apiName;
@@ -16,8 +16,8 @@ class ApiUrl {
 
   Map<String, dynamic> toMap() {
     var map = new Map<String, dynamic>();
-    map["apiName"] = _apiName;
-    map["apiUrl"] = _apiUrl;
+    map["name"] = _apiName;
+    map["url"] = _apiUrl;
 
     return map;
   }

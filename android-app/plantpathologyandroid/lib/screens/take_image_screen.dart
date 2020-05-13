@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp/services/request/upload_image.dart';
 import 'package:flutterapp/utils/utils.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 
 class TakeImage extends StatefulWidget {
@@ -233,7 +234,7 @@ class _TakeImageState extends State<TakeImage> {
       picture = await ImagePicker.pickImage(
           source: ImageSource.gallery, maxHeight: 200, maxWidth: 600);
     } catch (e) {
-      Utils.showSnackBar("Please try again!", scaffoldKey);
+      Utils.showLongToast("Please try again!");
     }
     this.setState(() {
       imageFile = picture;
@@ -246,7 +247,7 @@ class _TakeImageState extends State<TakeImage> {
       picture = await ImagePicker.pickImage(
           source: ImageSource.camera, maxHeight: 200, maxWidth: 600);
     } catch (e) {
-      Utils.showSnackBar("Please try again!", scaffoldKey);
+      Utils.showLongToast("Please try again!");
     }
     this.setState(() {
       imageFile = picture;
@@ -254,16 +255,67 @@ class _TakeImageState extends State<TakeImage> {
   }
 
   Widget decideImageView() {
-    if (imageFile != null) {
-      Utils.showSnackBar("Image loaded", scaffoldKey);
-      _showDecisionDialog(context, imageFile, plantName);
-      return Image.file(imageFile);
-    } else
-      Utils.showSnackBar("Please try again!", scaffoldKey);
-    return Text(
-      "Pick an image",
-      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+    try {
+      if (imageFile != null) {
+//      Utils.showSnackBar("Image loaded", scaffoldKey);
+        Utils.showLongToast("Image loaded");
+//        verifyOtpAlertDialog(context, plantName);
+//      _showImageUploadSuccessfullyDialog(context);
+//      showLongToast("Image loaded!");
+        return Image.file(imageFile);
+      } else {
+        return Text(
+          "Pick an image",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+        );
+//      Utils.showSnackBar("Please try again!", scaffoldKey);
+      }
+    } catch (e) {
+      return Text(
+        "Pick an image",
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+      );
+    }
+  }
+
+  void showLongToast(String text) {
+    Fluttertoast.showToast(
+      msg: text,
+      toastLength: Toast.LENGTH_LONG,
     );
+  }
+
+  void _showSnackBar(String text) {
+    scaffoldKey.currentState.showSnackBar(new SnackBar(
+      content: new Text(text),
+    ));
+  }
+
+  void verifyOtpAlertDialog(BuildContext context, String userName) async {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Verify Email'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  GestureDetector(
+                    child: Form(
+                      child: TextFormField(
+                        maxLength: 5,
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: "Enter Verification Code"),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                ],
+              ),
+            ),
+          );
+        });
   }
 }
 

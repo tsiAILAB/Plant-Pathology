@@ -23,7 +23,7 @@ class ApiUrlCtr {
   Future<ApiUrl> getApiUrl(String apiName) async {
     var dbClient = await con.db;
     var res = await dbClient
-        .rawQuery("SELECT * FROM api_url WHERE api_name = '$apiName'");
+        .rawQuery("SELECT * FROM api_url WHERE name = '$apiName'");
 
     if (res.length > 0) {
       return new ApiUrl.fromMap(res.first);
@@ -32,7 +32,7 @@ class ApiUrlCtr {
     return null;
   }
 
-  Future<ApiUrl> saveNewApiUrlWithOTP(String name, String url) async {
+  Future<ApiUrl> saveNewApiUrl(String name, String url) async {
     var dbClient = await con.db;
     var result = await dbClient
         .rawInsert("INSERT INTO api_url (name, url) VALUES ('$name', '$url')");

@@ -32,7 +32,7 @@ class PlantImageCtr {
     return null;
   }
 
-  Future<PlantImage> saveNewPlantImageWithOTP(String name, String url) async {
+  Future<PlantImage> saveNewPlantImage(String name, String url) async {
     var dbClient = await con.db;
     var result = await dbClient.rawInsert(
         "INSERT INTO plant_image (name, url) VALUES ('$name', '$url')");

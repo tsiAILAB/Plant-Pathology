@@ -5,24 +5,43 @@ import 'package:flutter/services.dart';
 import 'package:flutterapp/models/user.dart';
 import 'package:flutterapp/services/emailservice/email_server_smtp.dart';
 import 'package:flutterapp/services/request/sign_up_request.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:random_string/random_string.dart';
 
 class Utils {
-  Future<bool> saveImage(File image, String fileName, String imagePath) async {
+  Future<String> saveImage(
+      File image, String fileName, String imagePath) async {
     try {
       TimeOfDay timeOfDay = TimeOfDay.fromDateTime(DateTime.now());
       var imageName = "$imagePath$timeOfDay";
       // getting a directory path for saving
       var documentDirectory = await getApplicationDocumentsDirectory();
       var firstPath = documentDirectory.path + "/plant_images/$imagePath";
+      var filePath = await createDirectoryIfNotExist(firstPath);
       // copy the file to a new path
-      final File newImage = await image.copy('$firstPath/$imageName.png');
-    } on Exception catch (_) {
-      print("throwing new error");
-      throw Exception("Error on server");
+      File newImage = await image.copy('$firstPath/$imageName.png');
+      return newImage.path;
+    } catch (e) {
+      print("FileSaveError: $e");
     }
-    return true;
+  }
+
+  static Future<void> createDirectoryIfNotExist(String path) async {
+    final myDir = new Directory(path);
+    try {
+      myDir.exists().then((isThere) {
+        isThere
+            ? new Directory(path).create(recursive: true)
+                // The created directory is returned as a Future.
+                .then((Directory directory) {
+                print(directory.path);
+              })
+            : print('non-existent');
+      });
+    } catch (e) {
+      print('makeDirFailed: $e');
+    }
   }
 
   static String generateRandomNumberOTP() {
@@ -34,6 +53,13 @@ class Utils {
     scaffoldKey.currentState.showSnackBar(new SnackBar(
       content: new Text(text),
     ));
+  }
+
+  static void showLongToast(String text) {
+    Fluttertoast.showToast(
+      msg: text,
+      toastLength: Toast.LENGTH_LONG,
+    );
   }
 
   static Future<bool> checkInternetConnection() async {

@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -24,16 +25,17 @@ class _ConfigScreenState extends State<ConfigScreen>
   }
 
   File imageFile;
-  final scaffoldKey = new GlobalKey<ScaffoldState>();
-  final configformKey = new GlobalKey<FormState>();
-  String  _apiName, _apiUrl;
+  final _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final apiConfigFormKey = new GlobalKey<FormState>();
+  final cropFormKey = new GlobalKey<FormState>();
+  String _apiName, _apiUrl, _plantName;
 
   @override
   Widget build(BuildContext context) {
     return Scrollbar(
       child: SafeArea(
         child: Scaffold(
-          key: scaffoldKey,
+          key: _scaffoldKey,
           resizeToAvoidBottomPadding: false,
           backgroundColor: Colors.white,
           body: ListView(
@@ -54,15 +56,15 @@ class _ConfigScreenState extends State<ConfigScreen>
                         height: 20.0,
                       ),
                       Form(
-                        key: configformKey,
+                        key: apiConfigFormKey,
                         child: Column(
                           children: <Widget>[
                             TextFormField(
+                              onSaved: (val) => _apiName = val,
                               validator: (String value) {
                                 if (value.trim().isEmpty) {
                                   return 'API Name is required';
                                 }
-                                return "";
                               },
                               decoration: InputDecoration(
                                   prefixIcon: Icon(Icons.art_track),
@@ -73,6 +75,7 @@ class _ConfigScreenState extends State<ConfigScreen>
                               height: 15.0,
                             ),
                             TextFormField(
+                              onSaved: (val) => _apiUrl = val,
                               validator: (String value) {
                                 if (value.trim().isEmpty) {
                                   return 'API Url is required';
@@ -88,7 +91,7 @@ class _ConfigScreenState extends State<ConfigScreen>
                               height: 15.0,
                             ),
                             OutlineButton(
-                              onPressed: () {},
+                              onPressed: _saveApi,
                               child: Text(
                                 ' Submit ',
                                 style: TextStyle(
@@ -140,12 +143,14 @@ class _ConfigScreenState extends State<ConfigScreen>
                         height: 15.0,
                       ),
                       Form(
+                        key: cropFormKey,
                         child: Column(
                           children: <Widget>[
                             TextFormField(
+                              onSaved: (val) => _plantName = val,
                               validator: (String inputedApi) {
                                 if (inputedApi.isEmpty) {
-                                  return 'Please enter crop name.';
+                                  return 'Enter crop name.';
                                 }
                               },
                               decoration: InputDecoration(
@@ -155,7 +160,7 @@ class _ConfigScreenState extends State<ConfigScreen>
                             ),
                             SizedBox(height: 15.0),
                             OutlineButton(
-                              onPressed: () {},
+                              onPressed: _saveCrop,
                               child: Text(
                                 'Submit',
                                 style: TextStyle(
@@ -182,8 +187,11 @@ class _ConfigScreenState extends State<ConfigScreen>
     try {
       picture = await ImagePicker.pickImage(
           source: ImageSource.gallery, maxHeight: 150, maxWidth: 400);
+      Utils.showLongToast("Image loaded");
+//      Utils.showSnackBar("Image Loaded", _scaffoldKey);
     } catch (e) {
-      Utils.showSnackBar("Please try again!", scaffoldKey);
+      Utils.showLongToast("Please try again!");
+//      Utils.showSnackBar("Please try again!", _scaffoldKey);
     }
     this.setState(() {
       imageFile = picture;
@@ -204,11 +212,15 @@ class _ConfigScreenState extends State<ConfigScreen>
   @override
   void onApiUrlError(String error) {
     // TODO: implement onApiUrlError
+    Utils.showLongToast("Api alredy exist!");
   }
 
   @override
   void onApiUrlSuccess(ApiUrl apiUrl) {
     // TODO: implement onApiUrlSuccess
+    Utils.showLongToast("Api Saved");
+    log(apiUrl.apiName);
+    log(apiUrl.apiUrl);
   }
 
   @override
@@ -219,179 +231,211 @@ class _ConfigScreenState extends State<ConfigScreen>
   @override
   void onPlantImageSuccess(PlantImage plantImage) {
     // TODO: implement onPlantImageSuccess
+    Utils.showLongToast("Plant Saved");
+    log(plantImage.plantName);
+    log(plantImage.imageUrl);
   }
 
   @override
-  void onPlantImagesSuccess(List<PlantImage> plantImage) {
+  void onPlantImagesSuccess(List<PlantImage> plantImages) {
     // TODO: implement onPlantImagesSuccess
+    for (PlantImage plant in plantImages) {
+      log(plant.plantName);
+      log(plant.imageUrl);
+    }
+  }
+
+  void _saveApi() async {
+    final form = apiConfigFormKey.currentState;
+    Utils utils = new Utils();
+    setState(() {
+      form.save();
+      _apiUrlResponse.saveNewApiUrl(_apiName, _apiUrl);
+    });
+//    _apiUrlResponse.getApi("a");
+  }
+
+  void _saveCrop() async {
+    final form = cropFormKey.currentState;
+
+    Utils utils = new Utils();
+    String fileName = imageFile.path.split("/").last;
+    String imageUrl = await utils.saveImage(imageFile, fileName, _plantName);
+
+    setState(() {
+      form.save();
+      _plantImageResponse.saveNewPlantImage(_plantName, imageUrl);
+    });
+
+    _plantImageResponse.getAllPlant();
   }
 }
 
-class PlantTopSection extends StatefulWidget {
-  @override
-  _PlantTopSectionState createState() => _PlantTopSectionState();
-}
-
-class _PlantTopSectionState extends State<PlantTopSection> {
-  var plantName = 'Apple';
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.orange,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Text(
-                plantName,
-                style: TextStyle(fontSize: 25.0, color: Colors.white),
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Card(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 10.0, horizontal: 5),
-                    child: Column(
-                      children: <Widget>[
-                        Image.asset(
-                          'assets/images/fertilizerCalculator.PNG',
-                          height: 75,
-                          width: 75,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(30, 5, 30, 15),
-                          child: Text('Fertilizer Calculator'),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Card(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 10.0, horizontal: 5),
-                    child: Column(
-                      children: <Widget>[
-                        Image.asset(
-                          'assets/images/pestsAndDiseases.PNG',
-                          height: 75,
-                          width: 75,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(30, 5, 30, 15),
-                          child: Text('Pests & Diseases'),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class LocationPermission extends StatefulWidget {
-  @override
-  _LocationPermissionState createState() => _LocationPermissionState();
-}
-
-class _LocationPermissionState extends State<LocationPermission> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Text('Location'),
-    );
-  }
-}
-
-class HealthCheckSection extends StatefulWidget {
-  @override
-  _HealthCheckSectionState createState() => _HealthCheckSectionState();
-}
-
-class _HealthCheckSectionState extends State<HealthCheckSection> {
-  @override
-  Widget build(BuildContext context) {
-    return Opacity(
-      opacity: 0.9,
-      child: Container(
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage("assets/images/healthCheck2.jpg"),
-                fit: BoxFit.cover)),
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(15.0, 35.0, 15.0, 35.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                'Health Check',
-                style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
-              ),
-              Text(
-                'Take a picture of your crop to detect diseases and recieve treatment advice.',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.normal,
-                  fontSize: 20.0,
-                ),
-              ),
-              SizedBox(
-                height: 50,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 0.0, horizontal: 0.0),
-                    child: OutlineButton(
-                      borderSide: BorderSide(width: 1.0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                      color: Colors.teal[800],
-                      onPressed: () {},
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 5.0, horizontal: 35.0),
-                        child: Text('Gallery'),
-                      ),
-                    ),
-                  ),
-                  RaisedButton.icon(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0)),
-                    color: Colors.teal[900],
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.add_a_photo,
-                      color: Colors.white,
-                    ),
-                    label: Text(
-                      'New Picture',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  )
-                ],
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
+//class PlantTopSection extends StatefulWidget {
+//  @override
+//  _PlantTopSectionState createState() => _PlantTopSectionState();
+//}
+//
+//class _PlantTopSectionState extends State<PlantTopSection> {
+//  var plantName = 'Apple';
+//
+//  @override
+//  Widget build(BuildContext context) {
+//    return Container(
+//      decoration: BoxDecoration(
+//        color: Colors.orange,
+//      ),
+//      child: Padding(
+//        padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 20.0),
+//        child: Column(
+//          crossAxisAlignment: CrossAxisAlignment.start,
+//          children: <Widget>[
+//            Padding(
+//              padding: const EdgeInsets.all(12.0),
+//              child: Text(
+//                plantName,
+//                style: TextStyle(fontSize: 25.0, color: Colors.white),
+//              ),
+//            ),
+//            Row(
+//              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//              children: <Widget>[
+//                Card(
+//                  child: Padding(
+//                    padding: const EdgeInsets.symmetric(
+//                        vertical: 10.0, horizontal: 5),
+//                    child: Column(
+//                      children: <Widget>[
+//                        Image.asset(
+//                          'assets/images/fertilizerCalculator.PNG',
+//                          height: 75,
+//                          width: 75,
+//                        ),
+//                        Padding(
+//                          padding: const EdgeInsets.fromLTRB(30, 5, 30, 15),
+//                          child: Text('Fertilizer Calculator'),
+//                        ),
+//                      ],
+//                    ),
+//                  ),
+//                ),
+//                Card(
+//                  child: Padding(
+//                    padding: const EdgeInsets.symmetric(
+//                        vertical: 10.0, horizontal: 5),
+//                    child: Column(
+//                      children: <Widget>[
+//                        Image.asset(
+//                          'assets/images/pestsAndDiseases.PNG',
+//                          height: 75,
+//                          width: 75,
+//                        ),
+//                        Padding(
+//                          padding: const EdgeInsets.fromLTRB(30, 5, 30, 15),
+//                          child: Text('Pests & Diseases'),
+//                        ),
+//                      ],
+//                    ),
+//                  ),
+//                ),
+//              ],
+//            )
+//          ],
+//        ),
+//      ),
+//    );
+//  }
+//}
+//
+//class LocationPermission extends StatefulWidget {
+//  @override
+//  _LocationPermissionState createState() => _LocationPermissionState();
+//}
+//
+//class _LocationPermissionState extends State<LocationPermission> {
+//  @override
+//  Widget build(BuildContext context) {
+//    return Container(
+//      child: Text('Location'),
+//    );
+//  }
+//}
+//
+//class HealthCheckSection extends StatefulWidget {
+//  @override
+//  _HealthCheckSectionState createState() => _HealthCheckSectionState();
+//}
+//
+//class _HealthCheckSectionState extends State<HealthCheckSection> {
+//  @override
+//  Widget build(BuildContext context) {
+//    return Opacity(
+//      opacity: 0.9,
+//      child: Container(
+//        decoration: BoxDecoration(
+//            image: DecorationImage(
+//                image: AssetImage("assets/images/healthCheck2.jpg"),
+//                fit: BoxFit.cover)),
+//        child: Padding(
+//          padding: const EdgeInsets.fromLTRB(15.0, 35.0, 15.0, 35.0),
+//          child: Column(
+//            crossAxisAlignment: CrossAxisAlignment.start,
+//            children: <Widget>[
+//              Text(
+//                'Health Check',
+//                style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
+//              ),
+//              Text(
+//                'Take a picture of your crop to detect diseases and recieve treatment advice.',
+//                style: TextStyle(
+//                  color: Colors.black,
+//                  fontWeight: FontWeight.normal,
+//                  fontSize: 20.0,
+//                ),
+//              ),
+//              SizedBox(
+//                height: 50,
+//              ),
+//              Row(
+//                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                children: <Widget>[
+//                  Padding(
+//                    padding: const EdgeInsets.symmetric(
+//                        vertical: 0.0, horizontal: 0.0),
+//                    child: OutlineButton(
+//                      borderSide: BorderSide(width: 1.0),
+//                      shape: RoundedRectangleBorder(
+//                        borderRadius: BorderRadius.circular(20.0),
+//                      ),
+//                      color: Colors.teal[800],
+//                      onPressed: () {},
+//                      child: Padding(
+//                        padding: const EdgeInsets.symmetric(
+//                            vertical: 5.0, horizontal: 35.0),
+//                        child: Text('Gallery'),
+//                      ),
+//                    ),
+//                  ),
+//                  RaisedButton.icon(
+//                    shape: RoundedRectangleBorder(
+//                        borderRadius: BorderRadius.circular(20.0)),
+//                    color: Colors.teal[900],
+//                    onPressed: () {},
+//                    icon: Icon(
+//                      Icons.add_a_photo,
+//                      color: Colors.white,
+//                    ),
+//                    label: Text(
+//                      'New Picture',
+//                      style: TextStyle(color: Colors.white),
+//                    ),
+//                  )
+//                ],
+//              )
+//            ],
+//          ),
+//        ),
+//      ),
+//    );
+//  }
+//}

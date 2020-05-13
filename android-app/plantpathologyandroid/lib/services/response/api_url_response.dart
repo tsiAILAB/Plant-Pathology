@@ -11,7 +11,14 @@ class ApiUrlResponse {
   ApiUrlRequest apiUrlRequest = new ApiUrlRequest();
   ApiUrlResponse(this._callBack);
 
-  uploadNewPlant(String apiName, String url) {
+  saveNewApiUrl(String apiName, String url) {
+    apiUrlRequest
+        .saveNewApiUrl(apiName, url)
+        .then((apiUrl) => _callBack.onApiUrlSuccess(apiUrl))
+        .catchError((onError) => _callBack.onApiUrlError(onError.toString()));
+  }
+
+  uploadApiUrl(String apiName, String url) {
     apiUrlRequest
         .uploadApiUrl(apiName, url)
         .then((apiUrl) => _callBack.onApiUrlSuccess(apiUrl))

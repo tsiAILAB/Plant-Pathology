@@ -23,7 +23,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> implements ApiUrlCallBack {
   String plantName;
   ApiUrlResponse _apiUrlResponse;
-  final scaffoldKey = new GlobalKey<ScaffoldState>();
 //  _HomeScreenState(this.plantName);
   _HomeScreenState(plantName) {
     this.plantName = plantName;
@@ -36,6 +35,7 @@ class _HomeScreenState extends State<HomeScreen> implements ApiUrlCallBack {
   var appbarTitle = new Text("");
   var appbarTitleList = ["Potato", "Tomato", "Maze", "Config"];
 
+  final scaffoldKey = new GlobalKey<ScaffoldState>();
   signOut() {
     setState(() {
       widget.signOut();
@@ -196,16 +196,16 @@ class _HomeScreenState extends State<HomeScreen> implements ApiUrlCallBack {
 
   @override
   void onApiUrlError(String error) {
-    Utils.showSnackBar("Api update failed", scaffoldKey);
+    Utils.showLongToast("Api update failed");
     setState(() {});
   }
 
   @override
   void onApiUrlSuccess(ApiUrl apiUri) async {
     if (apiUri != null) {
-      Utils.showSnackBar("Api Updated", scaffoldKey);
+      Utils.showLongToast("Api Updated");
     } else {
-      Utils.showSnackBar("Api update failed", scaffoldKey);
+      Utils.showLongToast("Api update failed");
       setState(() {});
     }
   }

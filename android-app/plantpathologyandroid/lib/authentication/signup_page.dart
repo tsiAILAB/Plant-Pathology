@@ -83,15 +83,14 @@ class _SignUpPageState extends State<SignUpPage> implements SignUpCallBack {
                       border: OutlineInputBorder(),
                       labelText: "Confirm Password"),
                 ),
-                SizedBox(height: 10.0,),
+                SizedBox(
+                  height: 10.0,
+                ),
                 OutlineButton(
                   onPressed: _signUp,
                   child: Text(
                     ' Submit ',
-                    style: TextStyle(
-                        color: Colors.teal[800],
-                        fontSize: 16.0
-                    ),
+                    style: TextStyle(color: Colors.teal[800], fontSize: 16.0),
                   ),
                 ),
               ],
@@ -116,8 +115,8 @@ class _SignUpPageState extends State<SignUpPage> implements SignUpCallBack {
 
   @override
   void onSignUpError(String error) {
-    Utils.showSnackBar(
-        "This email is already registered. Please go to login.", scaffoldKey);
+    Utils.showLongToast(
+        "This email is already registered. Please go to login.");
     setState(() {});
   }
 
@@ -126,15 +125,14 @@ class _SignUpPageState extends State<SignUpPage> implements SignUpCallBack {
     if (user != null) {
       if (await Utils.checkInternetConnection()) {
         EmailServerSMTP.sendEmailViaSMTP(user.username, user.otp);
-        Utils.showSnackBar("Please check your mail for otp", scaffoldKey);
+        Utils.showLongToast("Please check your mail for otp");
         verifyOtpAlertDialog(context, user.username);
       } else {
-        Utils.showSnackBar(
-            "Please check your internet connection and resend otp",
-            scaffoldKey);
+        Utils.showLongToast(
+            "Please check your internet connection and resend otp");
       }
     } else {
-      Utils.showSnackBar("Wrong username or password", scaffoldKey);
+      Utils.showLongToast("Wrong username or password");
       setState(() {});
     }
   }
@@ -183,7 +181,7 @@ class _SignUpPageState extends State<SignUpPage> implements SignUpCallBack {
                           Navigator.pop(context);
                           Utils.gotoHomeUi(context);
                         } else {
-                          Utils.showSnackBar("Wrong OTP!", scaffoldKey);
+                          Utils.showLongToast("Wrong OTP!");
                         }
                       },
                       shape: RoundedRectangleBorder(

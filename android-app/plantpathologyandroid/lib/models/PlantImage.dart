@@ -6,8 +6,8 @@ class PlantImage {
   PlantImage(this._plantName, this._imageUrl);
 
   PlantImage.fromMap(dynamic obj) {
-    this._plantName = obj['plantName'];
-    this._imageUrl = obj['imageUrl'];
+    this._plantName = obj['name'];
+    this._imageUrl = obj['url'];
   }
 
   String get plantName => _plantName;
@@ -15,8 +15,8 @@ class PlantImage {
 
   Map<String, dynamic> toMap() {
     var map = new Map<String, dynamic>();
-    map["plantName"] = _plantName;
-    map["imageUrl"] = _imageUrl;
+    map["name"] = _plantName;
+    map["url"] = _imageUrl;
 
     return map;
   }
