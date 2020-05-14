@@ -147,7 +147,10 @@ class _LandingScreenState extends State<LandingScreen>
                 ],
               ),
             ),
-            Container(child: loadDynamicUi()),
+            Container(
+                child: Column(
+              children: loadDynamicUi(),
+            )),
           ],
         ),
       ),
@@ -155,7 +158,7 @@ class _LandingScreenState extends State<LandingScreen>
   }
 
   void goToPlantUi(String plantName) {
-    print("I'm Tomato");
+    print("I'm $plantName");
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -164,32 +167,40 @@ class _LandingScreenState extends State<LandingScreen>
 //                      HomeScreen(signOut);
   }
 
-  Widget loadDynamicUi() {
-    for (int i = 0; i < plantImages.length; i++) {
-      PlantImage plantImage = plantImages[i];
-      log(plantImage.plantName);
-      log(plantImage.imageUrl);
-      return Column(
-        children: <Widget>[
-          FlatButton(
-            onPressed: () {
-              print("I'm Potato");
-              goToPlantUi("Potato");
-            },
-            child: CircleAvatar(
-              backgroundImage: _setImage(plantImage.imageUrl),
-              radius: 60,
-            ),
+  loadDynamicUi() {
+    if (plantImages != null) {
+      List<Widget> listOfPlantsWidget = new List();
+      for (int i = 0; i < plantImages.length; i++) {
+        PlantImage plantImage = plantImages[i];
+        log(plantImage.plantName);
+        log(plantImage.imageUrl);
+        listOfPlantsWidget.add(
+          Column(
+            children: <Widget>[
+              FlatButton(
+                onPressed: () {
+                  print("I'm Potato");
+                  goToPlantUi("Potato");
+                },
+                child: CircleAvatar(
+                  backgroundImage: _setImage(plantImage.imageUrl),
+                  radius: 60,
+                ),
+              ),
+              Text(
+                plantImage.plantName,
+                style: TextStyle(
+                    fontSize: 15.0,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1.0),
+              ),
+            ],
           ),
-          Text(
-            plantImage.plantName,
-            style: TextStyle(
-                fontSize: 15.0,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 1.0),
-          ),
-        ],
-      );
+        );
+      }
+      return listOfPlantsWidget;
+    } else {
+      return <Widget>[];
     }
   }
 
@@ -220,7 +231,9 @@ class _LandingScreenState extends State<LandingScreen>
   @override
   void onPlantImagesSuccess(List<PlantImage> plantImages) {
     // TODO: implement onPlantImagesSuccess
-    this.plantImages = plantImages;
+    setState(() {
+      this.plantImages = plantImages;
+    });
     for (int i = 0; i < plantImages.length; i++) {
       PlantImage plantImage = plantImages[i];
       log(plantImage.plantName);
