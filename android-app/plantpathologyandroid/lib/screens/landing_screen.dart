@@ -161,6 +161,34 @@ class _LandingScreenState extends State<LandingScreen>
 //                      HomeScreen(signOut);
   }
 
+  Widget loadDynamicUi() {
+    for (PlantImage plantImage in plantImages) {
+      log(plantImage.plantName);
+      log(plantImage.imageUrl);
+      return Column(
+        children: <Widget>[
+          FlatButton(
+            onPressed: () {
+              print("I'm Potato");
+              goToPlantUi("Potato");
+            },
+            child: CircleAvatar(
+              backgroundImage: AssetImage('assets/images/potato.jpg'),
+              radius: 60,
+            ),
+          ),
+          Text(
+            plantImage.plantName,
+            style: TextStyle(
+                fontSize: 15.0,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 1.0),
+          ),
+        ],
+      );
+    }
+  }
+
   void getAllPlants() async {
     setState(() {
       _plantImageResponse.getAllPlants();
