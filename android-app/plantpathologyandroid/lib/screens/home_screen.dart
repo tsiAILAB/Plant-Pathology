@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_curved_tab_bar/flutter_curved_tab_bar.dart';
 import 'package:flutterapp/models/ApiUrl.dart';
+import 'package:flutterapp/models/PlantImage.dart';
 import 'package:flutterapp/screens/config_screen.dart';
 import 'package:flutterapp/screens/take_image_screen.dart';
 import 'package:flutterapp/services/apis/all_apis.dart';
@@ -12,20 +13,25 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   final VoidCallback signOut;
-  String plantName;
+  PlantImage plantImage;
 
-  HomeScreen(this.signOut, this.plantName);
+  HomeScreen(this.signOut, this.plantImage);
 
   @override
-  _HomeScreenState createState() => _HomeScreenState(this.plantName);
+  _HomeScreenState createState() => _HomeScreenState(this.plantImage);
 }
 
 class _HomeScreenState extends State<HomeScreen> implements ApiUrlCallBack {
+  PlantImage plantImage;
+
   String plantName;
+  String plantImageUrl;
   ApiUrlResponse _apiUrlResponse;
 //  _HomeScreenState(this.plantName);
-  _HomeScreenState(plantName) {
-    this.plantName = plantName;
+  _HomeScreenState(plantImage) {
+    this.plantImage = plantImage;
+    this.plantName = this.plantImage.plantName;
+    this.plantImageUrl = this.plantImage.imageUrl;
     _apiUrlResponse = new ApiUrlResponse(this);
   }
   int _currentIndex = 0;
@@ -33,9 +39,9 @@ class _HomeScreenState extends State<HomeScreen> implements ApiUrlCallBack {
   var userRole;
   int numberOfTabs;
   var appbarTitle = new Text("");
-  var appbarTitleList = ["Potato", "Tomato", "Maze", "Config"];
+  var appbarTitleList = ["Potato", "Tomato", "Maize", "Config"];
 
-  final scaffoldKey = new GlobalKey<ScaffoldState>();
+  final _scaffoldKey = new GlobalKey<ScaffoldState>();
   signOut() {
     setState(() {
       widget.signOut();
@@ -107,12 +113,12 @@ class _HomeScreenState extends State<HomeScreen> implements ApiUrlCallBack {
 
     return SafeArea(
       child: Scaffold(
-          key: scaffoldKey,
+          key: _scaffoldKey,
           body: SingleChildScrollView(
             child: Column(
               children: <Widget>[
                 AppBar(
-                  title: appbarTitle,
+                  title: Text("Plant Diagnosis System"),
                   backgroundColor: Colors.white,
                   actions: <Widget>[
                     IconButton(
@@ -141,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> implements ApiUrlCallBack {
                         _currentIndex = _index;
 
                         var plantNameText = this.plantName;
-                        appbarTitle = Text("Plant Disease $plantNameText");
+                        appbarTitle = Text("Diagnosis");
                         log('plantName: $plantNameText');
                         log('appbarTitle: $plantNameText');
                       });
@@ -155,21 +161,23 @@ class _HomeScreenState extends State<HomeScreen> implements ApiUrlCallBack {
 
   Widget _screen0() {
     var plantNameText = this.plantName;
-    appbarTitle = Text("Plant Disease $plantNameText");
+    setState(() {
+      appbarTitle = Text("Diagnosis");
+    });
     return Container(
       height: MediaQuery.of(context).size.height - 73,
       color: Colors.white,
-      child: TakeImage(plantNameText),
+      child: TakeImage(this.plantImage),
     );
   }
 
   Widget _screen1() {
     String plantNameText = this.plantName;
-    appbarTitle = Text("Plant Disease $plantNameText");
+    appbarTitle = Text("Diagnosis");
     return Container(
       height: MediaQuery.of(context).size.height - 73,
       color: Colors.white,
-      child: TakeImage(plantNameText),
+      child: TakeImage(this.plantImage),
     );
   }
 
@@ -179,12 +187,15 @@ class _HomeScreenState extends State<HomeScreen> implements ApiUrlCallBack {
     return Container(
       height: MediaQuery.of(context).size.height - 73,
       color: Colors.white,
-      child: TakeImage(appbarTitleList[2]),
+      child: TakeImage(this.plantImage),
     );
   }
 
   Widget _screen3() {
-    appbarTitle = Text("Plant Disease Configurations");
+    setState(() {
+//      appbarTitle = Text("Configuration");
+    });
+
 //    String plantName = "Config";
 //    appbarTitle = "Plant Disease $plantName";
     return Container(

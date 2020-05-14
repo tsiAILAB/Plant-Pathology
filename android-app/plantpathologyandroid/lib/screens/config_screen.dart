@@ -29,7 +29,7 @@ class _ConfigScreenState extends State<ConfigScreen>
   final _scaffoldKey = new GlobalKey<ScaffoldState>();
   final apiConfigFormKey = new GlobalKey<FormState>();
   final cropFormKey = new GlobalKey<FormState>();
-  String _apiName, _apiUrl, _plantName;
+  String _apiUrl, _plantName;
 
   @override
   Widget build(BuildContext context) {
@@ -60,18 +60,19 @@ class _ConfigScreenState extends State<ConfigScreen>
                         key: apiConfigFormKey,
                         child: Column(
                           children: <Widget>[
-                            TextFormField(
-                              onSaved: (val) => _apiName = val,
-                              validator: (String value) {
-                                if (value.trim().isEmpty) {
-                                  return 'API Name is required';
-                                }
-                              },
-                              decoration: InputDecoration(
-                                  prefixIcon: Icon(Icons.art_track),
-                                  border: OutlineInputBorder(),
-                                  labelText: "API Name"),
-                            ),
+                            Text("Api Name: ${AllApis.API_NAME}"),
+//                            TextFormField(
+//                              onSaved: (val) => _apiName = val,
+//                              validator: (String value) {
+//                                if (value.trim().isEmpty) {
+//                                  return 'API Name is required';
+//                                }
+//                              },
+//                              decoration: InputDecoration(
+//                                  prefixIcon: Icon(Icons.art_track),
+//                                  border: OutlineInputBorder(),
+//                                  labelText: "API Name"),
+//                            ),
                             SizedBox(
                               height: 15.0,
                             ),
@@ -84,7 +85,7 @@ class _ConfigScreenState extends State<ConfigScreen>
                                 return "";
                               },
                               decoration: InputDecoration(
-                                  prefixIcon: Icon(Icons.art_track),
+                                  prefixIcon: Icon(Icons.border_color),
                                   border: OutlineInputBorder(),
                                   labelText: "API URL"),
                             ),
@@ -94,7 +95,7 @@ class _ConfigScreenState extends State<ConfigScreen>
                             OutlineButton(
                               onPressed: _saveApi,
                               child: Text(
-                                ' Submit ',
+                                ' Update API ',
                                 style: TextStyle(
                                     color: Colors.teal[800], fontSize: 16.0),
                               ),
@@ -155,7 +156,7 @@ class _ConfigScreenState extends State<ConfigScreen>
                                 }
                               },
                               decoration: InputDecoration(
-                                  prefixIcon: Icon(Icons.extension),
+                                  prefixIcon: Icon(Icons.border_color),
                                   border: OutlineInputBorder(),
                                   labelText: "Enter crop name"),
                             ),
@@ -163,7 +164,7 @@ class _ConfigScreenState extends State<ConfigScreen>
                             OutlineButton(
                               onPressed: _saveCrop,
                               child: Text(
-                                'Submit',
+                                'Add New Crop',
                                 style: TextStyle(
                                     color: Colors.teal[800], fontSize: 16.0),
                               ),
@@ -205,9 +206,9 @@ class _ConfigScreenState extends State<ConfigScreen>
         return Image.file(imageFile);
       } else {
         return Text(
-          "Please pic an image",
+          "No crop icon selected!",
           style: TextStyle(
-              fontWeight: FontWeight.bold, fontSize: 25, color: Colors.red),
+              fontWeight: FontWeight.bold, fontSize: 20, color: Colors.red),
         );
       }
     } catch (e) {
@@ -260,7 +261,11 @@ class _ConfigScreenState extends State<ConfigScreen>
     setState(() {
       form.save();
       AllApis.uploadImageUrl = _apiUrl;
-      _apiUrlResponse.saveNewApiUrl(_apiName, _apiUrl);
+      if (_apiUrl != null && _apiUrl != "") {
+        _apiUrlResponse.saveNewApiUrl(AllApis.API_NAME, _apiUrl);
+      } else {
+        Utils.showLongToast("Api URL cannot be empty!");
+      }
     });
 //    _apiUrlResponse.getApi("a");
   }
@@ -275,7 +280,11 @@ class _ConfigScreenState extends State<ConfigScreen>
     setState(() {
       form.save();
     });
-    await _plantImageResponse.saveNewPlantImage(_plantName, "$imageUrl");
+    if (_plantName != null && _plantName != "") {
+      await _plantImageResponse.saveNewPlantImage(_plantName, "$imageUrl");
+    } else {
+      Utils.showLongToast("Crop name cannot be empty!");
+    }
     await _plantImageResponse.getAllPlants();
   }
 }

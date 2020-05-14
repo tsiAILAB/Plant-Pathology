@@ -18,12 +18,12 @@ class UploadImage extends StatefulWidget {
 
 class _UploadImageState extends State<UploadImage> {
   String uploadImageAPI = AllApis.uploadImageUrl;
-  final scaffoldKey = new GlobalKey<ScaffoldState>();
+  final _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      key: scaffoldKey,
+      key: _scaffoldKey,
     );
   }
 
@@ -47,6 +47,16 @@ class _UploadImageState extends State<UploadImage> {
           decodedImage.width.toString() + "*" + decodedImage.height.toString();
       String platformName = Platform.operatingSystem;
 
+//      _scaffoldKey.currentState.showSnackBar(new SnackBar(
+//        duration: new Duration(seconds: 4),
+//        content: new Row(
+//          children: <Widget>[
+//            new CircularProgressIndicator(),
+//            new Text("  Uploading...")
+//          ],
+//        ),
+//      ));
+
       http.post(uploadImageAPI, body: {
         "image": base64Image,
         "image_name": fileName,
@@ -60,9 +70,11 @@ class _UploadImageState extends State<UploadImage> {
         print(res.statusCode);
 //      Utils utils = new Utils();
         utils.saveImage(imageFileForUpload, fileName, plantName);
+
         Utils.showLongToast("Image upload sucessful!");
       }).catchError((err) {
         print(err);
+
         Utils.showLongToast("Image upload failed!");
       });
     } else {

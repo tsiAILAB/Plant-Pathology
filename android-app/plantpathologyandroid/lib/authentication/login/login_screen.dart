@@ -19,7 +19,7 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
   BuildContext _ctx;
   bool _isLoading = false;
   final formKey = new GlobalKey<FormState>();
-  final scaffoldKey = new GlobalKey<ScaffoldState>();
+  final _scaffoldKey = new GlobalKey<ScaffoldState>();
   bool rememberMeValue = false;
 
   String _username, _password;
@@ -37,13 +37,34 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
     setState(() {
       _isLoading = true;
       form.save();
-      _response.doLogin(_username, _password);
+      if (_username != null &&
+          _username != "" &&
+          _password != null &&
+          _password != "") {
+        _scaffoldKey.currentState.showSnackBar(new SnackBar(
+          duration: new Duration(seconds: 4),
+          content: new Row(
+            children: <Widget>[
+              new CircularProgressIndicator(),
+              new Text("  Signing-In...")
+            ],
+          ),
+        ));
+        _response
+            .doLogin(_username, _password)
+            .whenComplete(() => Navigator.pop(context));
+
+        //_response.doLogin(_username, _password);
+      } else {
+        //Navigator.of(context).pushNamed("/Home"));
+        Utils.showLongToast("Username and password cannot be empty!");
+      }
     });
 //    }
   }
 
   void _showSnackBar(String text) {
-    scaffoldKey.currentState.showSnackBar(new SnackBar(
+    _scaffoldKey.currentState.showSnackBar(new SnackBar(
       content: new Text(text),
     ));
   }
@@ -178,7 +199,7 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
       appBar: new AppBar(
         title: new Text("Login Page"),
       ),
-      key: scaffoldKey,
+      key: _scaffoldKey,
       body: new Container(
         child: new Center(
           child: loginForm,
@@ -191,7 +212,7 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
     _ctx = context;
     return Scrollbar(
         child: Scaffold(
-      key: scaffoldKey,
+      key: _scaffoldKey,
       resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -201,7 +222,7 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
       ),
       body: Card(
         child: Padding(
-          padding: EdgeInsets.all(30.0),
+          padding: EdgeInsets.all(20.0),
           child: Form(
             key: formKey,
             child: Column(
@@ -279,7 +300,7 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
                     style: TextStyle(color: Colors.blue, fontSize: 15.0),
                   ),
                 ),
-                SizedBox(height: 15.0),
+                SizedBox(height: 10.0),
                 FlatButton(
                   onPressed: () {
                     Navigator.push(context,
@@ -287,6 +308,7 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
                   },
                   child: Text(
                     'New to Plan Diagnosis System?Sign Up',
+                    textAlign: TextAlign.center,
                     style: TextStyle(color: Colors.blue, fontSize: 15.0),
                   ),
                 ),

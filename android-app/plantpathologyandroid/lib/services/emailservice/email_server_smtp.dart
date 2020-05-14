@@ -15,7 +15,7 @@ class EmailServerSMTP {
 
     // Create our message.
     final message = Message()
-      ..from = Address(username, 'Plant Diagnostis')
+      ..from = Address(username, 'Plant Diagnosis System')
       ..recipients.add(recipientsEmail)
 //      ..ccRecipients.addAll(['destCc1@example.com', 'destCc2@example.com'])
 //      ..bccRecipients.add(Address('bccAddress@example.com'))

@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterapp/models/PlantImage.dart';
 import 'package:flutterapp/services/request/upload_image.dart';
 import 'package:flutterapp/utils/utils.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -10,23 +11,28 @@ import 'package:image/image.dart' as ImageLibrary;
 import 'package:image_picker/image_picker.dart';
 
 class TakeImage extends StatefulWidget {
-  final String plantName;
+  final PlantImage plantImage;
 
-  TakeImage(this.plantName);
+  TakeImage(this.plantImage);
 
   @override
-  _TakeImageState createState() => _TakeImageState(plantName);
+  _TakeImageState createState() => _TakeImageState(this.plantImage);
 }
 
 class _TakeImageState extends State<TakeImage> {
   File imageFile;
+  String plantImageUrl;
+  final PlantImage plantImage;
   String plantName;
   String imageType = '';
   int imageHeight = 0, imageWidth = 0, imageSize = 0;
 
-  final scaffoldKey = new GlobalKey<ScaffoldState>();
+  final _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-  _TakeImageState(this.plantName);
+  _TakeImageState(this.plantImage) {
+    this.plantName = this.plantImage.plantName;
+    this.plantImageUrl = this.plantImage.imageUrl;
+  }
 
   String selectedPlantName;
   String selectedPlantImageLink = 'assets/images/maze.jpg';
@@ -46,9 +52,11 @@ class _TakeImageState extends State<TakeImage> {
       case "Maize":
         selectedPlantImageLink = 'assets/images/maze.jpg';
         break;
+      default:
+        selectedPlantImageLink = null;
     }
     return Scaffold(
-      key: scaffoldKey,
+      key: _scaffoldKey,
       backgroundColor: Colors.white,
 //      appBar: AppBar(
 //        title: Text("Plant disease"),
@@ -62,10 +70,12 @@ class _TakeImageState extends State<TakeImage> {
                 children: <Widget>[
                   FlatButton(
                     onPressed: () {
-                      print("I'm Maze");
+                      print("I'm Maize");
                     },
                     child: CircleAvatar(
-                      backgroundImage: AssetImage('$selectedPlantImageLink'),
+                      backgroundImage: (selectedPlantImageLink != null)
+                          ? AssetImage('$selectedPlantImageLink')
+                          : FileImage(File("$plantImageUrl")),
                       radius: 40,
                     ),
                   ),
@@ -324,7 +334,7 @@ class _TakeImageState extends State<TakeImage> {
   }
 
   void _showSnackBar(String text) {
-    scaffoldKey.currentState.showSnackBar(new SnackBar(
+    _scaffoldKey.currentState.showSnackBar(new SnackBar(
       content: new Text(text),
     ));
   }
@@ -353,70 +363,94 @@ class _TakeImageState extends State<TakeImage> {
       // TODO
     }
   }
-}
 
-Future<void> _showDecisionDialog(
-    BuildContext context, File imageFile, String plantName) {
-  UploadImage uploadImage = new UploadImage();
+//  getImageSizeByte(fileLength){
+//
+//      String sizes = { "B", "KB", "MB", "GB" };
+//      int order = 0;
+//      while (fileLength >= 1024 && order + 1 < sizes.Length) {
+//        order++;
+//        fileLength = fileLength/1024;
+//      }
+//      string result = String.Format("{0:0.##} {1}", fileLength, sizes[order]);
+//      return result;
+//
+//  }
 
-  return showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-          title: Text('Do you want diagnosis of this Image?'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    GestureDetector(
-                      child: OutlineButton(
-                        onPressed: () {
-                          if (imageFile != null) {
-                            uploadImage.uploadImage(imageFile, plantName);
-                          } else {
-                            Utils.showLongToast("Image upload failed!");
-                          }
-                          Navigator.pop(context);
-                        },
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0)),
-                        child: Text(
-                          'Yes',
-                          style: TextStyle(color: Colors.teal[800]),
+  _showDecisionDialog(BuildContext context, File imageFile, String plantName) {
+    UploadImage uploadImage = new UploadImage();
+
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0)),
+            title: Text('Do you want diagnosis of this Image?'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      GestureDetector(
+                        child: OutlineButton(
+                          onPressed: () {
+                            if (imageFile != null) {
+                              uploadImage.uploadImage(imageFile, plantName);
+                            } else {
+                              Utils.showLongToast("Image upload failed!");
+                            }
+                            Navigator.pop(context);
+                          },
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0)),
+                          child: Text(
+                            'Yes',
+                            style: TextStyle(color: Colors.teal[800]),
+                          ),
                         ),
+                        onTap: () {},
                       ),
-                      onTap: () {},
-                    ),
-                    GestureDetector(
-                      child: OutlineButton(
-                        onPressed: () {
-                          Utils utils = new Utils();
-                          var fileName = imageFile.path.split("/").last;
-                          utils.saveImage(imageFile, fileName, imageFile.path);
-                          Utils.showLongToast("Image saved in local storage");
-                          Navigator.pop(context);
-                        },
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0)),
-                        child: Text(
-                          'No',
-                          style: TextStyle(color: Colors.teal[800]),
+                      GestureDetector(
+                        child: OutlineButton(
+                          onPressed: () {
+                            _scaffoldKey.currentState.showSnackBar(new SnackBar(
+                              duration: new Duration(seconds: 4),
+                              content: new Row(
+                                children: <Widget>[
+                                  new CircularProgressIndicator(),
+                                  new Text("  Uploading...")
+                                ],
+                              ),
+                            ));
+
+                            Utils utils = new Utils();
+                            var fileName = imageFile.path.split("/").last;
+                            utils
+                                .saveImage(imageFile, fileName, imageFile.path)
+                                .whenComplete(() => Navigator.pop(context));
+                            Utils.showLongToast("Image saved in local storage");
+                            Navigator.pop(context);
+                          },
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0)),
+                          child: Text(
+                            'No',
+                            style: TextStyle(color: Colors.teal[800]),
+                          ),
                         ),
+                        onTap: () {},
                       ),
-                      onTap: () {},
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        );
-      });
+          );
+        });
+  }
 }
 
 Future<void> _showImageUploadSuccessfullyDialog(BuildContext context) {

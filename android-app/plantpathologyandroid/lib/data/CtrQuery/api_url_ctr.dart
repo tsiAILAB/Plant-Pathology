@@ -34,8 +34,18 @@ class ApiUrlCtr {
 
   Future<ApiUrl> saveNewApiUrl(String name, String url) async {
     var dbClient = await con.db;
-    var result = await dbClient
-        .rawInsert("INSERT INTO api_url (name, url) VALUES ('$name', '$url')");
+    try {
+      var res =
+          await dbClient.rawQuery("SELECT * FROM api_url WHERE name = '$name'");
+
+      if (res.length > 0) {
+        var res2 = await dbClient
+            .rawUpdate("UPDATE api_url SET url = '$url' WHERE name = '$name'");
+      } else {
+        var result = await dbClient.rawInsert(
+            "INSERT INTO api_url (name, url) VALUES ('$name', '$url')");
+      }
+    } catch (e) {}
 
     var res =
         await dbClient.rawQuery("SELECT * FROM api_url WHERE name = '$name'");

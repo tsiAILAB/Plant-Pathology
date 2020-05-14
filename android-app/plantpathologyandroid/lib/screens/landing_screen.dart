@@ -31,6 +31,12 @@ class _LandingScreenState extends State<LandingScreen>
   String plantName;
   List<PlantImage> plantImages;
 
+  PlantImage potatoImageObj =
+      new PlantImage("Potato", "assets/images/potato.jpg");
+  PlantImage tomatoImageObj =
+      new PlantImage("Tomato", "assets/images/tomato.jpg");
+  PlantImage maizeImageObj = new PlantImage("Maize", "assets/images/maze.jpg");
+
   @override
   void initState() {
     super.initState();
@@ -51,39 +57,39 @@ class _LandingScreenState extends State<LandingScreen>
         child: ListView(
 //          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            AppBar(
+              title: Text('Plant Selection'),
+              backgroundColor: Colors.white,
+              actions: <Widget>[
+                IconButton(
+                  onPressed: () {
+                    signOut();
+                  },
+                  icon: Icon(Icons.power_settings_new),
+                )
+              ],
+            ),
             Container(
               child: Column(
                 children: <Widget>[
-                  Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            'Select a Plant',
-                            style: TextStyle(
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 1.5),
-                          ),
-                          IconButton(
-                            onPressed: () {
-                              signOut();
-                            },
-                            icon: Icon(Icons.power_settings_new),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
+//                  Card(
+//                    child: Padding(
+//                      padding: const EdgeInsets.all(20.0),
+//                      child: Row(
+////                        mainAxisAlignment: MainAxisAlignment.center,
+//                        children: <Widget>[
+//
+//                        ],
+//                      ),
+//                    ),
+//                  ),
                   SizedBox(height: 20),
                   FlatButton(
                     onPressed: () {
-                      goToPlantUi("Tomato");
+                      goToPlantUi(tomatoImageObj);
                     },
                     child: CircleAvatar(
-                      backgroundImage: AssetImage('assets/images/tomato.jpg'),
+                      backgroundImage: AssetImage('${tomatoImageObj.imageUrl}'),
                       radius: 60,
                     ),
                   ),
@@ -104,10 +110,10 @@ class _LandingScreenState extends State<LandingScreen>
                   FlatButton(
                     onPressed: () {
                       print("I'm Potato");
-                      goToPlantUi("Potato");
+                      goToPlantUi(potatoImageObj);
                     },
                     child: CircleAvatar(
-                      backgroundImage: AssetImage('assets/images/potato.jpg'),
+                      backgroundImage: AssetImage('${potatoImageObj.imageUrl}'),
                       radius: 60,
                     ),
                   ),
@@ -128,10 +134,10 @@ class _LandingScreenState extends State<LandingScreen>
                   FlatButton(
                     onPressed: () {
                       print("I'm Maize");
-                      goToPlantUi("Maize");
+                      goToPlantUi(maizeImageObj);
                     },
                     child: CircleAvatar(
-                      backgroundImage: AssetImage('assets/images/maze.jpg'),
+                      backgroundImage: AssetImage('${maizeImageObj.imageUrl}'),
                       radius: 60,
                     ),
                   ),
@@ -155,12 +161,12 @@ class _LandingScreenState extends State<LandingScreen>
     );
   }
 
-  void goToPlantUi(String plantName) {
+  void goToPlantUi(PlantImage plantImage) {
     print("I'm $plantName");
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => HomeScreen(this.signOut, plantName)),
+          builder: (context) => HomeScreen(this.signOut, plantImage)),
     );
 //                      HomeScreen(signOut);
   }
@@ -178,7 +184,7 @@ class _LandingScreenState extends State<LandingScreen>
               FlatButton(
                 onPressed: () {
                   print("I'm Potato");
-                  goToPlantUi("Potato");
+                  goToPlantUi(plantImage);
                 },
                 child: CircleAvatar(
                   backgroundImage: _setImage(plantImage.imageUrl),
