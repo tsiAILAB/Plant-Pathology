@@ -42,7 +42,8 @@ class _LandingScreenState extends State<LandingScreen>
 
   @override
   Widget build(BuildContext context) {
-//    for (PlantImage plantImage in plantImages) {
+//    for (int i = 0; i < plantImages.length; i++) {
+//      PlantImage plantImage = plantImages[i];
 //      log(plantImage.plantName);
 //      log(plantImage.imageUrl);
 //    }
@@ -220,7 +221,8 @@ class _LandingScreenState extends State<LandingScreen>
   void onPlantImagesSuccess(List<PlantImage> plantImages) {
     // TODO: implement onPlantImagesSuccess
     this.plantImages = plantImages;
-    for (PlantImage plantImage in plantImages) {
+    for (int i = 0; i < plantImages.length; i++) {
+      PlantImage plantImage = plantImages[i];
       log(plantImage.plantName);
       log(plantImage.imageUrl);
     }
