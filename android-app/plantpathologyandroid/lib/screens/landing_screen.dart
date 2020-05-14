@@ -4,7 +4,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutterapp/models/PlantImage.dart';
 import 'package:flutterapp/services/response/plant_image_response.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:flutterapp/utils/utils.dart';
+import 'package:image/image.dart' as ImageLibrary;
 
 import 'home_screen.dart';
 
@@ -23,8 +24,6 @@ class _LandingScreenState extends State<LandingScreen>
 
   PlantImageResponse _plantImageResponse;
 
-  Directory extDir;
-
   _LandingScreenState(this.signOut) {
     _plantImageResponse = new PlantImageResponse(this);
   }
@@ -32,15 +31,11 @@ class _LandingScreenState extends State<LandingScreen>
   String plantName;
   List<PlantImage> plantImages;
 
-//  signOut() {
-//    setState(() {
-//      widget.signOut();
-//    });
-//  }
   @override
   void initState() {
     super.initState();
     getAllPlants();
+    getPermission();
   }
 
   @override
@@ -207,22 +202,20 @@ class _LandingScreenState extends State<LandingScreen>
     }
   }
 
-  getPathDirectory() async {
-    extDir = await getExternalStorageDirectory();
-    final directory = await getApplicationDocumentsDirectory();
-    return directory.path;
-  }
-
   _setImage(String imageUrl) {
-    var directoryPath = getPathDirectory();
+//    var directoryPath = getPathDirectory();
     try {
 //      Directory tempDir = await getTemporaryDirectory();
       try {
-        FileImage(File("$directoryPath/$imageUrl"));
+        log("$imageUrl");
+        ImageLibrary.Image image =
+            ImageLibrary.decodeImage(new File('$imageUrl').readAsBytesSync());
+        log('Heidght: ${image.height}');
+        log('weidth: ${image.width}');
       } on Exception catch (e) {
         // TODO
       }
-      return FileImage(File("$extDir/$imageUrl"));
+      return FileImage(File("$imageUrl"));
     } catch (e) {
       return AssetImage('assets/images/potato.jpg');
     }
@@ -232,6 +225,10 @@ class _LandingScreenState extends State<LandingScreen>
     setState(() {
       _plantImageResponse.getAllPlants();
     });
+  }
+
+  void getPermission() async {
+    await Utils.requestStoragePermission();
   }
 
   @override

@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -5,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutterapp/services/request/upload_image.dart';
 import 'package:flutterapp/utils/utils.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image/image.dart' as ImageLibrary;
 import 'package:image_picker/image_picker.dart';
 
 class TakeImage extends StatefulWidget {
@@ -19,7 +21,8 @@ class TakeImage extends StatefulWidget {
 class _TakeImageState extends State<TakeImage> {
   File imageFile;
   String plantName;
-  String imageType;
+  String imageType = '';
+  int imageHeight = 0, imageWidth = 0, imageSize = 0;
 
   final scaffoldKey = new GlobalKey<ScaffoldState>();
 
@@ -85,9 +88,9 @@ class _TakeImageState extends State<TakeImage> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         Text("Type - $imageType"),
-                        Text("Size - 100.0"),
-                        Text('Height : 200.0'),
-                        Text('Width : 400.0'),
+                        Text("Size - $imageSize"),
+                        Text('Height : $imageHeight'),
+                        Text('Width : $imageWidth'),
                       ],
                     ),
                   ),
@@ -264,13 +267,7 @@ class _TakeImageState extends State<TakeImage> {
   Widget decideImageView() {
     try {
       if (imageFile != null) {
-        String fileName = imageFile.path.split("/").last;
-        String imageType = fileName.split(".").last;
-
-        setState(() {
-          this.imageType = imageType;
-        });
-
+        getImageDetails(imageFile);
         Utils.showLongToast("Image loaded");
 //      _showImageUploadSuccessfullyDialog(context);
         return Image.file(imageFile);
@@ -299,6 +296,31 @@ class _TakeImageState extends State<TakeImage> {
     scaffoldKey.currentState.showSnackBar(new SnackBar(
       content: new Text(text),
     ));
+  }
+
+  void getImageDetails(imageFile) {
+    try {
+      String fileName = imageFile.path.split("/").last;
+      String imageType = fileName.split(".").last;
+      var imageHeight, imageWidth, imageSize;
+      ImageLibrary.Image image =
+          ImageLibrary.decodeImage(imageFile.readAsBytesSync());
+      imageHeight = image.height;
+      imageWidth = image.width;
+      imageSize = image.length;
+
+      log('Height: $imageHeight');
+      log('weidth: $imageWidth');
+
+      setState(() {
+        this.imageType = imageType;
+        this.imageHeight = imageHeight;
+        this.imageWidth = imageWidth;
+        this.imageSize = imageSize;
+      });
+    } on Exception catch (e) {
+      // TODO
+    }
   }
 }
 

@@ -7,6 +7,7 @@ import 'package:flutterapp/services/emailservice/email_server_smtp.dart';
 import 'package:flutterapp/services/request/sign_up_request.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:random_string/random_string.dart';
 
 class Utils {
@@ -197,7 +198,14 @@ class Utils {
     }
   }
 
-  requestStoragePermission() {
+  static requestStoragePermission() async {
+    Map<Permission, PermissionStatus> statuses = await [
+      Permission.camera,
+      Permission.storage,
+      Permission.photos,
+    ].request();
+    print(statuses[Permission.location]);
+
 //    if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)==
 //        PackageManager.PERMISSION_GRANTED) {
 //      //do the things} else {
