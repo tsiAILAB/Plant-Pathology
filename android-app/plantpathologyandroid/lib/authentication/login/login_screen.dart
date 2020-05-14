@@ -271,7 +271,7 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
                   },
                   child: Text(
                     'Forgot Password?',
-                    style: TextStyle(color: Colors.blue, fontSize: 16.0),
+                    style: TextStyle(color: Colors.blue, fontSize: 15.0),
                   ),
                 ),
                 SizedBox(height: 15.0),
@@ -281,8 +281,8 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
                         MaterialPageRoute(builder: (context) => SignUpPage()));
                   },
                   child: Text(
-                    'New to Plan Diagnosis System? Sign Up',
-                    style: TextStyle(color: Colors.blue, fontSize: 16.0),
+                    'New to Plan Diagnosis System?Sign Up',
+                    style: TextStyle(color: Colors.blue, fontSize: 15.0),
                   ),
                 ),
               ],
