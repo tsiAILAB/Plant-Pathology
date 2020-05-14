@@ -39,7 +39,7 @@ class _UploadImageState extends State<UploadImage> {
         imageType.toUpperCase() == 'JPG' ||
         imageType.toUpperCase() == 'JPEG' ||
         imageType.toUpperCase() == 'JPG') {
-      utils.saveImage(imageFileForUpload, fileName, plantName);
+//      utils.saveImage(imageFileForUpload, fileName, plantName);
       var decodedImage =
           await decodeImageFromList(imageFileForUpload.readAsBytesSync());
 
@@ -64,6 +64,8 @@ class _UploadImageState extends State<UploadImage> {
       }).catchError((err) {
         print(err);
       });
+    } else {
+      Utils.showLongToast("$imageType type image is not supported!");
     }
   }
 }

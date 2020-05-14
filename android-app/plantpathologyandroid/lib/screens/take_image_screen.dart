@@ -19,6 +19,7 @@ class TakeImage extends StatefulWidget {
 class _TakeImageState extends State<TakeImage> {
   File imageFile;
   String plantName;
+  String imageType;
 
   final scaffoldKey = new GlobalKey<ScaffoldState>();
 
@@ -83,6 +84,7 @@ class _TakeImageState extends State<TakeImage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
+                        Text("Type - $imageType"),
                         Text("Size - 100.0"),
                         Text('Height : 200.0'),
                         Text('Width : 400.0'),
@@ -262,7 +264,13 @@ class _TakeImageState extends State<TakeImage> {
   Widget decideImageView() {
     try {
       if (imageFile != null) {
-//      Utils.showSnackBar("Image loaded", scaffoldKey);
+        String fileName = imageFile.path.split("/").last;
+        String imageType = fileName.split(".").last;
+
+        setState(() {
+          this.imageType = imageType;
+        });
+
         Utils.showLongToast("Image loaded");
 //      _showImageUploadSuccessfullyDialog(context);
         return Image.file(imageFile);

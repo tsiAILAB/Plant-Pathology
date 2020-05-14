@@ -64,11 +64,22 @@ class PlantImageCtr {
 
   Future<List<PlantImage>> getAllPlantImage() async {
     var dbClient = await con.db;
-    var res = await dbClient.query("SELECT * FROM plant_image");
+    var res = await dbClient.rawQuery("SELECT * FROM plant_image");
 
     List<PlantImage> list =
         res.isNotEmpty ? res.map((c) => PlantImage.fromMap(c)).toList() : null;
 
     return list;
   }
+
+//  var dbClient = await con.db;
+//  var res = await dbClient.rawQuery("SELECT * FROM plant_image");
+//
+//  List<PlantImage> list;
+//  if (res.length > 0) {
+//  list = res.map((c) => PlantImage.fromMap(c)).toList();
+//  } else
+//  list = null;
+//  return list;
+
 }

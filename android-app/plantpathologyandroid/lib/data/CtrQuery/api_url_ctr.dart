@@ -64,7 +64,7 @@ class ApiUrlCtr {
 
   Future<List<ApiUrl>> getAllApiUrl() async {
     var dbClient = await con.db;
-    var res = await dbClient.query("SELECT * FROM api_url");
+    var res = await dbClient.rawQuery("SELECT * FROM api_url");
 
     List<ApiUrl> list =
         res.isNotEmpty ? res.map((c) => ApiUrl.fromMap(c)).toList() : null;

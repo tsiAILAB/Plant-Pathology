@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp/models/ApiUrl.dart';
 import 'package:flutterapp/models/PlantImage.dart';
+import 'package:flutterapp/services/apis/all_apis.dart';
 import 'package:flutterapp/services/response/api_url_response.dart';
 import 'package:flutterapp/services/response/plant_image_response.dart';
 import 'package:flutterapp/utils/utils.dart';
@@ -250,6 +251,7 @@ class _ConfigScreenState extends State<ConfigScreen>
     Utils utils = new Utils();
     setState(() {
       form.save();
+      AllApis.uploadImageUrl = _apiUrl;
       _apiUrlResponse.saveNewApiUrl(_apiName, _apiUrl);
     });
 //    _apiUrlResponse.getApi("a");
@@ -264,10 +266,9 @@ class _ConfigScreenState extends State<ConfigScreen>
 
     setState(() {
       form.save();
-      _plantImageResponse.saveNewPlantImage(_plantName, "$imageUrl");
     });
-
-    _plantImageResponse.getAllPlant();
+    await _plantImageResponse.saveNewPlantImage(_plantName, "$imageUrl");
+    await _plantImageResponse.getAllPlant();
   }
 }
 
