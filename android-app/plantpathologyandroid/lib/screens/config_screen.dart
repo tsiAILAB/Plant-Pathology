@@ -200,14 +200,22 @@ class _ConfigScreenState extends State<ConfigScreen>
   }
 
   Widget decideImageView() {
-    if (imageFile != null) {
-      return Image.file(imageFile);
-    } else
+    try {
+      if (imageFile != null) {
+        return Image.file(imageFile);
+      } else {
+        return Text(
+          "Please pic an image",
+          style: TextStyle(
+              fontWeight: FontWeight.bold, fontSize: 25, color: Colors.red),
+        );
+      }
+    } catch (e) {
       return Text(
-        "Please pic an image",
-        style: TextStyle(
-            fontWeight: FontWeight.bold, fontSize: 25, color: Colors.red),
+        "Pick an image",
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
       );
+    }
   }
 
   @override
