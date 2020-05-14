@@ -31,6 +31,8 @@ class _TakeImageState extends State<TakeImage> {
   String selectedPlantName;
   String selectedPlantImageLink = 'assets/images/maze.jpg';
 
+  UploadImage uploadImage = new UploadImage();
+
   @override
   Widget build(BuildContext context) {
     selectedPlantName = this.plantName;
@@ -82,6 +84,7 @@ class _TakeImageState extends State<TakeImage> {
               child: Column(
                 children: <Widget>[
                   decideImageView(),
+                  uploadIcon(),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
@@ -285,6 +288,23 @@ class _TakeImageState extends State<TakeImage> {
     }
   }
 
+  uploadIcon() {
+    if (imageFile != null) {
+      return IconButton(
+        icon: Icon(Icons.file_upload),
+        tooltip: 'Upload Image to the Server',
+        onPressed: () {
+          _showDecisionDialog(context, imageFile, plantName);
+        },
+      );
+    } else {
+      return IconButton(
+        icon: Icon(Icons.file_upload),
+        onPressed: () {},
+      );
+    }
+  }
+
   void showLongToast(String text) {
     Fluttertoast.showToast(
       msg: text,
@@ -352,7 +372,7 @@ Future<void> _showDecisionDialog(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20.0)),
                         child: Text(
-                          'Ok',
+                          'Yes',
                           style: TextStyle(color: Colors.teal[800]),
                         ),
                       ),
@@ -360,11 +380,15 @@ Future<void> _showDecisionDialog(
                     ),
                     GestureDetector(
                       child: OutlineButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Utils utils = new Utils();
+                          var fileName = imageFile.path.split("/").last;
+                          utils.saveImage(imageFile, fileName, imageFile.path);
+                        },
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20.0)),
                         child: Text(
-                          'Cancel',
+                          'No',
                           style: TextStyle(color: Colors.teal[800]),
                         ),
                       ),

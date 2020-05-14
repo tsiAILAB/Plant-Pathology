@@ -63,6 +63,7 @@ class _UploadImageState extends State<UploadImage> {
         Utils.showLongToast("Image upload sucessful!");
       }).catchError((err) {
         print(err);
+        Utils.showLongToast("Image upload failed!");
       });
     } else {
       Utils.showLongToast("$imageType type image is not supported!");
