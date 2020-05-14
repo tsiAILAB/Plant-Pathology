@@ -173,7 +173,7 @@ class _LandingScreenState extends State<LandingScreen>
               goToPlantUi("Potato");
             },
             child: CircleAvatar(
-              backgroundImage: AssetImage('assets/images/potato.jpg'),
+              backgroundImage: _setImage(plantImage.imageUrl),
               radius: 60,
             ),
           ),
@@ -188,6 +188,8 @@ class _LandingScreenState extends State<LandingScreen>
       );
     }
   }
+
+  _setImage(String imageUrl) {}
 
   void getAllPlants() async {
     setState(() {
