@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutterapp/models/PlantImage.dart';
@@ -145,6 +146,7 @@ class _LandingScreenState extends State<LandingScreen>
                 ],
               ),
             ),
+            Container(child: loadDynamicUi()),
           ],
         ),
       ),
@@ -162,7 +164,8 @@ class _LandingScreenState extends State<LandingScreen>
   }
 
   Widget loadDynamicUi() {
-    for (PlantImage plantImage in plantImages) {
+    for (int i = 0; i < plantImages.length; i++) {
+      PlantImage plantImage = plantImages[i];
       log(plantImage.plantName);
       log(plantImage.imageUrl);
       return Column(
@@ -189,7 +192,13 @@ class _LandingScreenState extends State<LandingScreen>
     }
   }
 
-  _setImage(String imageUrl) {}
+  _setImage(String imageUrl) {
+    try {
+      return FileImage(File(imageUrl));
+    } catch (e) {
+      return AssetImage('assets/images/potato.jpg');
+    }
+  }
 
   void getAllPlants() async {
     setState(() {
