@@ -84,7 +84,7 @@ class _TakeImageState extends State<TakeImage> {
               child: Column(
                 children: <Widget>[
                   decideImageView(),
-                  uploadIcon(),
+//                  uploadIcon(),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
@@ -273,7 +273,18 @@ class _TakeImageState extends State<TakeImage> {
         getImageDetails(imageFile);
         Utils.showLongToast("Image loaded");
 //      _showImageUploadSuccessfullyDialog(context);
-        return Image.file(imageFile);
+        return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Image.file(imageFile),
+              IconButton(
+                icon: Icon(Icons.file_upload),
+                tooltip: 'Upload Image to the Server',
+                onPressed: () {
+                  _showDecisionDialog(context, imageFile, plantName);
+                },
+              )
+            ]);
       } else {
         return Text(
           "Pick an image",
