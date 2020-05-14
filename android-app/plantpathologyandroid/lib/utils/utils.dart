@@ -196,4 +196,16 @@ class Utils {
       SystemNavigator.pop();
     }
   }
+
+  requestStoragePermission() {
+//    if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)==
+//        PackageManager.PERMISSION_GRANTED) {
+//      //do the things} else {
+//      requestPermissions(new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE },
+//          AnyNumber);
+//  }
+//    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//      requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+//      requestPermissions(new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+  }
 }

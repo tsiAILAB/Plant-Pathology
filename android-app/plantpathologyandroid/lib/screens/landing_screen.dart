@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutterapp/models/PlantImage.dart';
 import 'package:flutterapp/services/response/plant_image_response.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'home_screen.dart';
 
@@ -21,6 +22,8 @@ class _LandingScreenState extends State<LandingScreen>
   final VoidCallback signOut;
 
   PlantImageResponse _plantImageResponse;
+
+  Directory extDir;
 
   _LandingScreenState(this.signOut) {
     _plantImageResponse = new PlantImageResponse(this);
@@ -204,9 +207,22 @@ class _LandingScreenState extends State<LandingScreen>
     }
   }
 
+  getPathDirectory() async {
+    extDir = await getExternalStorageDirectory();
+    final directory = await getApplicationDocumentsDirectory();
+    return directory.path;
+  }
+
   _setImage(String imageUrl) {
+    var directoryPath = getPathDirectory();
     try {
-      return FileImage(File(imageUrl));
+//      Directory tempDir = await getTemporaryDirectory();
+      try {
+        FileImage(File("$directoryPath/$imageUrl"));
+      } on Exception catch (e) {
+        // TODO
+      }
+      return FileImage(File("$extDir/$imageUrl"));
     } catch (e) {
       return AssetImage('assets/images/potato.jpg');
     }
