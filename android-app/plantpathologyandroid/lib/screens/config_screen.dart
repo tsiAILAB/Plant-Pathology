@@ -199,9 +199,9 @@ class _ConfigScreenState extends State<ConfigScreen>
   }
 
   Widget decideImageView() {
-    if (imageFile != null)
+    if (imageFile != null) {
       return Image.file(imageFile);
-    else
+    } else
       return Text(
         "Please pic an image",
         style: TextStyle(
@@ -260,11 +260,11 @@ class _ConfigScreenState extends State<ConfigScreen>
 
     Utils utils = new Utils();
     String fileName = imageFile.path.split("/").last;
-    String imageUrl = await utils.saveImage(imageFile, fileName, _plantName);
+    String imageUrl = imageFile.path;
 
     setState(() {
       form.save();
-      _plantImageResponse.saveNewPlantImage(_plantName, imageUrl);
+      _plantImageResponse.saveNewPlantImage(_plantName, "$imageUrl");
     });
 
     _plantImageResponse.getAllPlant();

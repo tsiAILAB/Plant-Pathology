@@ -80,14 +80,14 @@ class _TakeImageState extends State<TakeImage> {
                   decideImageView(),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-//                    child: Row(
-//                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                      children: <Widget>[
-//                        Text("Size - 100.0"),
-//                        Text('Height : 200.0'),
-//                        Text('Width : 400.0'),
-//                      ],
-//                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Text("Size - 100.0"),
+                        Text('Height : 200.0'),
+                        Text('Width : 400.0'),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -249,8 +249,13 @@ class _TakeImageState extends State<TakeImage> {
     } catch (e) {
       Utils.showLongToast("Please try again!");
     }
+    Utils utils = new Utils();
     this.setState(() {
       imageFile = picture;
+      var fileName;
+      try {
+        utils.saveImage(imageFile, fileName, plantName);
+      } catch (e) {}
     });
   }
 

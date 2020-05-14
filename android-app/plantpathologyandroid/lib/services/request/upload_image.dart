@@ -33,30 +33,37 @@ class _UploadImageState extends State<UploadImage> {
     String fileName = imageFileForUpload.path.split("/").last;
     String imageType = fileName.split(".").last;
     Utils utils = new Utils();
-    utils.saveImage(imageFileForUpload, fileName, plantName);
-    var decodedImage =
-        await decodeImageFromList(imageFileForUpload.readAsBytesSync());
-
-    String imageSize =
-        decodedImage.width.toString() + "*" + decodedImage.height.toString();
-    String platformName = Platform.operatingSystem;
-
-    http.post(uploadImageAPI, body: {
-      "image": base64Image,
-      "image_name": fileName,
-      "plant_name": plantName,
-      "image_type": imageType,
-      "image_size": imageSize,
-      "platform": platformName,
-      "no_of_image": '1',
-      "image_contents": 'image file contennts'
-    }).then((res) {
-      print(res.statusCode);
-//      Utils utils = new Utils();
+    if (imageType.toUpperCase() == 'BMP') {
+      Utils.showLongToast("BMP image is not supported!");
+    } else if (imageType.toUpperCase() == 'PNG' ||
+        imageType.toUpperCase() == 'JPG' ||
+        imageType.toUpperCase() == 'JPEG' ||
+        imageType.toUpperCase() == 'JPG') {
       utils.saveImage(imageFileForUpload, fileName, plantName);
-      Utils.showLongToast("Image upload sucessful!");
-    }).catchError((err) {
-      print(err);
-    });
+      var decodedImage =
+          await decodeImageFromList(imageFileForUpload.readAsBytesSync());
+
+      String imageSize =
+          decodedImage.width.toString() + "*" + decodedImage.height.toString();
+      String platformName = Platform.operatingSystem;
+
+      http.post(uploadImageAPI, body: {
+        "image": base64Image,
+        "image_name": fileName,
+        "plant_name": plantName,
+        "image_type": imageType,
+        "image_size": imageSize,
+        "platform": platformName,
+        "no_of_image": '1',
+        "image_contents": 'image file contennts'
+      }).then((res) {
+        print(res.statusCode);
+//      Utils utils = new Utils();
+        utils.saveImage(imageFileForUpload, fileName, plantName);
+        Utils.showLongToast("Image upload sucessful!");
+      }).catchError((err) {
+        print(err);
+      });
+    }
   }
 }

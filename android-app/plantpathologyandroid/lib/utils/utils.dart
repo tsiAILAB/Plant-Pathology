@@ -14,10 +14,12 @@ class Utils {
       File image, String fileName, String imagePath) async {
     try {
       TimeOfDay timeOfDay = TimeOfDay.fromDateTime(DateTime.now());
-      var imageName = "$imagePath$timeOfDay";
+      var imageName = (fileName != null) ? "$fileName" : "$imagePath$timeOfDay";
       // getting a directory path for saving
       var documentDirectory = await getApplicationDocumentsDirectory();
-      var firstPath = documentDirectory.path + "/plant_images/$imagePath";
+      var firstPath = documentDirectory.path + "/plant_images";
+
+      ///$imagePath";
       var filePath = await createDirectoryIfNotExist(firstPath);
       // copy the file to a new path
       File newImage = await image.copy('$firstPath/$imageName.png');
