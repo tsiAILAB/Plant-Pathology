@@ -68,10 +68,15 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
     });
   }
 
+  void getPermission() async {
+    await Utils.requestStoragePermission();
+  }
+
   @override
   void initState() {
     super.initState();
     getPref();
+    getPermission();
   }
 
   @override

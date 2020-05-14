@@ -278,7 +278,7 @@ class _TakeImageState extends State<TakeImage> {
             children: <Widget>[
               Image.file(imageFile),
               IconButton(
-                icon: Icon(Icons.file_upload),
+                icon: Icon(Icons.cloud_upload),
                 tooltip: 'Upload Image to the Server',
                 onPressed: () {
                   _showDecisionDialog(context, imageFile, plantName);
@@ -365,7 +365,7 @@ Future<void> _showDecisionDialog(
         return AlertDialog(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-          title: Text('Do you want to Diagnosis of this Image ?'),
+          title: Text('Do you want diagnosis of this Image?'),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
@@ -378,7 +378,10 @@ Future<void> _showDecisionDialog(
                         onPressed: () {
                           if (imageFile != null) {
                             uploadImage.uploadImage(imageFile, plantName);
+                          } else {
+                            Utils.showLongToast("Image upload failed!");
                           }
+                          Navigator.pop(context);
                         },
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20.0)),
@@ -395,6 +398,8 @@ Future<void> _showDecisionDialog(
                           Utils utils = new Utils();
                           var fileName = imageFile.path.split("/").last;
                           utils.saveImage(imageFile, fileName, imageFile.path);
+                          Utils.showLongToast("Image saved in local storage");
+                          Navigator.pop(context);
                         },
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20.0)),

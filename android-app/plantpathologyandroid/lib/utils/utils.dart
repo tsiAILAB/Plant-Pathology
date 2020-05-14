@@ -200,11 +200,13 @@ class Utils {
 
   static requestStoragePermission() async {
     Map<Permission, PermissionStatus> statuses = await [
-      Permission.camera,
       Permission.storage,
+      Permission.camera,
       Permission.photos,
     ].request();
-    print(statuses[Permission.location]);
+    print(statuses[Permission.storage]);
+    print(statuses[Permission.camera]);
+    print(statuses[Permission.photos]);
 
 //    if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)==
 //        PackageManager.PERMISSION_GRANTED) {
