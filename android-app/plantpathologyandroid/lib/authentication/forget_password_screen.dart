@@ -88,7 +88,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
-          "Verify that it's you",
+          "Recover Password",
         ),
         backgroundColor: Colors.white,
       ),
@@ -104,13 +104,13 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   onSaved: (val) => _userEmail = val,
                   validator: (String userName) {
                     if (userName.isEmpty) {
-                      return 'Enter your Email/Gmail address';
+                      return 'Please Enter Registered Email';
                     }
                   },
                   decoration: InputDecoration(
                       prefixIcon: Icon(Icons.email),
                       border: OutlineInputBorder(),
-                      labelText: "Enter your verified Email/Gmail"),
+                      labelText: "Enter Registered Email"),
                 ),
                 SizedBox(
                   height: 20,
@@ -146,7 +146,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0)),
                   child: Text(
-                    'Get verification Code',
+                    'Get Verification Code',
                     style: TextStyle(color: Colors.teal[800], fontSize: 16.0),
                   ),
                 ),
