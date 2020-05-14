@@ -1,4 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutterapp/models/PlantImage.dart';
+import 'package:flutterapp/services/response/plant_image_response.dart';
 
 import 'home_screen.dart';
 
@@ -11,21 +15,37 @@ class LandingScreen extends StatefulWidget {
   _LandingScreenState createState() => _LandingScreenState(this.signOut);
 }
 
-class _LandingScreenState extends State<LandingScreen> {
+class _LandingScreenState extends State<LandingScreen>
+    implements PlantImageCallBack {
   final VoidCallback signOut;
 
-  _LandingScreenState(this.signOut);
+  PlantImageResponse _plantImageResponse;
+
+  _LandingScreenState(this.signOut) {
+    _plantImageResponse = new PlantImageResponse(this);
+  }
 
   String plantName;
+  List<PlantImage> plantImages;
 
 //  signOut() {
 //    setState(() {
 //      widget.signOut();
 //    });
 //  }
+  @override
+  void initState() {
+    super.initState();
+    getAllPlants();
+  }
 
   @override
   Widget build(BuildContext context) {
+//    for (PlantImage plantImage in plantImages) {
+//      log(plantImage.plantName);
+//      log(plantImage.imageUrl);
+//    }
+
     return Scaffold(
       body: Center(
         child: ListView(
@@ -139,5 +159,31 @@ class _LandingScreenState extends State<LandingScreen> {
           builder: (context) => HomeScreen(this.signOut, plantName)),
     );
 //                      HomeScreen(signOut);
+  }
+
+  void getAllPlants() async {
+    setState(() {
+      _plantImageResponse.getAllPlants();
+    });
+  }
+
+  @override
+  void onPlantImageError(String error) {
+    // TODO: implement onPlantImageError
+  }
+
+  @override
+  void onPlantImageSuccess(PlantImage plantImage) {
+    // TODO: implement onPlantImageSuccess
+  }
+
+  @override
+  void onPlantImagesSuccess(List<PlantImage> plantImages) {
+    // TODO: implement onPlantImagesSuccess
+    this.plantImages = plantImages;
+    for (PlantImage plantImage in plantImages) {
+      log(plantImage.plantName);
+      log(plantImage.imageUrl);
+    }
   }
 }

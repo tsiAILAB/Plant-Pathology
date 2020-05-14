@@ -36,9 +36,9 @@ class PlantImageResponse {
             (onError) => _callBack.onPlantImageError(onError.toString()));
   }
 
-  getAllPlant() {
+  getAllPlants() {
     plantImageRequest
-        .getAllPlantImage()
+        .getAllPlantImages()
         .then((plantImages) => _callBack.onPlantImagesSuccess(plantImages))
         .catchError(
             (onError) => _callBack.onPlantImageError(onError.toString()));

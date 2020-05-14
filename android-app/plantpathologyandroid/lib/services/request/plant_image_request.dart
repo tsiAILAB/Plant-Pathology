@@ -19,8 +19,8 @@ class PlantImageRequest {
     return result;
   }
 
-  Future<List<PlantImage>> getAllPlantImage() async {
-    var result = await con.getAllPlantImage();
+  Future<List<PlantImage>> getAllPlantImages() async {
+    var result = await con.getAllPlantImages();
     return result;
   }
 }

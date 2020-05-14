@@ -62,7 +62,7 @@ class PlantImageCtr {
     return null;
   }
 
-  Future<List<PlantImage>> getAllPlantImage() async {
+  Future<List<PlantImage>> getAllPlantImages() async {
     var dbClient = await con.db;
     var res = await dbClient.rawQuery("SELECT * FROM plant_image");
 

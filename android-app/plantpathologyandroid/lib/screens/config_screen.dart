@@ -268,7 +268,7 @@ class _ConfigScreenState extends State<ConfigScreen>
       form.save();
     });
     await _plantImageResponse.saveNewPlantImage(_plantName, "$imageUrl");
-    await _plantImageResponse.getAllPlant();
+    await _plantImageResponse.getAllPlants();
   }
 }
 
