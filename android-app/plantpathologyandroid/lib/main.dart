@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'authentication/login/login_screen.dart';
 
@@ -12,8 +13,10 @@ Future<void> main() async {
 
   // Get a specific camera from the list of available cameras.
 //  final firstCamera = cameras.first;
-
-  runApp(MyApp());
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
+    runApp(new MyApp());
+  });
 }
 
 final routes = {
@@ -28,7 +31,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.orange,
+        primarySwatch: Colors.blueGrey,
       ),
       routes: routes,
 //      home: MyHomePage(),

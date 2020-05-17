@@ -18,7 +18,8 @@ class _SignUpSocialMediaPageState extends State<SignUpSocialMediaPage> {
     return Scaffold(
       backgroundColor: Colors.amber[200],
       appBar: AppBar(
-        title: Text("SignUp Page"),
+        title: Text("SignUp Page", style: TextStyle(color: Colors.blueGrey)),
+        iconTheme: IconThemeData(color: Colors.blueGrey),
       ),
       body: Card(
         child: Padding(

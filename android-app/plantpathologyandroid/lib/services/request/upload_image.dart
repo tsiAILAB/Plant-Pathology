@@ -14,6 +14,10 @@ class UploadImage extends StatefulWidget {
     _UploadImageState _uploadImageState = new _UploadImageState();
     _uploadImageState._upload(imageFile, plantName);
   }
+
+  void uploadDummyImage(File imageFile, String plantName) {
+    _UploadImageState _uploadImageState = new _UploadImageState();
+  }
 }
 
 class _UploadImageState extends State<UploadImage> {

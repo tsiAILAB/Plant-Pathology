@@ -25,7 +25,8 @@ class _ForgetPasswordState extends State<ForgetPassword> {
           return AlertDialog(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0)),
-            title: Text('Verify Email'),
+            title:
+                Text('Verify Email', style: TextStyle(color: Colors.blueGrey)),
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
@@ -87,9 +88,9 @@ class _ForgetPasswordState extends State<ForgetPassword> {
       key: scaffoldKey,
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text(
-          "Recover Password",
-        ),
+        title:
+            Text("Recover Password", style: TextStyle(color: Colors.blueGrey)),
+        iconTheme: IconThemeData(color: Colors.blueGrey),
         backgroundColor: Colors.white,
       ),
       body: Card(
@@ -174,6 +175,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                       key: _forgetPasswordFormKey,
                       child: TextFormField(
                         onSaved: (val) => _otp = val,
+                        keyboardType: TextInputType.number,
                         maxLength: 5,
                         validator: (String verifyCode) {
                           if (verifyCode.isEmpty) {

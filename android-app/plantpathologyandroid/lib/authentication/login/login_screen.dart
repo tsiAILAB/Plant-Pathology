@@ -216,7 +216,8 @@ class _LoginPageState extends State<LoginPage> implements LoginCallBack {
       resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("Plant Diagnosis System"),
+        title: Text("Plant Diagnosis System",
+            style: TextStyle(color: Colors.blueGrey)),
         backgroundColor: Colors.white,
         centerTitle: true,
       ),

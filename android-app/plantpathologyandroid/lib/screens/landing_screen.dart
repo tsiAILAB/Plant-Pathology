@@ -2,12 +2,14 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutterapp/authentication/login/login_screen.dart';
 import 'package:flutterapp/models/PlantImage.dart';
+import 'package:flutterapp/screens/configuration/configuration_screen.dart';
+import 'package:flutterapp/screens/plantdiagnosisscreen/take_image_screen.dart';
 import 'package:flutterapp/services/response/plant_image_response.dart';
 import 'package:flutterapp/utils/utils.dart';
 import 'package:image/image.dart' as ImageLibrary;
-
-import 'home_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LandingScreen extends StatefulWidget {
   final VoidCallback signOut;
@@ -28,6 +30,8 @@ class _LandingScreenState extends State<LandingScreen>
     _plantImageResponse = new PlantImageResponse(this);
   }
 
+  String userRole;
+
   String plantName;
   List<PlantImage> plantImages;
 
@@ -42,6 +46,7 @@ class _LandingScreenState extends State<LandingScreen>
     super.initState();
     getAllPlants();
     getPermission();
+    getPref();
   }
 
   @override
@@ -58,16 +63,11 @@ class _LandingScreenState extends State<LandingScreen>
 //          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             AppBar(
-              title: Text('Plant Selection'),
+              title: Text('Plant Selection',
+                  style: TextStyle(color: Colors.blueGrey)),
+              iconTheme: IconThemeData(color: Colors.blueGrey),
               backgroundColor: Colors.white,
-              actions: <Widget>[
-                IconButton(
-                  onPressed: () {
-                    signOut();
-                  },
-                  icon: Icon(Icons.power_settings_new),
-                )
-              ],
+              actions: loadConfigButtonAndLogout(),
             ),
             Container(
               child: Column(
@@ -151,6 +151,7 @@ class _LandingScreenState extends State<LandingScreen>
                 ],
               ),
             ),
+            SizedBox(height: 20),
             Container(
                 child: Column(
               children: loadDynamicUi(),
@@ -161,14 +162,44 @@ class _LandingScreenState extends State<LandingScreen>
     );
   }
 
+  getPref() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    setState(() {
+      userRole = preferences.getString("role");
+    });
+  }
+
   void goToPlantUi(PlantImage plantImage) {
     print("I'm $plantName");
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => HomeScreen(this.signOut, plantImage)),
-    );
+    if (signOut != null) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => TakeImageScreen(this.signOut, plantImage)),
+      );
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                TakeImageScreen(this.signOutIfEmpty, plantImage)),
+      );
+    }
 //                      HomeScreen(signOut);
+  }
+
+  signOutIfEmpty() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    setState(() {
+      preferences.setInt("value", null);
+      preferences.commit();
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+        (Route<dynamic> route) => false,
+      );
+//      _loginStatus = LoginStatus.notSignIn;
+    });
   }
 
   loadDynamicUi() {
@@ -198,6 +229,7 @@ class _LandingScreenState extends State<LandingScreen>
                     fontWeight: FontWeight.bold,
                     letterSpacing: 1.0),
               ),
+              SizedBox(height: 20),
             ],
           ),
         );
@@ -224,6 +256,52 @@ class _LandingScreenState extends State<LandingScreen>
       return FileImage(File("$imageUrl"));
     } catch (e) {
       return AssetImage('assets/images/potato.jpg');
+    }
+  }
+
+  List<Widget> loadConfigButtonAndLogout() {
+    if (userRole == "ADMIN") {
+      var configWidget;
+      setState(() {
+        configWidget = <Widget>[
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ConfigurationScreen(this.signOut)),
+              );
+            },
+            icon: Icon(Icons.settings),
+          ),
+          IconButton(
+            onPressed: () {
+              if (signOut != null)
+                signOut();
+              else
+                signOutIfEmpty();
+            },
+            icon: Icon(Icons.power_settings_new),
+          )
+        ];
+      });
+      return configWidget;
+    } else {
+      var configWidget;
+      setState(() {
+        configWidget = <Widget>[
+          IconButton(
+            onPressed: () {
+              if (signOut != null)
+                signOut();
+              else
+                signOutIfEmpty();
+            },
+            icon: Icon(Icons.power_settings_new),
+          )
+        ];
+      });
+      return configWidget;
     }
   }
 

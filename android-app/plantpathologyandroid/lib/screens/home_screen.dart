@@ -5,7 +5,7 @@ import 'package:flutter_curved_tab_bar/flutter_curved_tab_bar.dart';
 import 'package:flutterapp/models/ApiUrl.dart';
 import 'package:flutterapp/models/PlantImage.dart';
 import 'package:flutterapp/screens/config_screen.dart';
-import 'package:flutterapp/screens/take_image_screen.dart';
+import 'package:flutterapp/screens/plantdiagnosisscreen/take_image_screen.dart';
 import 'package:flutterapp/services/apis/all_apis.dart';
 import 'package:flutterapp/services/response/api_url_response.dart';
 import 'package:flutterapp/utils/utils.dart';
@@ -13,7 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   final VoidCallback signOut;
-  PlantImage plantImage;
+  final PlantImage plantImage;
 
   HomeScreen(this.signOut, this.plantImage);
 
@@ -167,7 +167,7 @@ class _HomeScreenState extends State<HomeScreen> implements ApiUrlCallBack {
     return Container(
       height: MediaQuery.of(context).size.height - 73,
       color: Colors.white,
-      child: TakeImage(this.plantImage),
+      child: TakeImageScreen(signOut, this.plantImage),
     );
   }
 
@@ -177,7 +177,7 @@ class _HomeScreenState extends State<HomeScreen> implements ApiUrlCallBack {
     return Container(
       height: MediaQuery.of(context).size.height - 73,
       color: Colors.white,
-      child: TakeImage(this.plantImage),
+      child: TakeImageScreen(signOut, this.plantImage),
     );
   }
 
@@ -187,7 +187,7 @@ class _HomeScreenState extends State<HomeScreen> implements ApiUrlCallBack {
     return Container(
       height: MediaQuery.of(context).size.height - 73,
       color: Colors.white,
-      child: TakeImage(this.plantImage),
+      child: TakeImageScreen(signOut, this.plantImage),
     );
   }
 

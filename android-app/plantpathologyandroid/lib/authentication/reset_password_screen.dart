@@ -31,7 +31,8 @@ class _ResetPasswordState extends State<ResetPassword>
       key: scaffoldKey,
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("Reset Password"),
+        title: Text("Reset Password", style: TextStyle(color: Colors.blueGrey)),
+        iconTheme: IconThemeData(color: Colors.blueGrey),
         backgroundColor: Colors.white,
       ),
       body: Card(

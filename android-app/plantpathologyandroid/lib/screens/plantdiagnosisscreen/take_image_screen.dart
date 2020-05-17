@@ -4,32 +4,36 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapp/models/PlantImage.dart';
+import 'package:flutterapp/models/plant_diagnosis_response.dart';
+import 'package:flutterapp/screens/plantdiagnosisscreen/plant_details_screen.dart';
 import 'package:flutterapp/services/request/upload_image.dart';
 import 'package:flutterapp/utils/utils.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image/image.dart' as ImageLibrary;
 import 'package:image_picker/image_picker.dart';
 
-class TakeImage extends StatefulWidget {
+class TakeImageScreen extends StatefulWidget {
+  final VoidCallback signOut;
   final PlantImage plantImage;
 
-  TakeImage(this.plantImage);
+  TakeImageScreen(this.signOut, this.plantImage);
 
   @override
-  _TakeImageState createState() => _TakeImageState(this.plantImage);
+  _TakeImageScreenState createState() => _TakeImageScreenState(this.plantImage);
 }
 
-class _TakeImageState extends State<TakeImage> {
+class _TakeImageScreenState extends State<TakeImageScreen> {
   File imageFile;
   String plantImageUrl;
   final PlantImage plantImage;
+  static int count = 0;
   String plantName;
   String imageType = '';
   int imageHeight = 0, imageWidth = 0, imageSize = 0;
 
   final _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-  _TakeImageState(this.plantImage) {
+  _TakeImageScreenState(this.plantImage) {
     this.plantName = this.plantImage.plantName;
     this.plantImageUrl = this.plantImage.imageUrl;
   }
@@ -58,9 +62,20 @@ class _TakeImageState extends State<TakeImage> {
     return Scaffold(
       key: _scaffoldKey,
       backgroundColor: Colors.white,
-//      appBar: AppBar(
-//        title: Text("Plant disease"),
-//      ),
+      appBar: AppBar(
+        title: Text('Plant Diagnosis System',
+            style: TextStyle(color: Colors.blueGrey)),
+        iconTheme: IconThemeData(color: Colors.blueGrey),
+        backgroundColor: Colors.white,
+        actions: <Widget>[
+          IconButton(
+            onPressed: () {
+              signOut();
+            },
+            icon: Icon(Icons.power_settings_new),
+          ),
+        ],
+      ),
       body: Center(
         child: Column(
           children: <Widget>[
@@ -100,10 +115,14 @@ class _TakeImageState extends State<TakeImage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                        Text("Type - $imageType"),
-                        Text("Size - $imageSize"),
-                        Text('Height : $imageHeight'),
-                        Text('Width : $imageWidth'),
+                        Text("Type - $imageType",
+                            style: TextStyle(color: Colors.blueGrey)),
+                        Text("Size - $imageSize",
+                            style: TextStyle(color: Colors.blueGrey)),
+                        Text('Height : $imageHeight',
+                            style: TextStyle(color: Colors.blueGrey)),
+                        Text('Width : $imageWidth',
+                            style: TextStyle(color: Colors.blueGrey)),
                       ],
                     ),
                   ),
@@ -245,6 +264,13 @@ class _TakeImageState extends State<TakeImage> {
 //    );
   }
 
+  signOut() {
+    setState(() {
+      widget.signOut();
+    });
+    Utils.gotoHomeUi(context);
+  }
+
 //  EmailServerSMTP.sendEmailViaSMTP("firozsujan@gmail.com", 33446);
   openGallery() async {
     var picture;
@@ -304,7 +330,8 @@ class _TakeImageState extends State<TakeImage> {
     } catch (e) {
       return Text(
         "Pick an image",
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+        style: TextStyle(
+            fontWeight: FontWeight.bold, fontSize: 25, color: Colors.blueGrey),
       );
     }
   }
@@ -386,7 +413,8 @@ class _TakeImageState extends State<TakeImage> {
           return AlertDialog(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0)),
-            title: Text('Do you want diagnosis of this Image?'),
+            title: Text('Do you want diagnosis of this Image?',
+                style: TextStyle(color: Colors.blueGrey)),
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
@@ -398,11 +426,12 @@ class _TakeImageState extends State<TakeImage> {
                         child: OutlineButton(
                           onPressed: () {
                             if (imageFile != null) {
-                              uploadImage.uploadImage(imageFile, plantName);
+                              uploadDummyImage(imageFile, plantName);
+//                              uploadImage.uploadImage(imageFile, plantName);
                             } else {
                               Utils.showLongToast("Image upload failed!");
                             }
-                            Navigator.pop(context);
+//                            Navigator.pop(context);
                           },
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0)),
@@ -450,6 +479,54 @@ class _TakeImageState extends State<TakeImage> {
             ),
           );
         });
+  }
+
+  void uploadDummyImage(File imageFile, String plantName) {
+    PlantDiagnosisResponse plantDiagnosisResponse;
+    String fileName = imageFile.path.split("/").last;
+    String imageType = fileName.split(".").last;
+    String _diseaseName, _diagnosisResponse;
+
+//    if (plantName.toUpperCase() == "POTATO" &&
+//        fileName.toUpperCase() == "EARLY_BLIGHT") {
+    if (count == 0) {
+      _diseaseName = "Early Blight";
+      _diagnosisResponse = "Diseases Found, Probability-92.75%";
+
+      plantDiagnosisResponse = new PlantDiagnosisResponse(
+          plantName, imageFile.path, _diseaseName, _diagnosisResponse);
+//    } else if (plantName.toUpperCase() == "POTATO" &&
+//        fileName.toUpperCase() == "LATE_BLIGHT") {
+    } else if (count == 1) {
+      _diseaseName = "Late Blight";
+      _diagnosisResponse = "Diseases Found, Probability-98.12%";
+
+      plantDiagnosisResponse = new PlantDiagnosisResponse(
+          plantName, imageFile.path, _diseaseName, _diagnosisResponse);
+//    } else if (plantName.toUpperCase() == "POTATO" &&
+//        fileName.toUpperCase() == "HEALTHY_LEAF") {
+    } else if (count == 2) {
+      _diseaseName = "Disease not found";
+      _diagnosisResponse = "Diseases Not Found, Probability-92.75%";
+
+      plantDiagnosisResponse = new PlantDiagnosisResponse(
+          plantName, imageFile.path, _diseaseName, _diagnosisResponse);
+    } else {
+      _diseaseName = "Not a Plant";
+      _diagnosisResponse = "This is not a Plant!";
+
+      plantDiagnosisResponse = new PlantDiagnosisResponse(
+          plantName, imageFile.path, _diseaseName, _diagnosisResponse);
+    }
+
+    count = count + 1;
+
+    Navigator.of(context).pop();
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => PlantDetailsScreen(plantDiagnosisResponse)),
+    );
   }
 }
 

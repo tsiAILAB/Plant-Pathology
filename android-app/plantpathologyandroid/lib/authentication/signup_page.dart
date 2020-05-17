@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/models/user.dart';
+import 'package:flutterapp/screens/landing_screen.dart';
 import 'package:flutterapp/services/emailservice/email_server_smtp.dart';
 import 'package:flutterapp/services/request/sign_up_request.dart';
 import 'package:flutterapp/services/response/sign_up_response.dart';
 import 'package:flutterapp/utils/utils.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 //void main() => runApp(SignUpPage());
 
@@ -12,7 +14,10 @@ class SignUpPage extends StatefulWidget {
   _SignUpPageState createState() => _SignUpPageState();
 }
 
+enum LoginStatus { notSignIn, signIn }
+
 class _SignUpPageState extends State<SignUpPage> implements SignUpCallBack {
+  LoginStatus _loginStatus = LoginStatus.notSignIn;
   SignUpResponse _response;
 
   final scaffoldKey = new GlobalKey<ScaffoldState>();
@@ -32,7 +37,8 @@ class _SignUpPageState extends State<SignUpPage> implements SignUpCallBack {
       key: scaffoldKey,
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("Sign Up"),
+        title: Text("Sign Up", style: TextStyle(color: Colors.blueGrey)),
+        iconTheme: IconThemeData(color: Colors.blueGrey),
         backgroundColor: Colors.white,
       ),
       body: Card(
@@ -113,28 +119,24 @@ class _SignUpPageState extends State<SignUpPage> implements SignUpCallBack {
     }
   }
 
-  @override
-  void onSignUpError(String error) {
-    Utils.showLongToast(
-        "This email is already registered. Please go to login.");
-    setState(() {});
-  }
+//  signOut() async {
+//    SharedPreferences preferences = await SharedPreferences.getInstance();
+//    setState(() {
+//      preferences.setInt("value", null);
+//      preferences.commit();
+//      _loginStatus = LoginStatus.notSignIn;
+//    });
+//  }
 
-  @override
-  void onSignUpSuccess(User user) async {
-    if (user != null) {
-      if (await Utils.checkInternetConnection()) {
-        EmailServerSMTP.sendEmailViaSMTP(user.username, user.otp);
-        Utils.showLongToast("Please check your mail for otp");
-        verifyOtpAlertDialog(context, user.username);
-      } else {
-        Utils.showLongToast(
-            "Please check your internet connection and resend otp");
-      }
-    } else {
-      Utils.showLongToast("Wrong username or password");
-      setState(() {});
-    }
+  savePref(int value, String user, String pass, String role) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    setState(() {
+      preferences.setInt("value", value);
+      preferences.setString("user", user);
+      preferences.setString("pass", pass);
+      preferences.setString("role", role);
+      preferences.commit();
+    });
   }
 
   void verifyOtpAlertDialog(BuildContext context, String userName) async {
@@ -144,7 +146,8 @@ class _SignUpPageState extends State<SignUpPage> implements SignUpCallBack {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Verify Email'),
+            title:
+                Text('Verify Email', style: TextStyle(color: Colors.blueGrey)),
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
@@ -153,6 +156,7 @@ class _SignUpPageState extends State<SignUpPage> implements SignUpCallBack {
                       key: _forgetPasswordFormKey,
                       child: TextFormField(
                         onSaved: (val) => _otp = val,
+                        keyboardType: TextInputType.number,
                         maxLength: 5,
                         validator: (String verifyCode) {
                           if (verifyCode.isEmpty) {
@@ -179,7 +183,23 @@ class _SignUpPageState extends State<SignUpPage> implements SignUpCallBack {
                         User user = await signUpReq.isValidOTP(userName, _otp);
                         if (user != null) {
                           Navigator.pop(context);
-                          Utils.gotoHomeUi(context);
+                          if (user.isVerified == "true") {
+                            savePref(
+                                1, user.username, user.password, user.role);
+                            _loginStatus = LoginStatus.signIn;
+
+//                            Navigator.of(context).pushReplacement(
+//                                new MaterialPageRoute(
+//                                    builder: (BuildContext context) =>
+//                                        LandingScreen(signOut)));
+
+                            Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LandingScreen(null)),
+                              (Route<dynamic> route) => false,
+                            );
+                          }
                         } else {
                           Utils.showLongToast("Wrong OTP!");
                         }
@@ -220,5 +240,29 @@ class _SignUpPageState extends State<SignUpPage> implements SignUpCallBack {
             ),
           );
         });
+  }
+
+  @override
+  void onSignUpError(String error) {
+    Utils.showLongToast(
+        "This email is already registered. Please go to login.");
+    setState(() {});
+  }
+
+  @override
+  void onSignUpSuccess(User user) async {
+    if (user != null) {
+      if (await Utils.checkInternetConnection()) {
+        EmailServerSMTP.sendEmailViaSMTP(user.username, user.otp);
+        Utils.showLongToast("Please check your mail for otp");
+        verifyOtpAlertDialog(context, user.username);
+      } else {
+        Utils.showLongToast(
+            "Please check your internet connection and resend otp");
+      }
+    } else {
+      Utils.showLongToast("Wrong username or password");
+      setState(() {});
+    }
   }
 }

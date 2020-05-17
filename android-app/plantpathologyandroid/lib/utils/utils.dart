@@ -97,6 +97,7 @@ class Utils {
                       child: TextFormField(
                         onSaved: (val) => _otp = val,
                         maxLength: 5,
+                        keyboardType: TextInputType.number,
                         validator: (String verifyCode) {
                           if (verifyCode.isEmpty) {
                             return 'Please enter the Code';
