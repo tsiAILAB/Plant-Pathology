@@ -2,11 +2,12 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutterapp/models/user.dart';
-import 'package:flutterapp/services/emailservice/email_server_smtp.dart';
-import 'package:flutterapp/services/request/sign_up_request.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:pds/authentication/login/login_screen.dart';
+import 'package:pds/models/user.dart';
+import 'package:pds/services/emailservice/email_server_smtp.dart';
+import 'package:pds/services/request/sign_up_request.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:random_string/random_string.dart';
 
@@ -194,6 +195,11 @@ class Utils {
   static void gotoHomeUi(BuildContext context) {
     if (Navigator.canPop(context)) {
       Navigator.pop(context);
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+        (Route<dynamic> route) => false,
+      );
     } else {
       SystemNavigator.pop();
     }

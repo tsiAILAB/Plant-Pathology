@@ -2,9 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutterapp/services/apis/all_apis.dart';
-import 'package:flutterapp/utils/utils.dart';
 import 'package:http/http.dart' as http;
+import 'package:pds/services/apis/all_apis.dart';
+import 'package:pds/utils/utils.dart';
 
 class UploadImage extends StatefulWidget {
   @override

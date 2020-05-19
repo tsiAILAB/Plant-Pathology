@@ -2,13 +2,13 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_curved_tab_bar/flutter_curved_tab_bar.dart';
-import 'package:flutterapp/models/ApiUrl.dart';
-import 'package:flutterapp/models/PlantImage.dart';
-import 'package:flutterapp/screens/config_screen.dart';
-import 'package:flutterapp/screens/plantdiagnosisscreen/take_image_screen.dart';
-import 'package:flutterapp/services/apis/all_apis.dart';
-import 'package:flutterapp/services/response/api_url_response.dart';
-import 'package:flutterapp/utils/utils.dart';
+import 'package:pds/models/ApiUrl.dart';
+import 'package:pds/models/PlantImage.dart';
+import 'package:pds/screens/config_screen.dart';
+import 'package:pds/screens/plantdiagnosisscreen/take_image_screen.dart';
+import 'package:pds/services/apis/all_apis.dart';
+import 'package:pds/services/response/api_url_response.dart';
+import 'package:pds/utils/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {

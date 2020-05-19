@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:flutterapp/data/database_helper.dart';
-import 'package:flutterapp/models/PlantImage.dart';
+import 'package:pds/data/database_helper.dart';
+import 'package:pds/models/PlantImage.dart';
 
 class PlantImageCtr {
   DatabaseHelper con = new DatabaseHelper();

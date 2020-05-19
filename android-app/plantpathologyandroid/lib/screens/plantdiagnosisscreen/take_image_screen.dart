@@ -3,14 +3,14 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterapp/models/PlantImage.dart';
-import 'package:flutterapp/models/plant_diagnosis_response.dart';
-import 'package:flutterapp/screens/plantdiagnosisscreen/plant_details_screen.dart';
-import 'package:flutterapp/services/request/upload_image.dart';
-import 'package:flutterapp/utils/utils.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image/image.dart' as ImageLibrary;
 import 'package:image_picker/image_picker.dart';
+import 'package:pds/models/PlantImage.dart';
+import 'package:pds/models/plant_diagnosis_response.dart';
+import 'package:pds/screens/plantdiagnosisscreen/plant_details_screen.dart';
+import 'package:pds/services/request/upload_image.dart';
+import 'package:pds/utils/utils.dart';
 
 class TakeImageScreen extends StatefulWidget {
   final VoidCallback signOut;
@@ -110,26 +110,10 @@ class _TakeImageScreenState extends State<TakeImageScreen> {
                 children: <Widget>[
                   decideImageView(),
 //                  uploadIcon(),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Text("Type - $imageType",
-                            style: TextStyle(color: Colors.blueGrey)),
-                        Text("Size - $imageSize",
-                            style: TextStyle(color: Colors.blueGrey)),
-                        Text('Height : $imageHeight',
-                            style: TextStyle(color: Colors.blueGrey)),
-                        Text('Width : $imageWidth',
-                            style: TextStyle(color: Colors.blueGrey)),
-                      ],
-                    ),
-                  ),
                 ],
               ),
             ),
-            SizedBox(height: 30),
+            SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -140,7 +124,7 @@ class _TakeImageScreenState extends State<TakeImageScreen> {
                     Icons.camera,
                     color: Colors.white,
                   ),
-                  color: Colors.teal[900],
+                  color: Colors.blueGrey,
                   textColor: Colors.white,
                   label: Text("Camera"),
                   onPressed: () {
@@ -155,7 +139,7 @@ class _TakeImageScreenState extends State<TakeImageScreen> {
                     Icons.image,
                     color: Colors.white,
                   ),
-                  color: Colors.teal[900],
+                  color: Colors.blueGrey,
                   textColor: Colors.white,
                   label: Text("Gallery"),
                   onPressed: () {
@@ -307,19 +291,40 @@ class _TakeImageScreenState extends State<TakeImageScreen> {
     try {
       if (imageFile != null) {
         getImageDetails(imageFile);
-        Utils.showLongToast("Image loaded");
+        Utils.showLongToast("Image loading successful!");
 //      _showImageUploadSuccessfullyDialog(context);
         return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Image.file(imageFile),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Text("Type - $imageType",
+                        style: TextStyle(color: Colors.blueGrey)),
+                    Text("Size - $imageSize",
+                        style: TextStyle(color: Colors.blueGrey)),
+                    Text('Height : $imageHeight',
+                        style: TextStyle(color: Colors.blueGrey)),
+                    Text('Width : $imageWidth',
+                        style: TextStyle(color: Colors.blueGrey)),
+                  ],
+                ),
+              ),
               IconButton(
-                icon: Icon(Icons.cloud_upload),
+                icon: Icon(
+                  Icons.cloud_upload,
+                  size: 50,
+                  color: Colors.blueGrey,
+                ),
                 tooltip: 'Upload Image to the Server',
                 onPressed: () {
                   _showDecisionDialog(context, imageFile, plantName);
                 },
-              )
+              ),
+              SizedBox(height: 10),
             ]);
       } else {
         return Text(
@@ -491,7 +496,7 @@ class _TakeImageScreenState extends State<TakeImageScreen> {
 //        fileName.toUpperCase() == "EARLY_BLIGHT") {
     if (count == 0) {
       _diseaseName = "Early Blight";
-      _diagnosisResponse = "Diseases Found, Probability-92.75%";
+      _diagnosisResponse = "Disease Found, Probability-92.75%";
 
       plantDiagnosisResponse = new PlantDiagnosisResponse(
           plantName, imageFile.path, _diseaseName, _diagnosisResponse);
@@ -499,15 +504,15 @@ class _TakeImageScreenState extends State<TakeImageScreen> {
 //        fileName.toUpperCase() == "LATE_BLIGHT") {
     } else if (count == 1) {
       _diseaseName = "Late Blight";
-      _diagnosisResponse = "Diseases Found, Probability-98.12%";
+      _diagnosisResponse = "Disease Found, Probability-98.12%";
 
       plantDiagnosisResponse = new PlantDiagnosisResponse(
           plantName, imageFile.path, _diseaseName, _diagnosisResponse);
 //    } else if (plantName.toUpperCase() == "POTATO" &&
 //        fileName.toUpperCase() == "HEALTHY_LEAF") {
     } else if (count == 2) {
-      _diseaseName = "Disease not found";
-      _diagnosisResponse = "Diseases Not Found, Probability-92.75%";
+      _diseaseName = "Diseas not found";
+      _diagnosisResponse = "Disease Not Found, Probability-92.75%";
 
       plantDiagnosisResponse = new PlantDiagnosisResponse(
           plantName, imageFile.path, _diseaseName, _diagnosisResponse);
@@ -517,6 +522,7 @@ class _TakeImageScreenState extends State<TakeImageScreen> {
 
       plantDiagnosisResponse = new PlantDiagnosisResponse(
           plantName, imageFile.path, _diseaseName, _diagnosisResponse);
+      count = -1;
     }
 
     count = count + 1;

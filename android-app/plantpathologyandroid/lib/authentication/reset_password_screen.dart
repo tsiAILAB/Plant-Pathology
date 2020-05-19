@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutterapp/models/user.dart';
-import 'package:flutterapp/services/response/change_password_response.dart';
-import 'package:flutterapp/utils/utils.dart';
+import 'package:pds/models/user.dart';
+import 'package:pds/services/response/change_password_response.dart';
+import 'package:pds/utils/utils.dart';
 
 class ResetPassword extends StatefulWidget {
   static String userEmail;

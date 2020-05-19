@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:flutterapp/data/database_helper.dart';
-import 'package:flutterapp/models/ApiUrl.dart';
+import 'package:pds/data/database_helper.dart';
+import 'package:pds/models/ApiUrl.dart';
 
 class ApiUrlCtr {
   DatabaseHelper con = new DatabaseHelper();

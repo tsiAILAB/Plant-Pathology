@@ -1,5 +1,5 @@
-import 'package:flutterapp/models/ApiUrl.dart';
-import 'package:flutterapp/services/request/api_url_request.dart';
+import 'package:pds/models/ApiUrl.dart';
+import 'package:pds/services/request/api_url_request.dart';
 
 abstract class ApiUrlCallBack {
   void onApiUrlSuccess(ApiUrl apiUrl);

@@ -3,10 +3,10 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterapp/models/ApiUrl.dart';
-import 'package:flutterapp/services/apis/all_apis.dart';
-import 'package:flutterapp/services/response/api_url_response.dart';
-import 'package:flutterapp/utils/utils.dart';
+import 'package:pds/models/ApiUrl.dart';
+import 'package:pds/services/apis/all_apis.dart';
+import 'package:pds/services/response/api_url_response.dart';
+import 'package:pds/utils/utils.dart';
 
 class AddApiScreen extends StatefulWidget {
   @override
@@ -22,6 +22,8 @@ class _AddApiScreenState extends State<AddApiScreen> implements ApiUrlCallBack {
   File imageFile;
   final _scaffoldKey = new GlobalKey<ScaffoldState>();
   final apiConfigFormKey = new GlobalKey<FormState>();
+  final TextEditingController _apiUrlTextController =
+      new TextEditingController();
   String _apiUrl;
 
   @override
@@ -32,14 +34,14 @@ class _AddApiScreenState extends State<AddApiScreen> implements ApiUrlCallBack {
           key: _scaffoldKey,
           resizeToAvoidBottomPadding: false,
           backgroundColor: Colors.white,
-          body: ListView(
+          body: Column(
             children: <Widget>[
               Card(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
                     children: <Widget>[
-                      Text("Api Name: ${AllApis.API_NAME}",
+                      Text('Update API',
                           style: TextStyle(
                               color: Colors.blueGrey,
                               fontSize: 20.0,
@@ -48,7 +50,7 @@ class _AddApiScreenState extends State<AddApiScreen> implements ApiUrlCallBack {
                         height: 20.0,
                       ),
                       Text(
-                        'Update API',
+                        "Api Name: ${AllApis.API_NAME}",
                         style: TextStyle(
                             fontSize: 15.0,
                             color: Colors.teal[800],
@@ -77,6 +79,7 @@ class _AddApiScreenState extends State<AddApiScreen> implements ApiUrlCallBack {
                               height: 15.0,
                             ),
                             TextFormField(
+                              controller: _apiUrlTextController,
                               onSaved: (val) => _apiUrl = val,
                               validator: (String value) {
                                 if (value.trim().isEmpty) {
@@ -85,23 +88,26 @@ class _AddApiScreenState extends State<AddApiScreen> implements ApiUrlCallBack {
                                 return "";
                               },
                               decoration: InputDecoration(
-                                  prefixIcon: Icon(Icons.border_color),
+                                  prefixIcon: Icon(
+                                    Icons.border_color,
+                                    color: Colors.blueGrey,
+                                  ),
                                   border: OutlineInputBorder(),
                                   labelText: "API URL"),
                             ),
                             SizedBox(
-                              height: 15.0,
+                              height: 20.0,
                             ),
                             OutlineButton(
                               onPressed: _saveApi,
                               child: Text(
-                                ' Update API ',
+                                'Update',
                                 style: TextStyle(
-                                    color: Colors.teal[800], fontSize: 16.0),
+                                    color: Colors.blueGrey, fontSize: 16.0),
                               ),
                             ),
 
-                            SizedBox(height: 50.0),
+                            SizedBox(height: 40.0),
                           ],
                         ),
                       ),
@@ -126,6 +132,9 @@ class _AddApiScreenState extends State<AddApiScreen> implements ApiUrlCallBack {
   void onApiUrlSuccess(ApiUrl apiUrl) {
     // TODO: implement onApiUrlSuccess
     Utils.showLongToast("Api Saved");
+    setState(() {
+      _apiUrlTextController.clear();
+    });
     log(apiUrl.apiName);
     log(apiUrl.apiUrl);
   }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutterapp/data/CtrQuery/login_ctr.dart';
-import 'package:flutterapp/models/user.dart';
-import 'package:flutterapp/services/emailservice/email_server_smtp.dart';
-import 'package:flutterapp/services/request/sign_up_request.dart';
-import 'package:flutterapp/utils/utils.dart';
+import 'package:pds/data/CtrQuery/login_ctr.dart';
+import 'package:pds/models/user.dart';
+import 'package:pds/services/emailservice/email_server_smtp.dart';
+import 'package:pds/services/request/sign_up_request.dart';
+import 'package:pds/utils/utils.dart';
 
 import 'reset_password_screen.dart';
 

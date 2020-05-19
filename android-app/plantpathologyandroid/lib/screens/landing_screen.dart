@@ -2,13 +2,13 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutterapp/authentication/login/login_screen.dart';
-import 'package:flutterapp/models/PlantImage.dart';
-import 'package:flutterapp/screens/configuration/configuration_screen.dart';
-import 'package:flutterapp/screens/plantdiagnosisscreen/take_image_screen.dart';
-import 'package:flutterapp/services/response/plant_image_response.dart';
-import 'package:flutterapp/utils/utils.dart';
 import 'package:image/image.dart' as ImageLibrary;
+import 'package:pds/authentication/login/login_screen.dart';
+import 'package:pds/models/PlantImage.dart';
+import 'package:pds/screens/configuration/configuration_screen.dart';
+import 'package:pds/screens/plantdiagnosisscreen/take_image_screen.dart';
+import 'package:pds/services/response/plant_image_response.dart';
+import 'package:pds/utils/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LandingScreen extends StatefulWidget {
@@ -43,6 +43,7 @@ class _LandingScreenState extends State<LandingScreen>
 
   @override
   void initState() {
+//    WidgetsBinding.instance.addPostFrameCallback(loadDynamicUi());
     super.initState();
     getAllPlants();
     getPermission();
@@ -270,7 +271,7 @@ class _LandingScreenState extends State<LandingScreen>
                 context,
                 MaterialPageRoute(
                     builder: (context) => ConfigurationScreen(this.signOut)),
-              );
+              ); //.then((value) => initState());
             },
             icon: Icon(Icons.settings),
           ),

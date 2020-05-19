@@ -1,5 +1,5 @@
-import 'package:flutterapp/models/user.dart';
-import 'package:flutterapp/services/request/change_password_request.dart';
+import 'package:pds/models/user.dart';
+import 'package:pds/services/request/change_password_request.dart';
 
 abstract class ChangePasswordCallBack {
   void onChangePasswordSuccess(User user);

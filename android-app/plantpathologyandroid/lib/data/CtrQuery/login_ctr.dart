@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:flutterapp/data/database_helper.dart';
-import 'package:flutterapp/models/user.dart';
+import 'package:pds/data/database_helper.dart';
+import 'package:pds/models/user.dart';
 
 class LoginCtr {
   DatabaseHelper con = new DatabaseHelper();
@@ -63,7 +63,6 @@ class LoginCtr {
     var dbClient = await con.db;
     var res = await dbClient.rawQuery(
         "SELECT * FROM user WHERE username = '$userEmail' and otp = '$otp'");
-
     if (res.length > 0) {
 //      User savedUser = new User.fromMap(res.first);
       var res2 = await dbClient.rawUpdate(

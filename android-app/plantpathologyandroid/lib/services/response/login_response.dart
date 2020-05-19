@@ -1,5 +1,5 @@
-import 'package:flutterapp/models/user.dart';
-import 'package:flutterapp/services/request/login_request.dart';
+import 'package:pds/models/user.dart';
+import 'package:pds/services/request/login_request.dart';
 
 abstract class LoginCallBack {
   void onLoginSuccess(User user);

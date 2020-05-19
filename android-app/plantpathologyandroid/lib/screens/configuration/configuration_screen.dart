@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_curved_tab_bar/flutter_curved_tab_bar.dart';
-import 'package:flutterapp/screens/configuration/add_api_screen.dart';
-import 'package:flutterapp/screens/configuration/add_plant_image_screen.dart';
-import 'package:flutterapp/utils/utils.dart';
+import 'package:pds/screens/configuration/add_api_screen.dart';
+import 'package:pds/screens/configuration/add_plant_image_screen.dart';
+import 'package:pds/utils/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ConfigurationScreen extends StatefulWidget {
@@ -75,43 +75,44 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
 //      }
     });
 
-    return SafeArea(
-      child: Scaffold(
-          key: _scaffoldKey,
-          body: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                AppBar(
-                  title: Text('Configuration',
-                      style: TextStyle(color: Colors.blueGrey)),
-                  iconTheme: IconThemeData(color: Colors.blueGrey),
-                  backgroundColor: Colors.white,
-                  actions: <Widget>[
-                    IconButton(
-                      onPressed: () {
-                        signOut();
-                      },
-                      icon: Icon(Icons.power_settings_new),
-                    )
-                  ],
-                ),
-                CurvedTabBar(
-                    tabsColor: Colors.blue[50],
-                    tabSelectedColor: Colors.blueGrey,
-                    iconSelectedColor: Colors.white,
-                    iconsColor: Colors.blueGrey,
-                    numberOfTabs: numberOfTabs,
-                    icons: [Icons.phonelink_setup, Icons.image],
-                    onTabSelected: (_index) {
-                      setState(() {
-                        _currentIndex = _index;
-                        appbarTitle = Text("Configuration");
-                      });
-                    }),
-                _screens[_currentIndex]
-              ],
-            ),
-          )),
+    return Scaffold(
+//      child: Scaffold(
+      key: _scaffoldKey,
+//        body: SingleChildScrollView(
+      body: ListView(
+        children: <Widget>[
+          AppBar(
+            title:
+                Text('Configuration', style: TextStyle(color: Colors.blueGrey)),
+            iconTheme: IconThemeData(color: Colors.blueGrey),
+            backgroundColor: Colors.white,
+            actions: <Widget>[
+              IconButton(
+                onPressed: () {
+                  signOut();
+                },
+                icon: Icon(Icons.power_settings_new),
+              )
+            ],
+          ),
+          CurvedTabBar(
+              tabsColor: Colors.blue[50],
+              tabSelectedColor: Colors.blueGrey,
+              iconSelectedColor: Colors.white,
+              iconsColor: Colors.blueGrey,
+              numberOfTabs: numberOfTabs,
+              icons: [Icons.phonelink_setup, Icons.image],
+              onTabSelected: (_index) {
+                setState(() {
+                  _currentIndex = _index;
+                  appbarTitle = Text("Configuration");
+                });
+              }),
+          _screens[_currentIndex]
+        ],
+//          ),
+      ),
+//    ),
     );
   }
 

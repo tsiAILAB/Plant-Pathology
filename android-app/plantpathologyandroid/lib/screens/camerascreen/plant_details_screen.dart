@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterapp/services/request/upload_image.dart';
+import 'package:pds/services/request/upload_image.dart';
 
 //void main() => runApp(PlantsDetailsPage());
 

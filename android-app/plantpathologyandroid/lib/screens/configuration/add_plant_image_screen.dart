@@ -3,10 +3,10 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterapp/models/PlantImage.dart';
-import 'package:flutterapp/services/response/plant_image_response.dart';
-import 'package:flutterapp/utils/utils.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pds/models/PlantImage.dart';
+import 'package:pds/services/response/plant_image_response.dart';
+import 'package:pds/utils/utils.dart';
 
 class AddPlantImageScreen extends StatefulWidget {
   @override
@@ -23,92 +23,95 @@ class _AddPlantImageScreenState extends State<AddPlantImageScreen>
   File imageFile;
   final _scaffoldKey = new GlobalKey<ScaffoldState>();
   final cropFormKey = new GlobalKey<FormState>();
+  final TextEditingController _plantNameTextController =
+      new TextEditingController();
   String _plantName;
 
   @override
   Widget build(BuildContext context) {
-    return Scrollbar(
-      child: SafeArea(
-        child: Scaffold(
-          key: _scaffoldKey,
-          resizeToAvoidBottomPadding: false,
-          backgroundColor: Colors.white,
-          body: ListView(
-            children: <Widget>[
-              Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: <Widget>[
-                      Text(
-                        'Add New Crop',
-                        style: TextStyle(
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blueGrey),
-                      ),
-                      SizedBox(
-                        height: 15.0,
-                      ),
-                      OutlineButton(
-                        onPressed: () {
-                          openGallery();
-                        },
-                        child: Text(
-                          'Upload Image Icon',
-                          style: TextStyle(
-                              color: Colors.teal[800], fontSize: 16.0),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 15.0,
-                      ),
-                      decideImageView(),
+//    return Scrollbar(
+//      child: SafeArea(
+    return Scaffold(
+      key: _scaffoldKey,
+      resizeToAvoidBottomPadding: false,
+      backgroundColor: Colors.white,
+      body: Column(
+        children: <Widget>[
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: <Widget>[
+                  Text(
+                    'Add New Crop',
+                    style: TextStyle(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blueGrey),
+                  ),
+                  SizedBox(
+                    height: 15.0,
+                  ),
+                  OutlineButton(
+                    onPressed: () {
+                      openGallery();
+                    },
+                    child: Text(
+                      'Upload Image Icon',
+                      style: TextStyle(color: Colors.blueGrey, fontSize: 16.0),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 15.0,
+                  ),
+                  decideImageView(),
 
 //                    CircleAvatar(
 //                     backgroundImage: Image.file(imageFile),
 //                      radius: 60,
 //                    ),
-                      SizedBox(
-                        height: 15.0,
-                      ),
-                      Form(
-                        key: cropFormKey,
-                        child: Column(
-                          children: <Widget>[
-                            TextFormField(
-                              onSaved: (val) => _plantName = val,
-                              validator: (String inputedApi) {
-                                if (inputedApi.isEmpty) {
-                                  return 'Enter crop name.';
-                                }
-                              },
-                              decoration: InputDecoration(
-                                  prefixIcon: Icon(Icons.border_color),
-                                  border: OutlineInputBorder(),
-                                  labelText: "Enter crop name"),
-                            ),
-                            SizedBox(height: 15.0),
-                            OutlineButton(
-                              onPressed: _saveCrop,
-                              child: Text(
-                                'Add New Crop',
-                                style: TextStyle(
-                                    color: Colors.teal[800], fontSize: 16.0),
-                              ),
-                            ),
-                            SizedBox(height: 50.0),
-                          ],
-                        ),
-                      ),
-                    ],
+                  SizedBox(
+                    height: 15.0,
                   ),
-                ),
+                  Form(
+                    key: cropFormKey,
+                    child: Column(
+                      children: <Widget>[
+                        TextFormField(
+                          controller: _plantNameTextController,
+                          onSaved: (val) => _plantName = val,
+                          validator: (String inputedApi) {
+                            if (inputedApi.isEmpty) {
+                              return 'Enter crop name.';
+                            }
+                          },
+                          decoration: InputDecoration(
+                              prefixIcon: Icon(Icons.border_color,
+                                  color: Colors.blueGrey),
+                              border: OutlineInputBorder(),
+                              labelText: "Enter crop name"),
+                        ),
+                        SizedBox(height: 15.0),
+                        OutlineButton(
+                          onPressed: _saveCrop,
+                          child: Text(
+                            'Add New Crop',
+                            style: TextStyle(
+                                color: Colors.blueGrey, fontSize: 16.0),
+                          ),
+                        ),
+                        SizedBox(height: 50.0),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
+//        ),
+//      ),
     );
   }
 
@@ -174,6 +177,10 @@ class _AddPlantImageScreenState extends State<AddPlantImageScreen>
   void onPlantImageSuccess(PlantImage plantImage) {
     // TODO: implement onPlantImageSuccess
     Utils.showLongToast("Plant Saved");
+    setState(() {
+      _plantNameTextController.clear();
+      imageFile = null;
+    });
     log(plantImage.plantName);
     log(plantImage.imageUrl);
   }

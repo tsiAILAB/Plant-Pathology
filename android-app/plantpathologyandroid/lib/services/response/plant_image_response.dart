@@ -1,5 +1,5 @@
-import 'package:flutterapp/models/PlantImage.dart';
-import 'package:flutterapp/services/request/plant_image_request.dart';
+import 'package:pds/models/PlantImage.dart';
+import 'package:pds/services/request/plant_image_request.dart';
 
 abstract class PlantImageCallBack {
   void onPlantImageSuccess(PlantImage plantImage);

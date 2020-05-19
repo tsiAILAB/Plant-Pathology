@@ -1,5 +1,5 @@
-import 'package:flutterapp/models/user.dart';
-import 'package:flutterapp/services/request/sign_up_request.dart';
+import 'package:pds/models/user.dart';
+import 'package:pds/services/request/sign_up_request.dart';
 
 abstract class SignUpCallBack {
   void onSignUpSuccess(User user);

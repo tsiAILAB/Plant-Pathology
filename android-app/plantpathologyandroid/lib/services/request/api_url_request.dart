@@ -1,5 +1,5 @@
-import 'package:flutterapp/data/CtrQuery/api_url_ctr.dart';
-import 'package:flutterapp/models/ApiUrl.dart';
+import 'package:pds/data/CtrQuery/api_url_ctr.dart';
+import 'package:pds/models/ApiUrl.dart';
 
 class ApiUrlRequest {
   ApiUrlCtr con = new ApiUrlCtr();

@@ -1,5 +1,5 @@
-import 'package:flutterapp/data/CtrQuery/plant_image_ctr.dart';
-import 'package:flutterapp/models/PlantImage.dart';
+import 'package:pds/data/CtrQuery/plant_image_ctr.dart';
+import 'package:pds/models/PlantImage.dart';
 
 class PlantImageRequest {
   PlantImageCtr con = new PlantImageCtr();

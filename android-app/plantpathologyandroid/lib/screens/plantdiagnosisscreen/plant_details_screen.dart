@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterapp/models/plant_diagnosis_response.dart';
+import 'package:pds/models/plant_diagnosis_response.dart';
 
 class PlantDetailsScreen extends StatelessWidget {
   final PlantDiagnosisResponse plantDiagnosisResponse;

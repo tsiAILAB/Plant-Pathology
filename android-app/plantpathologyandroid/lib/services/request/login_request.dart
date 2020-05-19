@@ -1,5 +1,5 @@
-import 'package:flutterapp/data/CtrQuery/login_ctr.dart';
-import 'package:flutterapp/models/user.dart';
+import 'package:pds/data/CtrQuery/login_ctr.dart';
+import 'package:pds/models/user.dart';
 
 class LoginRequest {
   LoginCtr con = new LoginCtr();

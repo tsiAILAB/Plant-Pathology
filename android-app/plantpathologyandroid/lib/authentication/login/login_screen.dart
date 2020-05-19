@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutterapp/authentication/forget_password_screen.dart';
-import 'package:flutterapp/authentication/signup_page.dart';
-import 'package:flutterapp/models/user.dart';
-import 'package:flutterapp/screens/landing_screen.dart';
-import 'package:flutterapp/services/response/login_response.dart';
-import 'package:flutterapp/utils/utils.dart';
+import 'package:pds/authentication/forget_password_screen.dart';
+import 'package:pds/authentication/signup_page_screen.dart';
+import 'package:pds/models/user.dart';
+import 'package:pds/screens/landing_screen.dart';
+import 'package:pds/services/response/login_response.dart';
+import 'package:pds/utils/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {

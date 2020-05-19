@@ -3,13 +3,13 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterapp/models/ApiUrl.dart';
-import 'package:flutterapp/models/PlantImage.dart';
-import 'package:flutterapp/services/apis/all_apis.dart';
-import 'package:flutterapp/services/response/api_url_response.dart';
-import 'package:flutterapp/services/response/plant_image_response.dart';
-import 'package:flutterapp/utils/utils.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pds/models/ApiUrl.dart';
+import 'package:pds/models/PlantImage.dart';
+import 'package:pds/services/apis/all_apis.dart';
+import 'package:pds/services/response/api_url_response.dart';
+import 'package:pds/services/response/plant_image_response.dart';
+import 'package:pds/utils/utils.dart';
 
 class ConfigScreen extends StatefulWidget {
   @override
@@ -33,34 +33,34 @@ class _ConfigScreenState extends State<ConfigScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scrollbar(
-      child: SafeArea(
-        child: Scaffold(
-          key: _scaffoldKey,
-          resizeToAvoidBottomPadding: false,
-          backgroundColor: Colors.white,
-          body: ListView(
-            children: <Widget>[
-              Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: <Widget>[
-                      Text(
-                        'Update API',
-                        style: TextStyle(
-                            fontSize: 20.0,
-                            color: Colors.teal[800],
-                            fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      Form(
-                        key: apiConfigFormKey,
-                        child: Column(
-                          children: <Widget>[
-                            Text("Api Name: ${AllApis.API_NAME}"),
+    return Scaffold(
+//      child: SafeArea(
+//      child: Scaffold(
+      key: _scaffoldKey,
+      resizeToAvoidBottomPadding: false,
+      backgroundColor: Colors.white,
+      body: ListView(
+        children: <Widget>[
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: <Widget>[
+                  Text(
+                    'Update API',
+                    style: TextStyle(
+                        fontSize: 20.0,
+                        color: Colors.teal[800],
+                        fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  Form(
+                    key: apiConfigFormKey,
+                    child: Column(
+                      children: <Widget>[
+                        Text("Api Name: ${AllApis.API_NAME}"),
 //                            TextFormField(
 //                              onSaved: (val) => _apiName = val,
 //                              validator: (String value) {
@@ -73,114 +73,113 @@ class _ConfigScreenState extends State<ConfigScreen>
 //                                  border: OutlineInputBorder(),
 //                                  labelText: "API Name"),
 //                            ),
-                            SizedBox(
-                              height: 15.0,
-                            ),
-                            TextFormField(
-                              onSaved: (val) => _apiUrl = val,
-                              validator: (String value) {
-                                if (value.trim().isEmpty) {
-                                  return 'API Url is required';
-                                }
-                                return "";
-                              },
-                              decoration: InputDecoration(
-                                  prefixIcon: Icon(Icons.border_color),
-                                  border: OutlineInputBorder(),
-                                  labelText: "API URL"),
-                            ),
-                            SizedBox(
-                              height: 15.0,
-                            ),
-                            OutlineButton(
-                              onPressed: _saveApi,
-                              child: Text(
-                                ' Update API ',
-                                style: TextStyle(
-                                    color: Colors.teal[800], fontSize: 16.0),
-                              ),
-                            ),
-                          ],
+                        SizedBox(
+                          height: 15.0,
                         ),
-                      ),
-                    ],
+                        TextFormField(
+                          onSaved: (val) => _apiUrl = val,
+                          validator: (String value) {
+                            if (value.trim().isEmpty) {
+                              return 'API Url is required';
+                            }
+                            return "";
+                          },
+                          decoration: InputDecoration(
+                              prefixIcon: Icon(Icons.border_color),
+                              border: OutlineInputBorder(),
+                              labelText: "API URL"),
+                        ),
+                        SizedBox(
+                          height: 15.0,
+                        ),
+                        OutlineButton(
+                          onPressed: _saveApi,
+                          child: Text(
+                            ' Update API ',
+                            style: TextStyle(
+                                color: Colors.teal[800], fontSize: 16.0),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
+                ],
               ),
-              Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: <Widget>[
-                      Text(
-                        'Add new Crop',
-                        style: TextStyle(
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.teal[800]),
-                      ),
-                      SizedBox(
-                        height: 15.0,
-                      ),
-                      OutlineButton(
-                        onPressed: () {
-                          openGallery();
-                        },
-                        child: Text(
-                          'Upload image icon',
-                          style: TextStyle(
-                              color: Colors.teal[800], fontSize: 16.0),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 15.0,
-                      ),
-                      decideImageView(),
+            ),
+          ),
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: <Widget>[
+                  Text(
+                    'Add new Crop',
+                    style: TextStyle(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.teal[800]),
+                  ),
+                  SizedBox(
+                    height: 15.0,
+                  ),
+                  OutlineButton(
+                    onPressed: () {
+                      openGallery();
+                    },
+                    child: Text(
+                      'Upload image icon',
+                      style: TextStyle(color: Colors.teal[800], fontSize: 16.0),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 15.0,
+                  ),
+                  decideImageView(),
 
 //                    CircleAvatar(
 //                     backgroundImage: Image.file(imageFile),
 //                      radius: 60,
 //                    ),
-                      SizedBox(
-                        height: 15.0,
-                      ),
-                      Form(
-                        key: cropFormKey,
-                        child: Column(
-                          children: <Widget>[
-                            TextFormField(
-                              onSaved: (val) => _plantName = val,
-                              validator: (String inputedApi) {
-                                if (inputedApi.isEmpty) {
-                                  return 'Enter crop name.';
-                                }
-                              },
-                              decoration: InputDecoration(
-                                  prefixIcon: Icon(Icons.border_color),
-                                  border: OutlineInputBorder(),
-                                  labelText: "Enter crop name"),
-                            ),
-                            SizedBox(height: 15.0),
-                            OutlineButton(
-                              onPressed: _saveCrop,
-                              child: Text(
-                                'Add New Crop',
-                                style: TextStyle(
-                                    color: Colors.teal[800], fontSize: 16.0),
-                              ),
-                            ),
-                            SizedBox(height: 50.0),
-                          ],
-                        ),
-                      ),
-                    ],
+                  SizedBox(
+                    height: 15.0,
                   ),
-                ),
+                  Form(
+                    key: cropFormKey,
+                    child: Column(
+                      children: <Widget>[
+                        TextFormField(
+                          onSaved: (val) => _plantName = val,
+                          validator: (String inputedApi) {
+                            if (inputedApi.isEmpty) {
+                              return 'Enter crop name.';
+                            }
+                          },
+                          decoration: InputDecoration(
+                              prefixIcon: Icon(Icons.border_color),
+                              border: OutlineInputBorder(),
+                              labelText: "Enter crop name"),
+                        ),
+                        SizedBox(height: 15.0),
+                        OutlineButton(
+                          onPressed: _saveCrop,
+                          child: Text(
+                            'Add New Crop',
+                            style: TextStyle(
+                                color: Colors.teal[800], fontSize: 16.0),
+                          ),
+                        ),
+                        SizedBox(height: 50.0),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
+//      ),
+//      ),
     );
   }
 
