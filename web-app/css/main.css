@@ -1,0 +1,27 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.bg-blueGray{
+    background-color: #607D8B;
+}
+
+.text-blueGray{
+    color: #607D8B;
+}
+
+.w-80{
+    width: 80%;
+}
+
+/*.formContainer{*/
+/*    position: absolute;*/
+/*    top: 50%;*/
+/*    left: 50%;*/
+/*    transform: translate(-50%, -50%);*/
+/*}*/
+
+/*.formPosition{*/
+/*    position: relative;*/
+/*}*/
