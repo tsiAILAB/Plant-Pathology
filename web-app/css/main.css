@@ -2,6 +2,14 @@
     margin: 0;
     padding: 0;
 }
+input{
+    border-radius: 5px;
+    outline: none;
+    border: .5px solid black;
+}
+input:focus{
+    outline: none;
+}
 
 .bg-blueGray{
     background-color: #607D8B;
@@ -14,6 +22,20 @@
 .w-80{
     width: 80%;
 }
+
+.form-group  .label{
+    /*position: absolute;*/
+
+}
+
+.form-group input:focus{
+    border: 1.5px solid #607D8B;
+    border-radius: 5px;
+}
+
+/*.form-group .form-control:focus + .label{*/
+/*    top: 25px;!important;*/
+/*}*/
 
 /*.formContainer{*/
 /*    position: absolute;*/
