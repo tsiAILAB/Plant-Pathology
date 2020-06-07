@@ -1,0 +1,12 @@
+input[type="file"]{
+    display: none;
+}
+
+.pickImages{
+    height: 50px;
+    width: 175px;
+    padding-top: 12.5px;
+    color: white;
+    border-radius: 25px;
+    background-color: #607D8B;
+}
