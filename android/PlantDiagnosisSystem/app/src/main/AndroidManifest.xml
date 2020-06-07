@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.takepicture.TakePicture"></activity>
+        <activity android:name=".ui.plantdiagnosis.PlantDiagnosis"></activity>
+        <activity android:name=".ui.takepicture.TakePicture" />
         <activity android:name=".ui.signup.SignUp" />
         <activity android:name=".ui.landingpage.LandingPage" />
         <activity

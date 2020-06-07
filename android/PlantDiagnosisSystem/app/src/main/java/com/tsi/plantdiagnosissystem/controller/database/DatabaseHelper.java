@@ -1,8 +1,9 @@
-package com.tsi.plantdiagnosissystem.controller;
+package com.tsi.plantdiagnosissystem.controller.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
 import com.tsi.plantdiagnosissystem.ui.login.LoginActivity;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -16,17 +17,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String API_TABLE_NAME = "api_name";
 
     //loginTable column title
-    String userName = "user_name";
-    String password = "password";
-    String otp = "otp";
-    String isVerified = "is_verified";
-    String role = "role";
+    String userNameColumn = "user_name";
+    String passwordColumn = "password";
+    String otpColumn = "otp";
+    String isVerifiedColumn = "is_verified";
+    String roleColumn = "role";
 
-    //plantImage
-    String name = "name";
-    String url = "url";
+    //plantImage and ApiName
+    String nameColumn = "name";
+    String urlColumn = "url";
 
-    static DatabaseHelper instance() {
+    public static DatabaseHelper instance() {
         return InstanceHolder.INSTANCE;
     }
 
@@ -42,16 +43,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         //creating LOGIN_TABLE
-        String query = "CREATE TABLE " + LOGIN_TABLE_NAME + "(ID INTEGER PRIMARY KEY, " + userName + " TEXT unique, " + password + " TEXT," +
-                " " + isVerified + " TEXT, " + otp + " TEXT, " + role + " TEXT)";
+        String query = "CREATE TABLE " + LOGIN_TABLE_NAME + "(ID INTEGER PRIMARY KEY, " + userNameColumn + " TEXT unique, " + passwordColumn + " TEXT,"
+                + isVerifiedColumn + " TEXT, " + otpColumn + " TEXT, " + roleColumn + " TEXT)";
         db.execSQL(query);
 
         //creating table
-        String query2 = "CREATE TABLE " + PLANT_IMAGE_TABLE_NAME + "(ID INTEGER PRIMARY KEY, " + name + " TEXT, " + url + " TEXT)";
+        String query2 = "CREATE TABLE " + PLANT_IMAGE_TABLE_NAME + "(ID INTEGER PRIMARY KEY, " + nameColumn + " TEXT, " + urlColumn + " TEXT)";
         db.execSQL(query2);
 
         //creating table
-        String query3 = "CREATE TABLE " + API_TABLE_NAME + "(ID INTEGER PRIMARY KEY, " + name + " TEXT, " + url + " TEXT)";
+        String query3 = "CREATE TABLE " + API_TABLE_NAME + "(ID INTEGER PRIMARY KEY, " + nameColumn + " TEXT, " + urlColumn + " TEXT)";
         db.execSQL(query3);
     }
 

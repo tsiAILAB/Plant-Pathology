@@ -1,16 +1,15 @@
-package com.tsi.plantdiagnosissystem.controller;
+package com.tsi.plantdiagnosissystem.controller.database.databasecontroller;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.tsi.plantdiagnosissystem.controller.database.DatabaseHelper;
 import com.tsi.plantdiagnosissystem.data.model.User;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class LoginCtr {
-//    DatabaseHelper con = getDB();
 
     public static final String LOGIN_TABLE_NAME = "user";
 
@@ -20,7 +19,6 @@ public class LoginCtr {
     String otpColumn = "otp";
     String isVerifiedColumn = "is_verified";
     String roleColumn = "role";
-
 
     private static SQLiteDatabase getDB() {
         return DatabaseHelper.instance().getWritableDatabase();
@@ -178,7 +176,7 @@ public class LoginCtr {
         User user = null;
         // select all query
         String select_query = "SELECT *FROM " + LOGIN_TABLE_NAME + " WHERE " + userNameColumn
-                + " = " + userEmail+ " AND " + otpColumn + "=" + otp;
+                + " = " + userEmail + " AND " + otpColumn + "=" + otp;
 
         SQLiteDatabase db = getDB();
         Cursor cursor = db.rawQuery(select_query, null);
@@ -200,7 +198,7 @@ public class LoginCtr {
                     values,
                     this.userNameColumn + " = ?", new String[]{userEmail});
 
-        sqLiteDatabase.close();
+            sqLiteDatabase.close();
         }
 
         String select_query2 = "SELECT *FROM " + LOGIN_TABLE_NAME + " WHERE " + userNameColumn
