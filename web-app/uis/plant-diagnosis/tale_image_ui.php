@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" >
+    <meta id="Viewport" name="viewport" content="initial-scale=1, maximum-scale=1,
+        minimum-scale=1, user-scalable=no">
     <title>PDS-Take Image</title>
     <link rel="stylesheet" href="../../css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/main.css">
