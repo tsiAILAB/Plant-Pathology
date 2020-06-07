@@ -33,6 +33,27 @@ input:focus{
     border-radius: 5px;
 }
 
+.pl-10{
+    padding-left: 50px;
+}
+
+.pr-10{
+    padding-right: 50px;
+}
+
+input[type="file"]{
+    display: none;
+}
+
+.pickImages{
+    height: 50px;
+    width: 175px;
+    padding-top: 12.5px;
+    color: white;
+    border-radius: 25px;
+    background-color: #607D8B;
+}
+
 /*.form-group .form-control:focus + .label{*/
 /*    top: 25px;!important;*/
 /*}*/

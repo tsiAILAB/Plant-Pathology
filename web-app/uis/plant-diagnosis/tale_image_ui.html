@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PDS-Take Image</title>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="../../css/take_image_ui.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<div class="container col-sm-12 col-md-8 col-lg-8">
+    <nav class="d-flex justify-content-between shadow ">
+        <h5 class="text-blueGray p-2">Plant Diagnosis Systems</h5>
+        <div class="float-right">
+            <p class="pt-2 text-blueGray">
+                <i class="fa fa-power-off fa-lg pr-2" aria-hidden="true"></i>
+            </p>
+        </div>
+    </nav>
+</div>
+<div class="container d-flex flex-column justify-content-center" style="margin-top: 2%">
+    <div class="text-center">
+        <img src="../../assets/images/tomato.jpg" style="border-radius: 50%; height: 125px; width: 125px">
+        <p class="text-center" style="font-weight: bold">Tomato</p>
+    </div>
+    <div class="text-center">
+        <h2>Pick Images</h2>
+    </div>
+    <div class="text-center mt-2">
+        <input type="file" id="files" multiple accept="images/*">
+        <label for="files" class="shadow pickImages"><span style="padding-right: 10px"><i class="fa fa-picture-o" aria-hidden="true"></i></span>Pick Images</label>
+    </div>
+</div>
+
+
+</body>
+</html>

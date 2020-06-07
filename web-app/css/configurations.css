@@ -1,0 +1,12 @@
+input[type="file"]{
+    display: none;
+}
+
+.uploadPlantIcon{
+    height: 50px;
+    width: 175px;
+    padding-top: 12.5px;
+    color: #607D8B;
+    background-color: white;
+    border: 1px solid darkgray;
+}
