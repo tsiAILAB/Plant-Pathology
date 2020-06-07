@@ -1,0 +1,70 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+input{
+    border-radius: 5px;
+    outline: none;
+    border: .5px solid black;
+}
+input:focus{
+    outline: none;
+}
+
+.bg-blueGray{
+    background-color: #607D8B;
+}
+
+.text-blueGray{
+    color: #607D8B;
+}
+
+.w-80{
+    width: 80%;
+}
+
+.form-group  .label{
+    /*position: absolute;*/
+
+}
+
+.form-group input:focus{
+    border: 1.5px solid #607D8B;
+    border-radius: 5px;
+}
+
+.pl-10{
+    padding-left: 50px;
+}
+
+.pr-10{
+    padding-right: 50px;
+}
+
+input[type="file"]{
+    display: none;
+}
+
+.pickImages{
+    height: 50px;
+    width: 175px;
+    padding-top: 12.5px;
+    color: white;
+    border-radius: 25px;
+    background-color: #607D8B;
+}
+
+/*.form-group .form-control:focus + .label{*/
+/*    top: 25px;!important;*/
+/*}*/
+
+/*.formContainer{*/
+/*    position: absolute;*/
+/*    top: 50%;*/
+/*    left: 50%;*/
+/*    transform: translate(-50%, -50%);*/
+/*}*/
+
+/*.formPosition{*/
+/*    position: relative;*/
+/*}*/
