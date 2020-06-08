@@ -54,6 +54,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //creating table
         String query3 = "CREATE TABLE " + API_TABLE_NAME + "(ID INTEGER PRIMARY KEY, " + nameColumn + " TEXT, " + urlColumn + " TEXT)";
         db.execSQL(query3);
+
+        addDefaultCrops(db);
+    }
+
+    private void addDefaultCrops(SQLiteDatabase db) {
+        db.execSQL("insert into " + PLANT_IMAGE_TABLE_NAME
+                + " (ID, " + nameColumn + " , " + urlColumn + ")" + "values(1,'Potato','potato.jpg') ;");
+        db.execSQL("insert into " + PLANT_IMAGE_TABLE_NAME
+                + " (ID, " + nameColumn + " , " + urlColumn + ")" + "values(2,'Tomato','tomato.jpg') ;");
+        db.execSQL("insert into " + PLANT_IMAGE_TABLE_NAME
+                + " (ID, " + nameColumn + " , " + urlColumn + ")" + "values(3,'Maize','maze.jpg') ;");
+
     }
 
     //upgrading database

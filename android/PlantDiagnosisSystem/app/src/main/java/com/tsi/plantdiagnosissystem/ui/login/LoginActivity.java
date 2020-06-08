@@ -5,7 +5,9 @@ import android.app.Activity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -28,6 +30,11 @@ import com.tsi.plantdiagnosissystem.ui.landingpage.LandingPage;
 
 public class LoginActivity extends AppCompatActivity {
 
+
+    private static final int PERMISSION_REQUEST_CODE = 200;
+
+    Context CONTEXT;
+
     private LoginViewModel loginViewModel;
     private static LoginActivity instance;
     public static LoginActivity instance() {
@@ -42,6 +49,10 @@ public class LoginActivity extends AppCompatActivity {
 
         loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
+
+
+        CONTEXT = this;
+        requestPermission();
 
         final EditText usernameEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
@@ -136,5 +147,34 @@ public class LoginActivity extends AppCompatActivity {
 
     private void showLoginFailed(@StringRes Integer errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
+    }
+
+
+
+    public void requestPermission(){
+        String[] perms = {"android.permission.ACCESS_NETWORK_STATE", "android.permission.CAMERA", "android.permission.INTERNET",
+                "android.permission.READ_EXTERNAL_STORAGE", "android.permission.WRITE_EXTERNAL_STORAGE"};
+
+        int permsRequestCode = 200;
+        requestPermissions(perms, permsRequestCode);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int permsRequestCode, String[] permissions, int[] grantResults){
+
+        switch(permsRequestCode){
+
+            case 200:
+
+                boolean networkState = grantResults[0]== PackageManager.PERMISSION_GRANTED;
+                boolean cameraAccepted = grantResults[1]==PackageManager.PERMISSION_GRANTED;
+                boolean internet = grantResults[2]==PackageManager.PERMISSION_GRANTED;
+                boolean readExternalStorage = grantResults[3]==PackageManager.PERMISSION_GRANTED;
+                boolean writeExternalStorage = grantResults[4]==PackageManager.PERMISSION_GRANTED;
+
+                break;
+
+        }
+
     }
 }
