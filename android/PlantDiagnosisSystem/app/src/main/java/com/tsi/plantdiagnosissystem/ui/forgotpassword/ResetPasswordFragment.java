@@ -1,4 +1,4 @@
-package com.tsi.plantdiagnosissystem.ui.forgetpassword;
+package com.tsi.plantdiagnosissystem.ui.forgotpassword;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
 
 import com.tsi.plantdiagnosissystem.R;
 

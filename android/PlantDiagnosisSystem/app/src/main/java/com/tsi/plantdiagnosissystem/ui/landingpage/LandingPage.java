@@ -1,14 +1,9 @@
 package com.tsi.plantdiagnosissystem.ui.landingpage;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.Manifest;
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -16,8 +11,6 @@ import com.tsi.plantdiagnosissystem.R;
 import com.tsi.plantdiagnosissystem.controller.database.databasecontroller.PlantImageCtr;
 import com.tsi.plantdiagnosissystem.controller.email.EmailSender;
 import com.tsi.plantdiagnosissystem.data.model.PlantImage;
-import com.tsi.plantdiagnosissystem.ui.login.LoginActivity;
-import com.tsi.plantdiagnosissystem.ui.takepicture.TakePicture;
 
 import java.util.ArrayList;
 
@@ -47,7 +40,7 @@ public class LandingPage extends AppCompatActivity {
         cropListRecyclerView.setHasFixedSize(true);
 
         // use CropRecyclerAdapter
-        cropRecyclerAdapter = new CropRecyclerAdapter(plantImages);
+        cropRecyclerAdapter = new CropRecyclerAdapter(plantImages, this);
         cropListRecyclerView.setAdapter(cropRecyclerAdapter);
 
 //        Intent home = new Intent();

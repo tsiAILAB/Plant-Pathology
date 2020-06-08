@@ -1,5 +1,7 @@
 package com.tsi.plantdiagnosissystem.ui.landingpage;
 
+import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,15 +15,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.tsi.plantdiagnosissystem.R;
 import com.tsi.plantdiagnosissystem.data.model.PlantImage;
+import com.tsi.plantdiagnosissystem.ui.takepicture.TakePicture;
 
 import java.util.ArrayList;
 
 public class CropRecyclerAdapter extends RecyclerView.Adapter<CropRecyclerAdapter.ImageViewHolder> {
 
+    Context context;
     ArrayList<PlantImage> plantImages;
 
-    CropRecyclerAdapter(ArrayList<PlantImage> plantImages) {
+    CropRecyclerAdapter(ArrayList<PlantImage> plantImages, Context context) {
         this.plantImages = plantImages;
+        this.context = context;
     }
 
     @NonNull
@@ -29,7 +34,7 @@ public class CropRecyclerAdapter extends RecyclerView.Adapter<CropRecyclerAdapte
     public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.crop_list_recyclerview_adapter, parent, false);
-        ImageViewHolder imageViewHolder = new ImageViewHolder(view);
+        ImageViewHolder imageViewHolder = new ImageViewHolder(view, context, plantImages);
         return imageViewHolder;
     }
 
@@ -40,7 +45,7 @@ public class CropRecyclerAdapter extends RecyclerView.Adapter<CropRecyclerAdapte
         holder.cropImageView.setImageResource(R.drawable.potato);
 //        holder.cropImageView.setImageURI(Uri.parse(imageUri));
         holder.cropNameTextView.setText(plantImage.getPlantName());
-        Log.d("Crop: ","Name: "+plantImage.getPlantName()+" Url: "+plantImage.getImageUrl());
+        Log.d("Crop: ", "Name: " + plantImage.getPlantName() + " Url: " + plantImage.getImageUrl());
     }
 
     @Override
@@ -48,15 +53,29 @@ public class CropRecyclerAdapter extends RecyclerView.Adapter<CropRecyclerAdapte
         return plantImages.size();
     }
 
-    public static class ImageViewHolder extends RecyclerView.ViewHolder {
+    public static class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         ImageView cropImageView;
         TextView cropNameTextView;
+        Context context;
+        ArrayList<PlantImage> plantImages;
 
-        public ImageViewHolder(@NonNull View itemView) {
+
+        public ImageViewHolder(@NonNull View itemView, Context context, ArrayList<PlantImage> plantImages) {
             super(itemView);
+            this.context = context;
+            this.plantImages = plantImages;
             cropImageView = itemView.findViewById(R.id.cropImageView);
             cropNameTextView = itemView.findViewById(R.id.cropNameTextView);
+        }
+
+        @Override
+        public void onClick(View v) {
+
+            Intent takePicture = new Intent(context, TakePicture.class);
+            takePicture.putExtra("plant_image", plantImages.get(getAdapterPosition()));
+            context.startActivity(takePicture);
+
         }
     }
 }

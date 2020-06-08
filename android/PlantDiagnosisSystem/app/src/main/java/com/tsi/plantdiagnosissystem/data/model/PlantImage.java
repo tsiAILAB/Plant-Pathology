@@ -1,7 +1,9 @@
 package com.tsi.plantdiagnosissystem.data.model;
 
 
-public class PlantImage {
+import java.io.Serializable;
+
+public class PlantImage implements Serializable {
     int id;
     String plantName;
     String imageUrl;

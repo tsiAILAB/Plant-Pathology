@@ -21,7 +21,7 @@
         <activity android:name=".ui.signup.SignUp" />
         <activity android:name=".ui.landingpage.LandingPage" />
         <activity
-            android:name=".ui.forgetpassword.ForgotPassword"
+            android:name=".ui.forgotpassword.ForgotPassword"
             android:label="@string/title_activity_recover_password"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

@@ -1,6 +1,8 @@
 package com.tsi.plantdiagnosissystem.data.model;
 
-public class ApiName {
+import java.io.Serializable;
+
+public class ApiName implements Serializable {
     int id;
     String apiName;
     String apiUrl;

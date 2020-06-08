@@ -1,9 +1,11 @@
 package com.tsi.plantdiagnosissystem.data.model;
 
+import java.io.Serializable;
+
 /**
  * Data class that captures user information for logged in users retrieved from LoginRepository
  */
-public class User {
+public class User implements Serializable {
 
     private String userId;
     private String displayName;

@@ -12,27 +12,54 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
-        android:layout_marginTop="114dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="109dp"
-        android:layout_marginBottom="500dp"
         android:text="Camera"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/galleryButton"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/diseaseImageView" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/plantImageView"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="137dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="166dp"
+        android:layout_marginBottom="16dp"
+        android:padding="10dp"
+        android:src="@drawable/brinjal"
+        app:civ_border_color="#FF000000"
+        app:civ_border_width="2dp"
+        app:civ_circle_background_color="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/diseaseImageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+<!--    <ImageView-->
+<!--        android:id="@+id/2"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="137dp"-->
+<!--        android:layout_marginTop="108dp"-->
+<!--        android:layout_marginEnd="166dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:srcCompat="@drawable/ic_launcher_background" />-->
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/diseaseImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="137dp"
-        android:layout_marginTop="108dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="166dp"
-        android:layout_marginBottom="114dp"
-        app:layout_constraintBottom_toTopOf="@+id/cameraButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/plantImageView"
         app:srcCompat="@drawable/ic_launcher_background" />
 
     <Button
@@ -40,10 +67,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="66dp"
-        android:layout_marginTop="140dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="60dp"
         android:text="Gallery"
         app:layout_constraintEnd_toStartOf="@+id/cameraButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/diseaseImageView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

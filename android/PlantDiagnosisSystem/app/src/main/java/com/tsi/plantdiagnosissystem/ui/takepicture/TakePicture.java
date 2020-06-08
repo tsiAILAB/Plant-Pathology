@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.tsi.plantdiagnosissystem.R;
+import com.tsi.plantdiagnosissystem.data.model.PlantImage;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -23,6 +24,8 @@ public class TakePicture extends AppCompatActivity {
     ImageView pictureImageView;
     Button galleryButton, cameraButton;
 
+    PlantImage plantImage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +33,9 @@ public class TakePicture extends AppCompatActivity {
         pictureImageView = findViewById(R.id.imageView);
         galleryButton = findViewById(R.id.galleryButton);
         cameraButton = findViewById(R.id.cameraButton);
+
+        plantImage = (PlantImage) getIntent().getSerializableExtra("plant_image");
+
 
         galleryButton.setOnClickListener(new View.OnClickListener() {
             @Override
