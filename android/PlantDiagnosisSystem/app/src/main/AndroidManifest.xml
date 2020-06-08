@@ -2,13 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.tsi.plantdiagnosissystem">
 
-
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CAMERA" />
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -16,17 +9,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.plantdiagnosis.PlantDiagnosis"></activity>
+        <activity
+            android:name=".ui.configurations.Configurations"
+            android:label="@string/title_activity_configurations"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".ui.plantdiagnosis.PlantDiagnosis" />
         <activity android:name=".ui.takepicture.TakePicture" />
         <activity android:name=".ui.signup.SignUp" />
         <activity android:name=".ui.landingpage.LandingPage" />
         <activity
             android:name=".ui.forgotpassword.ForgotPassword"
             android:label="@string/title_activity_recover_password"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".ui.configurations.Configurations"
-            android:label="@string/title_activity_configurations"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.login.LoginActivity"
@@ -38,5 +31,11 @@
             </intent-filter>
         </activity>
     </application>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>

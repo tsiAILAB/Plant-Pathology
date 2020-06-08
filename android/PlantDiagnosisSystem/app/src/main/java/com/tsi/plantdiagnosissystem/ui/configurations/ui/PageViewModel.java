@@ -1,4 +1,4 @@
-package com.tsi.plantdiagnosissystem.ui.configurations.ui.main;
+package com.tsi.plantdiagnosissystem.ui.configurations.ui;
 
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;

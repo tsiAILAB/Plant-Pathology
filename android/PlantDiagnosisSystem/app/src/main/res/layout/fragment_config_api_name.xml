@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    tools:context=".ui.configurations.ui.ConfigApiNameFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="10dp"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="@string/hello_blank_fragment"
+        android:textColor="#6699CC"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        tools:text="Update API" />
+
+        <TextView
+            android:id="@+id/apiNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@string/hello_blank_fragment"
+            android:textColor="#004747"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            tools:text="Api Name: UPLOAD_IMAGE" />
+
+        <EditText
+            android:id="@+id/apiUrlEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="API URL"
+            android:inputType="textUri|textPersonName"
+            android:textColor="#6699CC"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/updateApiButton"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:text="Update"
+            android:textColor="#6699CC" />
+
+    </LinearLayout>
+</FrameLayout>

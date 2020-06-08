@@ -1,4 +1,4 @@
-package com.tsi.plantdiagnosissystem.ui.configurations.ui.main;
+package com.tsi.plantdiagnosissystem.ui.configurations.ui;
 
 import android.content.Context;
 

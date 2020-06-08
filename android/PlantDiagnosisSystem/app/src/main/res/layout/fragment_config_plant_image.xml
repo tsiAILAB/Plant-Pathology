@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.configurations.ui.ConfigPlantImageFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="10dp"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@string/hello_blank_fragment"
+            android:textColor="#6699CC"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            tools:text="Add New Crop" />
+
+        <Button
+            android:id="@+id/apiNameButton"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:text="Upload Image Icon"
+            android:textColor="#6699CC" />
+
+        <ImageView
+            android:id="@+id/cropImageView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/brinjal" />
+
+        <TextView
+            android:id="@+id/warningTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@string/hello_blank_fragment"
+            android:textColor="#6A0404"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            tools:text="No crop icon selected!" />
+
+        <EditText
+            android:id="@+id/cropNameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Enter crop name"
+            android:inputType="textUri|textPersonName"
+            android:textColor="#6699CC"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/addNewCropButton"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:text="Add New Crop"
+            android:textColor="#6699CC" />
+
+    </LinearLayout>
+
+</FrameLayout>
