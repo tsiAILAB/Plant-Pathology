@@ -43,11 +43,11 @@ public class SignUpActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Utils.isInternetAvailable()) {
+//                if (Utils.isNetworkConnected(SignUpActivity.this)) {
                     signUp();
-                } else {
-                    Toast.makeText(SignUpActivity.this, AppData.NO_INTERNET, Toast.LENGTH_LONG).show();
-                }
+//                } else {
+//                    Toast.makeText(SignUpActivity.this, AppData.NO_INTERNET, Toast.LENGTH_LONG).show();
+//                }
             }
         });
 
