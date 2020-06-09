@@ -57,8 +57,10 @@ if (isset($_POST['signInSubmit'])){
                 <p class="text-center text-secondary">Already Registered?</p>
                 <div class="text-center">
                     <input type="submit" name="signInSubmit" class="btn text-success w-100" style="font-size: 25px" value="Sign In">
-                    <button type="submit" class="btn text-info w-100">Forgot Password?</button>
-                    <button type="submit" class="btn text-info w-100">New to Plant Diagnosis System? Sign Up</button>
+                    <a href="forgot_password.php" class="text-info w-100" style="text-decoration: none">Forgot Password?</a>
+                </div>
+                <div class="text-center mt-2">
+                    <a href="signup_page.php" class="text-info w-100" style="text-decoration: none">New to Plant Diagnosis System? Sign Up</a>
                 </div>
             </form>
         </div>

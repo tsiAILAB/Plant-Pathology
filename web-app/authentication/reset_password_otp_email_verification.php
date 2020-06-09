@@ -14,15 +14,15 @@ if (isset($_POST['otpSubmit'])){
     $result = mysqli_query($db, $sql); //stores the submitted data into the database table : landing_page_crops
 
 
-   $count = mysqli_num_rows($result);
-   if ($count == 1){
-       $_SESSION['IS_LOGIN'] = $email;
-       mysqli_query($db, "UPDATE user SET verification_status=1 WHERE email='$email'");
+    $count = mysqli_num_rows($result);
+    if ($count == 1){
+        $_SESSION['EMAIL'] = $email;
+        mysqli_query($db, "UPDATE user SET verification_status=1 WHERE email='$email'");
 
-       header('Location: ../uis/landing_page.php');
-   }else{
-       header('Location: signup_otp_email_verification.php');
-   }
+        header('Location:reset_password.php');
+    }else{
+        header('Location: signup_otp_email_verification.php');
+    }
 }
 ?>
 
@@ -45,7 +45,7 @@ if (isset($_POST['otpSubmit'])){
     </nav>
 
     <div class="container col-md-8">
-        <form method="post" action="signup_otp_email_verification.php" style="margin-top: 35%">
+        <form method="post" action="reset_password_otp_email_verification.php" style="margin-top: 35%">
             <div class="form-group">
                 <input name="otp" type="text" id="otpField" required class="input-area">
                 <label for="otpField" class="label">OTP</label>

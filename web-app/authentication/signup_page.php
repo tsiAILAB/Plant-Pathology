@@ -20,7 +20,7 @@
                 mysqli_query($con, $sql);
                 $msg = "<p style='color: #1c7430'>Sign Up Successfully</p>";
 
-                $html = "Your OTP verification code is ".$otp;
+                $html = "Your Signup email OTP verification code is ".$otp;
                 $_SESSION['EMAIL'] =  $email;
                 smtp_mailer($email,'PDS - Email OTP Verification', $html);
 
