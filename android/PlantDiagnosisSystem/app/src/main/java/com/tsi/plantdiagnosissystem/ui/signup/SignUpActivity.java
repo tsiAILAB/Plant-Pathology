@@ -56,6 +56,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void signUp() {
 
+        user = new User();
         String userEmail = userEmailEditText.getText().toString();
         String password = passwordEditText.getText().toString();
 

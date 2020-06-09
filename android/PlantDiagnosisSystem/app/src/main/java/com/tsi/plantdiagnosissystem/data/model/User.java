@@ -17,10 +17,8 @@ public class User implements Serializable {
     private String otp;
     private String role;
 
-    public User(String userId, String displayName) {
-        this.userId = userId;
-        this.displayName = displayName;
-    }
+    public User() {
+        }
 
     public User(String username, String password, String isVerified, String otp, String role) {
         this.username = username;
