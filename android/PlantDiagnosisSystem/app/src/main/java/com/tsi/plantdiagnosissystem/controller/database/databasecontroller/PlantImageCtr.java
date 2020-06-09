@@ -58,6 +58,7 @@ public class PlantImageCtr {
             String url = cursor.getString(2);
             plantImage = new PlantImage(name, url);
         }
+        cursor.close();
         db.close();
         return plantImage;
     }
@@ -94,6 +95,8 @@ public class PlantImageCtr {
                 arrayList.add(user);
             } while (cursor.moveToNext());
         }
+
+        cursor.close();
         db.close();
         return arrayList;
     }

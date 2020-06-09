@@ -130,6 +130,7 @@ public class LoginCtr {
             String role = cursor.getString(5);
             user = new User(userNameDb, passwordDb, isVerified, otp, role);
         }
+        cursor.close();
         db.close();
         return user;
     }
@@ -167,6 +168,7 @@ public class LoginCtr {
             String roleDb = cursor.getString(5);
             user = new User(userNameDb, passwordDb, isVerifiedDb, otpDb, roleDb);
         }
+        cursor.close();
         db.close();
         return user;
     }
@@ -189,6 +191,7 @@ public class LoginCtr {
             String roleDb = cursor.getString(5);
             user = new User(userNameDb, passwordDb, isVerifiedDb, otpDb, roleDb);
         }
+        cursor.close();
         db.close();
         if (user != null) {
             SQLiteDatabase sqLiteDatabase = getDB();
@@ -215,6 +218,7 @@ public class LoginCtr {
             String roleDb = cursor2.getString(5);
             user = new User(userNameDb, passwordDb, isVerifiedDb, otpDb, roleDb);
         }
+        cursor2.close();
         db2.close();
 
         return user;
@@ -239,6 +243,7 @@ public class LoginCtr {
             String roleDb = cursor.getString(5);
             user = new User(userNameDb, passwordDb, isVerifiedDb, otpDb, roleDb);
         }
+        cursor.close();
         db.close();
         if (user != null) {
             SQLiteDatabase sqLiteDatabase = getDB();
@@ -265,6 +270,7 @@ public class LoginCtr {
             String roleDb = cursor2.getString(5);
             user = new User(userNameDb, passwordDb, isVerifiedDb, otpDb, roleDb);
         }
+        cursor2.close();
         db2.close();
 
         return user;
@@ -295,6 +301,7 @@ public class LoginCtr {
             String roleDb = cursor2.getString(5);
             user = new User(userNameDb, passwordDb, isVerifiedDb, otpDb, roleDb);
         }
+        cursor2.close();
         db2.close();
 
         return user;

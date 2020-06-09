@@ -62,6 +62,7 @@ public class ApiNameCtr {
             String url = cursor.getString(2);
             apiName = new ApiName(nameDb, url);
         }
+        cursor.close();
         db.close();
         return apiName;
     }
@@ -98,6 +99,7 @@ public class ApiNameCtr {
                 arrayList.add(user);
             } while (cursor.moveToNext());
         }
+        cursor.close();
         db.close();
         return arrayList;
     }
