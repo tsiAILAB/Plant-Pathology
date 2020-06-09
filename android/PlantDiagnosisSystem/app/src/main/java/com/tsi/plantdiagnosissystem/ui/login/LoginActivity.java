@@ -27,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tsi.plantdiagnosissystem.R;
+import com.tsi.plantdiagnosissystem.data.model.User;
 import com.tsi.plantdiagnosissystem.ui.forgotpassword.ForgotPasswordActivity;
 import com.tsi.plantdiagnosissystem.ui.landingpage.LandingPageActivity;
 import com.tsi.plantdiagnosissystem.ui.signup.SignUpActivity;
@@ -40,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
     private static LoginActivity instance;
+    private User user;
     public static LoginActivity instance() {
         return instance;
     }
@@ -54,7 +56,6 @@ public class LoginActivity extends AppCompatActivity {
 
         loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
-
 
         CONTEXT = this;
         requestPermission();
@@ -139,6 +140,8 @@ public class LoginActivity extends AppCompatActivity {
                 loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
+
+
             }
         });
 

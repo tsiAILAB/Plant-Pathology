@@ -55,22 +55,6 @@ public class LandingPageActivity extends AppCompatActivity {
 //        startActivity(home);
     }
 
-    void sendMail(){
-        Thread thread = new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-                try  {
-                    EmailSender.sendEmail("firozsujan@gmail.com", "PDS", "wdK31");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        thread.start();
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

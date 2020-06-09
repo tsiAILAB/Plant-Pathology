@@ -13,19 +13,23 @@ import java.io.IOException;
 
 public class PlantImageController {
 
-    public static boolean saveImageToDatabase(PlantImage plantImage){
-        boolean isSaved = false;
-        PlantImageCtr plantImageCtr = new PlantImageCtr();
-        plantImageCtr.addPlantImage(plantImage.getPlantName(), plantImage.getImageUrl());
-        return isSaved;
+    public static void saveImageToDatabase(PlantImage plantImage) {
+        try {
+            PlantImageCtr plantImageCtr = new PlantImageCtr();
+            plantImageCtr.addPlantImage(plantImage.getPlantName(), plantImage.getImageUrl());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static File saveImageExternalStorage(Bitmap bmp, String cropName) throws IOException {
         String imageName = String.valueOf(System.currentTimeMillis());
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.JPEG, 60, bytes);
-        File f = new File(Environment.getExternalStorageDirectory()
-                + File.separator + cropName + File.separator + imageName +".jpg");
+        String filePath = Environment.getExternalStorageDirectory()
+                + File.separator + cropName;
+        boolean isFileExist = Utils.createDirectoryIfNotExist(filePath);
+        File f = new File(filePath + File.separator + imageName + ".jpg");
         f.createNewFile();
         FileOutputStream fo = new FileOutputStream(f);
         fo.write(bytes.toByteArray());

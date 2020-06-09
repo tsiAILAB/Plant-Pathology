@@ -24,15 +24,20 @@ public class PlantImageCtr {
 
     //add the new PlantImage
     public void addPlantImage(String name, String url) {
-        SQLiteDatabase sqLiteDatabase = getDB();
-        ContentValues values = new ContentValues();
-        values.put(this.nameColumn, name);
-        values.put(this.urlColumn, url);
+        PlantImage plantImage = getPlantImage(name);
+        if (plantImage == null) {
+            SQLiteDatabase sqLiteDatabase = getDB();
+            ContentValues values = new ContentValues();
+            values.put(this.nameColumn, name);
+            values.put(this.urlColumn, url);
 
-        //inserting new row
-        sqLiteDatabase.insert(PLANT_IMAGE_TABLE_NAME, null, values);
-        //close database connection
-        sqLiteDatabase.close();
+            //inserting new row
+            sqLiteDatabase.insert(PLANT_IMAGE_TABLE_NAME, null, values);
+            //close database connection
+            sqLiteDatabase.close();
+        } else {
+            updatePlantImage(plantImage.getPlantName(), plantImage.getImageUrl());
+        }
     }
 
     //delete the PlantImage

@@ -7,7 +7,7 @@
     tools:context=".ui.signup.SignUpActivity">
 
     <EditText
-        android:id="@+id/emailEditText"
+        android:id="@+id/userEmailEditText"
         android:layout_width="0dp"
         android:layout_height="45dp"
         android:layout_marginStart="24dp"
@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/passworedEditText"
+        android:id="@+id/passwordEditText"
         android:layout_width="0dp"
         android:layout_height="45dp"
         android:layout_marginStart="24dp"
@@ -53,7 +53,7 @@
         app:layout_constraintTop_toBottomOf="@+id/passworedEditText" />
 
     <Button
-        android:id="@+id/submitButton"
+        android:id="@+id/signUpSubmitButton"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="0dp"
         android:layout_height="48dp"

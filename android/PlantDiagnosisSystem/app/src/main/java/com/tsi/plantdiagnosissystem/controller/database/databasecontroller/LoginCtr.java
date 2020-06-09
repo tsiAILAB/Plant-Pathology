@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.tsi.plantdiagnosissystem.controller.AppData;
 import com.tsi.plantdiagnosissystem.controller.database.DatabaseHelper;
 import com.tsi.plantdiagnosissystem.data.model.User;
 
@@ -25,19 +26,25 @@ public class LoginCtr {
     }
 
     //add the new User
-    public void addUser(String userName, String password, String isVerified, String otp, String role) {
-        SQLiteDatabase sqLiteDatabase = getDB();
-        ContentValues values = new ContentValues();
-        values.put(this.userNameColumn, userName);
-        values.put(this.passwordColumn, password);
-        values.put(this.isVerifiedColumn, isVerified);
-        values.put(this.otpColumn, otp);
-        values.put(this.roleColumn, role);
+    public String addUser(String userName, String password, String isVerified, String otp, String role) {
+        User user = getUser(userName);
+        if(user!=null) {
+            SQLiteDatabase sqLiteDatabase = getDB();
+            ContentValues values = new ContentValues();
+            values.put(this.userNameColumn, userName);
+            values.put(this.passwordColumn, password);
+            values.put(this.isVerifiedColumn, isVerified);
+            values.put(this.otpColumn, otp);
+            values.put(this.roleColumn, role);
 
-        //inserting new row
-        sqLiteDatabase.insert(LOGIN_TABLE_NAME, null, values);
-        //close database connection
-        sqLiteDatabase.close();
+            //inserting new row
+            sqLiteDatabase.insert(LOGIN_TABLE_NAME, null, values);
+            //close database connection
+            sqLiteDatabase.close();
+            return AppData.SIGN_UP_SUCCESSFUL;
+        }else {
+            return AppData.USER_ALREADY_EXIST;
+        }
     }
 
     //get the all users
