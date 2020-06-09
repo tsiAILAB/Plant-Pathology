@@ -52,7 +52,7 @@ public class PlantImageCtr {
         PlantImage plantImage = null;
 
         // select all query
-        String select_query = "SELECT * FROM " + PLANT_IMAGE_TABLE_NAME + " WHERE " + nameColumn + " = " + plantName;
+        String select_query = "SELECT * FROM " + PLANT_IMAGE_TABLE_NAME + " WHERE " + nameColumn + " = '" + plantName + "'";
 
         SQLiteDatabase db = getDB();
         Cursor cursor = db.rawQuery(select_query, null);
@@ -75,7 +75,7 @@ public class PlantImageCtr {
         values.put(this.nameColumn, name);
         values.put(this.urlColumn, url);
         //updating row
-        sqLiteDatabase.update(PLANT_IMAGE_TABLE_NAME, values, this.nameColumn + "=" + name, null);
+        sqLiteDatabase.update(PLANT_IMAGE_TABLE_NAME, values, this.nameColumn + "='" + name + "'", null);
         sqLiteDatabase.close();
 
         return getPlantImage(name);

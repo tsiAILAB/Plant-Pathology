@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.tsi.plantdiagnosissystem.controller.AppData;
 import com.tsi.plantdiagnosissystem.ui.login.LoginActivity;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -48,23 +49,44 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(query);
 
         //creating table
-        String query2 = "CREATE TABLE " + PLANT_IMAGE_TABLE_NAME + "(ID INTEGER PRIMARY KEY, " + nameColumn + " TEXT, " + urlColumn + " TEXT)";
+        String query2 = "CREATE TABLE " + PLANT_IMAGE_TABLE_NAME + "(ID INTEGER PRIMARY KEY, " + nameColumn + " TEXT unique, " + urlColumn + " TEXT)";
         db.execSQL(query2);
 
         //creating table
-        String query3 = "CREATE TABLE " + API_TABLE_NAME + "(ID INTEGER PRIMARY KEY, " + nameColumn + " TEXT, " + urlColumn + " TEXT)";
+        String query3 = "CREATE TABLE " + API_TABLE_NAME + "(ID INTEGER PRIMARY KEY, " + nameColumn + " TEXT unique, " + urlColumn + " TEXT)";
         db.execSQL(query3);
 
         addDefaultCrops(db);
     }
 
     private void addDefaultCrops(SQLiteDatabase db) {
+        //default api
+        db.execSQL("insert into " + API_TABLE_NAME
+                + " (ID, " + nameColumn + " , " + urlColumn + ")" + "values(1,'"+AppData.UPLOAD_IMAGE+"','http://testurl.com') ;");
+
+        //PlantImage default data
         db.execSQL("insert into " + PLANT_IMAGE_TABLE_NAME
                 + " (ID, " + nameColumn + " , " + urlColumn + ")" + "values(1,'Potato','potato.jpg') ;");
         db.execSQL("insert into " + PLANT_IMAGE_TABLE_NAME
                 + " (ID, " + nameColumn + " , " + urlColumn + ")" + "values(2,'Tomato','tomato.jpg') ;");
         db.execSQL("insert into " + PLANT_IMAGE_TABLE_NAME
                 + " (ID, " + nameColumn + " , " + urlColumn + ")" + "values(3,'Maize','maze.jpg') ;");
+
+        //admin login
+        db.execSQL("insert into " + LOGIN_TABLE_NAME
+                + " (ID, " + userNameColumn + " , " + passwordColumn
+                +" , " + isVerifiedColumn +" , " + otpColumn +" , " + roleColumn + ")"
+                + "values(1,'ADMIN','123456','true','otp', '"+ AppData.ADMIN_ROLE +"') ;");
+
+        db.execSQL("insert into " + LOGIN_TABLE_NAME
+                + " (ID, " + userNameColumn + " , " + passwordColumn
+                +" , " + isVerifiedColumn +" , " + otpColumn +" , " + roleColumn + ")"
+                + "values(2,'adm','123456','true','otp', '"+ AppData.ADMIN_ROLE +"') ;");
+
+        db.execSQL("insert into " + LOGIN_TABLE_NAME
+                + " (ID, " + userNameColumn + " , " + passwordColumn
+                +" , " + isVerifiedColumn +" , " + otpColumn +" , " + roleColumn + ")"
+                + "values(3,'user','123456','true','otp', '"+ AppData.USER_ROLE +"') ;");
 
     }
 

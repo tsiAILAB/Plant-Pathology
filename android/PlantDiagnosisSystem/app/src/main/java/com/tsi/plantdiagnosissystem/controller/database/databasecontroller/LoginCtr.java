@@ -28,7 +28,7 @@ public class LoginCtr {
     //add the new User
     public String addUser(String userName, String password, String isVerified, String otp, String role) {
         User user = getUser(userName);
-        if(user!=null) {
+        if (user != null) {
             SQLiteDatabase sqLiteDatabase = getDB();
             ContentValues values = new ContentValues();
             values.put(this.userNameColumn, userName);
@@ -42,7 +42,7 @@ public class LoginCtr {
             //close database connection
             sqLiteDatabase.close();
             return AppData.SIGN_UP_SUCCESSFUL;
-        }else {
+        } else {
             return AppData.USER_ALREADY_EXIST;
         }
     }
@@ -51,7 +51,7 @@ public class LoginCtr {
     public User getUser(String userName) {
         User user = null;
         // select query
-        String select_query = "SELECT *FROM " + LOGIN_TABLE_NAME + " WHERE " + this.userNameColumn + " = " + userName;
+        String select_query = "SELECT *FROM " + LOGIN_TABLE_NAME + " WHERE " + this.userNameColumn + " = '" + userName + "'";
 
         SQLiteDatabase db = getDB();
         Cursor cursor = db.rawQuery(select_query, null);
@@ -124,7 +124,7 @@ public class LoginCtr {
         User user = null;
         // select all query
         String select_query = "SELECT *FROM " + LOGIN_TABLE_NAME + " WHERE " + userNameColumn
-                + " = " + userName + " AND " + passwordColumn + "=" + password;
+                + " = '" + userName + "' AND " + passwordColumn + "= '" + password + "'";
 
         SQLiteDatabase db = getDB();
         Cursor cursor = db.rawQuery(select_query, null);
@@ -162,7 +162,7 @@ public class LoginCtr {
         User user = null;
         // select all query
         String select_query = "SELECT *FROM " + LOGIN_TABLE_NAME + " WHERE " + userNameColumn
-                + " = " + userEmail;
+                + " = '" + userEmail + "'";
 
         SQLiteDatabase db = getDB();
         Cursor cursor = db.rawQuery(select_query, null);
@@ -185,7 +185,7 @@ public class LoginCtr {
         User user = null;
         // select all query
         String select_query = "SELECT *FROM " + LOGIN_TABLE_NAME + " WHERE " + userNameColumn
-                + " = " + userEmail + " AND " + otpColumn + "=" + otp;
+                + " = '" + userEmail + "' AND " + otpColumn + "='" + otp + "'";
 
         SQLiteDatabase db = getDB();
         Cursor cursor = db.rawQuery(select_query, null);
@@ -212,7 +212,7 @@ public class LoginCtr {
         }
 
         String select_query2 = "SELECT *FROM " + LOGIN_TABLE_NAME + " WHERE " + userNameColumn
-                + " = " + userEmail;
+                + " = '" + userEmail + "'";
 
         SQLiteDatabase db2 = getDB();
         Cursor cursor2 = db2.rawQuery(select_query2, null);
@@ -237,7 +237,7 @@ public class LoginCtr {
         User user = null;
         // select all query
         String select_query = "SELECT *FROM " + LOGIN_TABLE_NAME + " WHERE " + userNameColumn
-                + " = " + userEmail;
+                + " = '" + userEmail + "'";
 
         SQLiteDatabase db = getDB();
         Cursor cursor = db.rawQuery(select_query, null);
@@ -264,7 +264,7 @@ public class LoginCtr {
         }
 
         String select_query2 = "SELECT *FROM " + LOGIN_TABLE_NAME + " WHERE " + userNameColumn
-                + " = " + userEmail;
+                + " = '" + userEmail + "'";
 
         SQLiteDatabase db2 = getDB();
         Cursor cursor2 = db2.rawQuery(select_query2, null);
@@ -295,7 +295,7 @@ public class LoginCtr {
         sqLiteDatabase.close();
 
         String select_query2 = "SELECT *FROM " + LOGIN_TABLE_NAME + " WHERE " + userNameColumn
-                + " = " + userEmail;
+                + " = '" + userEmail + "'";
 
         SQLiteDatabase db2 = getDB();
         Cursor cursor2 = db2.rawQuery(select_query2, null);

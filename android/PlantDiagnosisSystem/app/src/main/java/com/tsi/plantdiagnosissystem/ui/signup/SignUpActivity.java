@@ -65,36 +65,7 @@ public class SignUpActivity extends AppCompatActivity {
         String status = AuthenticationController.signUpUser(userEmail, password);
 
 
-        callVerifyOtpDialog(SignUpActivity.this);
-    }
-
-    private void callVerifyOtpDialog(final Context context) {
-        new AlertDialog.Builder(context)
-                .setMessage("Do you want diagnosis of this Image?")
-//                .setEditText()
-                // Specifying a listener allows you to take an action before dismissing the dialog.
-                // The dialog is automatically dismissed when a dialog button is clicked.
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Continue with delete operation
-                        User userOtpMatched = AuthenticationController.isValidOtp(user);
-                        if (userOtpMatched != null) {
-                            AuthenticationController.saveLogInInfo(context, userOtpMatched);
-                            Intent home = new Intent(context, LandingPageActivity.class);
-                            home.putExtra("USER", userOtpMatched);
-                            startActivity(home);
-                            finish();
-                        } else {
-                            Toast.makeText(SignUpActivity.this, AppData.TRY_AGAIN, Toast.LENGTH_LONG).show();
-                        }
-                    }
-                })
-
-                // A null listener allows the button to dismiss the dialog and take no further action.
-                .setNegativeButton(android.R.string.no, null)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
-
+        Utils.isValidOtpDialog(SignUpActivity.this, user);
     }
 
 
