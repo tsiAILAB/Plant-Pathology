@@ -15,6 +15,7 @@ import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
@@ -26,7 +27,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tsi.plantdiagnosissystem.R;
-import com.tsi.plantdiagnosissystem.ui.landingpage.LandingPage;
+import com.tsi.plantdiagnosissystem.ui.forgotpassword.ForgotPasswordActivity;
+import com.tsi.plantdiagnosissystem.ui.landingpage.LandingPageActivity;
+import com.tsi.plantdiagnosissystem.ui.signup.SignUpActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -47,6 +50,8 @@ public class LoginActivity extends AppCompatActivity {
 
         instance = this;
 
+        getSupportActionBar().setTitle(Html.fromHtml("<font color='#6699CC'>Plant Diagnosis System </font>"));
+
         loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 
@@ -57,6 +62,8 @@ public class LoginActivity extends AppCompatActivity {
         final EditText usernameEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
         final Button loginButton = findViewById(R.id.login);
+        final Button forgotPasswordButton = findViewById(R.id.forgotPasswordButton);
+        final Button signUpButton = findViewById(R.id.signUpButton);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
@@ -134,6 +141,24 @@ public class LoginActivity extends AppCompatActivity {
                         passwordEditText.getText().toString());
             }
         });
+
+        forgotPasswordButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent home = new Intent();
+                home.setClass(LoginActivity.this, ForgotPasswordActivity.class);
+                startActivity(home);
+            }
+        });
+
+        signUpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent home = new Intent();
+                home.setClass(LoginActivity.this, SignUpActivity.class);
+                startActivity(home);
+            }
+        });
     }
 
     private void updateUiWithUser(LoggedInUserView model) {
@@ -141,7 +166,7 @@ public class LoginActivity extends AppCompatActivity {
         // TODO : initiate successful logged in experience
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
         Intent home = new Intent();
-        home.setClass(LoginActivity.this, LandingPage.class);
+        home.setClass(LoginActivity.this, LandingPageActivity.class);
         startActivity(home);
     }
 

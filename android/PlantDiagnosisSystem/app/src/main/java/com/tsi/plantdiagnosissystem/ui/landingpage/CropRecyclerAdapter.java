@@ -2,7 +2,6 @@ package com.tsi.plantdiagnosissystem.ui.landingpage;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.tsi.plantdiagnosissystem.R;
 import com.tsi.plantdiagnosissystem.data.model.PlantImage;
-import com.tsi.plantdiagnosissystem.ui.takepicture.TakePicture;
+import com.tsi.plantdiagnosissystem.ui.takepicture.TakePictureActivity;
 
 import java.util.ArrayList;
 
@@ -67,12 +66,13 @@ public class CropRecyclerAdapter extends RecyclerView.Adapter<CropRecyclerAdapte
             this.plantImages = plantImages;
             cropImageView = itemView.findViewById(R.id.cropImageView);
             cropNameTextView = itemView.findViewById(R.id.cropNameTextView);
+            itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-
-            Intent takePicture = new Intent(context, TakePicture.class);
+            Log.d("ImagePosition", "ImagePosition: "+getAdapterPosition());
+            Intent takePicture = new Intent(context, TakePictureActivity.class);
             takePicture.putExtra("plant_image", plantImages.get(getAdapterPosition()));
             context.startActivity(takePicture);
 

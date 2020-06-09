@@ -17,7 +17,7 @@
     <string name="tab_text_2">Tab 2</string>
     <!--Strings used for ForgetPassword-->
     <string name="title_activity_recover_password">RecoverPassword</string>
-    <!--Strings used for SignUp-->
+    <!--Strings used for SignUpActivity-->
     <string name="email">Email</string>
     <string name="password">Enter Password</string>
     <string name="confirm_password">Confirm Password</string>

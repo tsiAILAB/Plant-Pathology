@@ -10,15 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.configurations.Configurations"
-            android:label="@string/title_activity_configurations"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".ui.plantdiagnosis.PlantDiagnosis" />
-        <activity android:name=".ui.takepicture.TakePicture" />
-        <activity android:name=".ui.signup.SignUp" />
-        <activity android:name=".ui.landingpage.LandingPage" />
+            android:name=".ui.configurations.ConfigurationsActivity"
+            android:label="@string/title_activity_configurations" />
+
+        <activity android:name=".ui.plantdiagnosis.PlantDiagnosisActivity" />
+        <activity android:name=".ui.takepicture.TakePictureActivity" />
+        <activity android:name=".ui.signup.SignUpActivity" />
+        <activity android:name=".ui.landingpage.LandingPageActivity" />
         <activity
-            android:name=".ui.forgotpassword.ForgotPassword"
+            android:name=".ui.forgotpassword.ForgotPasswordActivity"
             android:label="@string/title_activity_recover_password"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -30,12 +30,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <meta-data
+            android:name="com.google.android.actions"
+            android:resource="@menu/menu_main" />
     </application>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 </manifest>

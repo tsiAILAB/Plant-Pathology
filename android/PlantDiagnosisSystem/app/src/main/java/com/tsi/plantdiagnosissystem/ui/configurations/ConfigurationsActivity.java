@@ -1,6 +1,7 @@
 package com.tsi.plantdiagnosissystem.ui.configurations;
 
 import android.os.Bundle;
+import android.text.Html;
 
 import com.google.android.material.tabs.TabLayout;
 
@@ -10,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.tsi.plantdiagnosissystem.R;
 import com.tsi.plantdiagnosissystem.ui.configurations.ui.SectionsPagerAdapter;
 
-public class Configurations extends AppCompatActivity {
+public class ConfigurationsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +22,10 @@ public class Configurations extends AppCompatActivity {
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
+
+        //actonBar
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(Html.fromHtml("<font color='#6699CC'>Configurations</font>"));
 
     }
 }
