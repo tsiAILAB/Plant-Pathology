@@ -22,7 +22,7 @@ if (isset($_SESSION['IS_LOGIN'])){
             <h5 class="text-blueGray p-2">Plant Selection</h5>
             <div class="float-right">
                 <p class="pt-2 text-blueGray">
-                    <i class="fa fa-cog fa-lg" aria-hidden="true"></i>
+                    <a href="configuration/configurations_ui.php" class="text-blueGray" style="text-decoration: none"><i class="fa fa-cog fa-lg" aria-hidden="true"></i></a>
                     <span class="text-blueGray">
                         <a href="../authentication/logout.php" class="text-blueGray"><i class="fa fa-power-off fa-lg pr-2 pl-4" aria-hidden="true"></i></a>
                     </span>
@@ -31,26 +31,35 @@ if (isset($_SESSION['IS_LOGIN'])){
         </nav>
     </div>
     <div class="container d-flex flex-column justify-content-center">
+        <a href="plant-diagnosis/tale_image_ui.php" style="text-decoration: none">
+            <div class="text-center">
+                <img src="../assets/images/tomato.jpg" style="border-radius: 50%; height: 125px; width: 125px">
+                <p class="text-center text-secondary" style="font-weight: bold">Tomato</p>
+            </div>
+        </a>
         <div class="text-center">
-            <img src="../assets/images/tomato.jpg" style="border-radius: 50%; height: 125px; width: 125px">
-            <p class="text-center" style="font-weight: bold">Tomato</p>
+            <button style="background-color: transparent; border: none;" class="text-secondary">
+                <img src="../assets/images/potato.jpg" style="border-radius: 50%; height: 125px; width: 125px">
+                <p class="text-center" style="font-weight: bold">Potato</p>
+            </button>
         </div>
-        <div class="text-center">
-            <img src="../assets/images/potato.jpg" style="border-radius: 50%; height: 125px; width: 125px">
-            <p class="text-center" style="font-weight: bold">Potato</p>
-        </div>
-        <div class="text-center">
-            <img src="../assets/images/maze.jpg" style="border-radius: 50%; height: 125px; width: 125px">
-            <p class="text-center" style="font-weight: bold">Maze</p>
-        </div>
+        <a href="plant-diagnosis/tale_image_ui.php" style="text-decoration: none">
+            <div class="text-center">
+                <img src="../assets/images/maze.jpg" style="border-radius: 50%; height: 125px; width: 125px">
+                <p class="text-center text-secondary" style="font-weight: bold">Maze</p>
+            </div>
+        </a>
         <?php
         $db = mysqli_connect("localhost", "root", "", "pds_web");
         $sql = "SELECT * FROM landing_page_crops";
         $result = mysqli_query($db, $sql);
         while ($row = mysqli_fetch_array($result)) {
+            echo "<a href=\"plant-diagnosis/tale_image_ui.php\" style=\"text-decoration: none\">";
             echo " <div class=\"text-center\">";
             echo "<img src='../assets/images/".$row['crop_icon_image']."' style=\"border-radius: 50%; height: 125px; width: 125px\">";
-            echo "<p class=\"text-center\" style=\"font-weight: bold\">".$row['crop_name']."</p>";
+            echo "<p class=\"text-center text-secondary\" style=\"font-weight: bold\">".$row['crop_name']."</p>";
+            echo "</div>";
+            echo "</a>";
         }
         ?>
     </div>

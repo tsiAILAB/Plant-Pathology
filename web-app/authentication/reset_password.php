@@ -1,3 +1,38 @@
+<?php
+session_start();
+$msg = "";
+if (isset($_POST['submit'])){
+
+    //connect to databse
+    $db = mysqli_connect("localhost", "root", "", "pds_web");
+
+    $password = $_POST['password'];
+    $confirmPassword = $_POST['confirmPassword'];
+    $email = $_SESSION['EMAIL'];
+
+    if ($password === $confirmPassword){
+        $sql = "UPDATE user SET password='$password' WHERE email='$email'";
+        mysqli_query($db, $sql);
+
+        header('Location:login_page.php');
+    }else{
+        $msg = "<p class='text-danger'>Password did not match</p>";
+    }
+
+
+//    $count = mysqli_num_rows($result);
+//    if ($count == 1){
+////        $_SESSION['IS_LOGIN'] = $email;
+//        mysqli_query($db, "UPDATE user SET verification_status=1 WHERE email='$email'");
+//
+//        header('Location: ../uis/landing_page.php');
+//    }else{
+//        header('Location: signup_otp_email_verification.php');
+//    }
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,23 +57,25 @@
     </nav>
 
     <div class="container" style="margin-top: 22.5%">
-        <form>
+        <form method="post" action="reset_password.php">
             <div class="form-group">
-                <input type="text" id="newPassword" required class="input-area">
+                <input type="text" name="password" id="newPassword" required class="input-area">
                 <label for="newPassword" class="label">Password</label>
                 <span class="inputFieldIconStyle"><i class="material-icons text-secondary">security</i></span>
+                <p style="display: block"><?php echo $msg?></p>
             </div>
             <div class="form-group" style="margin-top: 15px">
-                <input type="text" id="confirmpassword" required class="input-area">
+                <input type="text" name="confirmPassword" id="confirmpassword" required class="input-area">
                 <label for="confirmpassword" class="label">New Password</label>
                 <span class="inputFieldIconStyle"><i class="material-icons text-secondary">security</i></span>
+                <p style="display: block"><?php echo $msg?></p>
             </div>
 <!--            <input type="email" id="newPassword" class="w-100" style="height: 45px; padding-left: 15px" placeholder="New Password">-->
 <!--            <label for="newPassword" class="label1 position-relative" style="bottom: 34px; left: 16px">Email</label>-->
 <!--            <input type="text" id="newConfirmPassword" class="w-100 mt-3" style="height: 45px; padding-left: 15px" placeholder="Confirm Password">-->
 <!--            <label for="newConfirmPassword" class="label">Email</label>-->
             <div class="text-center mt-3">
-                <button class="btn rounded-btn text-blueGray w-25" style="border: 1px solid lightslategray; font-weight: bold">Submit</button>
+                <input type="submit" name="submit" class="btn rounded-btn text-blueGray w-25" style="border: 1px solid lightslategray; font-weight: bold" value="Submit">
             </div>
         </form>
     </div>

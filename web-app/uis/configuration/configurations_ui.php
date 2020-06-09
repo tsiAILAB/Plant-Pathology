@@ -1,27 +1,33 @@
 <?php
-    $msg = "";
-    if (isset($_POST['addNewCrop'])){
-        //the path to store the uploaded image
-        $target = "../../assets/images/".basename($_FILES['selectIconImage']['name']);
+    session_start();
+    if (isset($_SESSION['IS_LOGIN'])) {
 
-        //connect to databse
-        $db = mysqli_connect("localhost", "root", "", "pds_web");
+        $msg = "";
+        if (isset($_POST['addNewCrop'])) {
+            //the path to store the uploaded image
+            $target = "../../assets/images/" . basename($_FILES['selectIconImage']['name']);
 
-        //get all the submitted data from the form
-        $cropIconImage = $_FILES['selectIconImage']['name'];
-        $cropName = $_POST['cropName'];
+            //connect to databse
+            $db = mysqli_connect("localhost", "root", "", "pds_web");
 
-        $sql = "INSERT INTO landing_page_crops (crop_icon_image, crop_name) VALUES ('$cropIconImage', '$cropName')";
-        mysqli_query($db, $sql); //stores the submitted data into the database table : landing_page_crops
+            //get all the submitted data from the form
+            $cropIconImage = $_FILES['selectIconImage']['name'];
+            $cropName = $_POST['cropName'];
 
-        //Move the uploaded image into the folder: assets/images
-        if (move_uploaded_file($_FILES['selectIconImage']['tmp_name'], $target)) {
-            $msg = "Crop Upladed successfully";
-        }else{
-            $msg = "Somethings went wrong";
+            $sql = "INSERT INTO landing_page_crops (crop_icon_image, crop_name) VALUES ('$cropIconImage', '$cropName')";
+            mysqli_query($db, $sql); //stores the submitted data into the database table : landing_page_crops
+
+            //Move the uploaded image into the folder: assets/images
+            if (move_uploaded_file($_FILES['selectIconImage']['tmp_name'], $target)) {
+                $msg = "Crop Upladed successfully";
+            } else {
+                $msg = "Somethings went wrong";
+            }
         }
-    }
-?>
+    ?>
+
+
+
 
 
 <!DOCTYPE html>
@@ -56,9 +62,9 @@
         <h5 class="text-blueGray p-2">Plant Selection</h5>
         <div class="float-right">
             <p class="pt-2 text-blueGray">
-                <i class="fa fa-cog fa-lg" aria-hidden="true"></i>
+<!--                <i class="fa fa-cog fa-lg" aria-hidden="true"></i>-->
                 <span class="text-blueGray">
-                    <i class="fa fa-power-off fa-lg pr-2 pl-4" aria-hidden="true"></i>
+                    <a href="../../authentication/logout.php" class="text-blueGray"><i class="fa fa-power-off fa-lg pr-2 pl-4" aria-hidden="true"></i></a>
                 </span>
             </p>
         </div>
@@ -145,3 +151,9 @@
 </script>
 </body>
 </html>
+
+<?php }else{
+header('Location:../authentication/login_page.php');
+die();
+}
+?>
