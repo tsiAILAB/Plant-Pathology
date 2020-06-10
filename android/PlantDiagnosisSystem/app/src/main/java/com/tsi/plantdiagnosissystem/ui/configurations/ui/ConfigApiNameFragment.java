@@ -2,14 +2,23 @@ package com.tsi.plantdiagnosissystem.ui.configurations.ui;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.tsi.plantdiagnosissystem.R;
+import com.tsi.plantdiagnosissystem.controller.ApiNameController;
+import com.tsi.plantdiagnosissystem.controller.AppData;
+import com.tsi.plantdiagnosissystem.data.model.ApiName;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,6 +37,10 @@ public class ConfigApiNameFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    TextView apiNameTextView;
+    EditText apiUrlEditText;
+    Button updateApiButton;
 
     public ConfigApiNameFragment() {
         // Required empty public constructor
@@ -71,5 +84,28 @@ public class ConfigApiNameFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_config_api_name, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        apiUrlEditText = view.findViewById(R.id.apiUrlEditText);
+        apiNameTextView = view.findViewById(R.id.apiNameTextView);
+        updateApiButton = view.findViewById(R.id.updateApiButton);
+
+        updateApiButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = AppData.UPLOAD_IMAGE;
+                String apiUrl = apiUrlEditText.getText().toString().trim();
+                if(apiUrl != null && apiUrl != "") {
+                    ApiName apiName = new ApiName(name, apiUrl);
+                    ApiNameController.saveImageToDatabase(apiName);
+                } else {
+                    Toast.makeText(getActivity().getApplicationContext(), "API URL cannot be empty!", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 }

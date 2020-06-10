@@ -18,7 +18,7 @@
         android:padding="10dp"
         android:src="@drawable/brinjal"
         app:civ_border_width="2dp"
-        app:civ_border_color="#FF000000"
+        app:civ_border_color="#6699CC"
         app:civ_circle_background_color="#FFFFFF"/>
 
     <TextView
@@ -26,7 +26,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textColor="#FF000000"
+        android:textColor="#6699CC"
+        android:textStyle="bold"
         android:text="Brinjal"/>
 
 </LinearLayout>

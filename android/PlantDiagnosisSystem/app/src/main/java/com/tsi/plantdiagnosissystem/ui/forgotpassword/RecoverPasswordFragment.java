@@ -46,12 +46,18 @@ public class RecoverPasswordFragment extends Fragment {
         getVerificationCodeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                user = new User();
-                user.setUsername(emailEditText.getText().toString());
+                String userName = emailEditText.getText().toString().trim();
+
+                if (userName != null && userName != ""){
+                    user = new User();
+                user.setUsername(userName);
                 AuthenticationController.recoverPassword(user.getUsername());
 
                 //call alertDialog
                 isValidOtpDialog();
+            }else {
+                    Toast.makeText(context, "User name cannot be empty!", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
