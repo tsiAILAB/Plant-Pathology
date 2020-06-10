@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.tsi.plantdiagnosissystem.R;
 import com.tsi.plantdiagnosissystem.controller.PlantImageController;
+import com.tsi.plantdiagnosissystem.controller.Utils;
 import com.tsi.plantdiagnosissystem.controller.database.databasecontroller.PlantImageCtr;
 import com.tsi.plantdiagnosissystem.controller.email.EmailSender;
 import com.tsi.plantdiagnosissystem.data.model.PlantImage;
@@ -32,6 +33,15 @@ public class LandingPageActivity extends AppCompatActivity {
 
         //actonBar
         getSupportActionBar().setTitle(Html.fromHtml("<font color='#6699CC'>Select Crop</font>"));
+
+        //copyAsset
+
+        String[] assetImageNames = {"early_blight.JPG", "healthy_leaf.JPG", "late_blight.JPG", "pillow.JPG",
+                "maze.jpg", "potato.jpg", "tomato.jpg"};
+        for (int i = 0; i < assetImageNames.length; i++) {
+            Utils.copyAssetToSdCard(this, assetImageNames[i]);
+        }
+
 
         plantImages = PlantImageController.getPlantImages();
 

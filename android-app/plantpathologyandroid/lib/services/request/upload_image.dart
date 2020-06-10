@@ -75,7 +75,7 @@ class _UploadImageState extends State<UploadImage> {
 //      Utils utils = new Utils();
         utils.saveImage(imageFileForUpload, fileName, plantName);
 
-        Utils.showLongToast("Image upload sucessful!");
+        Utils.showLongToast("Image upload successful!");
       }).catchError((err) {
         print(err);
 

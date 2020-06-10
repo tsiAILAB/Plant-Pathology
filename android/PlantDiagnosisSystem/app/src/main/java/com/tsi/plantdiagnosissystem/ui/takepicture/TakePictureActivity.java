@@ -3,12 +3,14 @@ package com.tsi.plantdiagnosissystem.ui.takepicture;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.MenuItem;
@@ -18,9 +20,12 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.tsi.plantdiagnosissystem.R;
+import com.tsi.plantdiagnosissystem.controller.AuthenticationController;
+import com.tsi.plantdiagnosissystem.controller.ImageUploadService;
 import com.tsi.plantdiagnosissystem.controller.PlantImageController;
 import com.tsi.plantdiagnosissystem.controller.Utils;
 import com.tsi.plantdiagnosissystem.data.model.PlantImage;
+import com.tsi.plantdiagnosissystem.data.model.User;
 import com.tsi.plantdiagnosissystem.ui.plantdiagnosis.PlantDiagnosisActivity;
 
 import java.io.File;
@@ -36,7 +41,9 @@ public class TakePictureActivity extends AppCompatActivity {
 
     Context context;
 
+    String imageUploadFilePath, uploadImageFileName;
     PlantImage plantImage = null;
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +58,7 @@ public class TakePictureActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(Html.fromHtml("<font color='#6699CC'>Take Picture</font>"));
 
+        user = AuthenticationController.getLoginInfo(this);
         plantImage = (PlantImage) getIntent().getSerializableExtra("plant_image");
 
         galleryButton.setOnClickListener(new View.OnClickListener() {
@@ -87,7 +95,8 @@ public class TakePictureActivity extends AppCompatActivity {
         if (requestCode == GALLERY_REQUEST && resultCode == RESULT_OK) {
             try {
                 final Uri imageUri = data.getData();
-                final String filename = Utils.getFileName(TakePictureActivity.this, imageUri);
+                imageUploadFilePath = imageUri.getPath();
+                uploadImageFileName = Utils.getFileName(TakePictureActivity.this, imageUri);
                 final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                 final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
                 pictureImageView.setImageBitmap(selectedImage);
@@ -102,17 +111,15 @@ public class TakePictureActivity extends AppCompatActivity {
                                 // The dialog is automatically dismissed when a dialog button is clicked.
                                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
-                                        // Continue with delete operation
-                                        Intent plantDiagnosis = new Intent(context, PlantDiagnosisActivity.class);
-                                        plantDiagnosis.putExtra("file_name", filename);
-                                        plantDiagnosis.putExtra("image_uri", imageUri);
-                                        startActivity(plantDiagnosis);
+                                        //go to plantDiagnosis
+                                        goToPlantDiagnosis(uploadImageFileName, imageUri);
+
                                     }
                                 })
 
                                 // A null listener allows the button to dismiss the dialog and take no further action.
                                 .setNegativeButton(android.R.string.no, null)
-                                .setIcon(android.R.drawable.ic_dialog_alert)
+//                                .setIcon(android.R.drawable.ic_dialog_alert)
                                 .show();
 
                     }
@@ -127,7 +134,6 @@ public class TakePictureActivity extends AppCompatActivity {
             final Bitmap photo = (Bitmap) data.getExtras().get("data");
             pictureImageView.setImageBitmap(photo);
 
-
             uploadImageButton.setVisibility(View.VISIBLE);
             uploadImageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -139,9 +145,21 @@ public class TakePictureActivity extends AppCompatActivity {
                             // The dialog is automatically dismissed when a dialog button is clicked.
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-                                    // Continue with delete operation
-                                    Intent plantDiagnosis = new Intent(context, PlantDiagnosisActivity.class);
-                                    startActivity(plantDiagnosis);
+                                    File file;
+                                    String filename;
+                                    Uri imageUri;
+                                    try {
+                                        //save image
+                                        file = PlantImageController.saveImageExternalStorage(TakePictureActivity.this, photo, plantImage.getPlantName());
+                                        //getFilePath
+                                        imageUploadFilePath = file.getAbsolutePath();
+                                        imageUri = Uri.parse(imageUploadFilePath);
+                                        uploadImageFileName = Utils.getFileName(TakePictureActivity.this, imageUri);
+                                        //go to plantDiagnosis
+                                        goToPlantDiagnosis(uploadImageFileName, imageUri);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
                                 }
                             })
 
@@ -152,12 +170,10 @@ public class TakePictureActivity extends AppCompatActivity {
                                     try {
                                         PlantImageController.saveImageExternalStorage(TakePictureActivity.this, photo, plantImage.getPlantName());
                                         Toast.makeText(context, "Image Saved!", Toast.LENGTH_LONG).show();
-
-
                                     } catch (FileNotFoundException e) {
                                         e.printStackTrace();
                                         Toast.makeText(TakePictureActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
-                                    } catch (IOException e){
+                                    } catch (IOException e) {
                                         e.printStackTrace();
                                         Toast.makeText(TakePictureActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
 
@@ -174,6 +190,14 @@ public class TakePictureActivity extends AppCompatActivity {
         }
     }
 
+    //start plant Diagnosis activity
+    private void goToPlantDiagnosis(String filename, Uri imageUri) {
+        Intent plantDiagnosis = new Intent(context, PlantDiagnosisActivity.class);
+        plantDiagnosis.putExtra("file_name", filename);
+        plantDiagnosis.putExtra("image_uri", imageUri);
+        startActivity(plantDiagnosis);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -184,6 +208,33 @@ public class TakePictureActivity extends AppCompatActivity {
 
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    //imageUpload AsyncTask
+    public class uploadToServer extends AsyncTask<Void, Void, String> {
+
+        private ProgressDialog pd = new ProgressDialog(TakePictureActivity.this);
+
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pd.setMessage("Wait image uploading!");
+            pd.show();
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+
+            File imageFile = new File(imageUploadFilePath);
+
+            ImageUploadService.uploadImage(user, imageFile, uploadImageFileName);
+            return "Success";
+        }
+
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            pd.hide();
+            pd.dismiss();
         }
     }
 }

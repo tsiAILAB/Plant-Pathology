@@ -14,4 +14,9 @@ public class ApiNameController {
             e.printStackTrace();
         }
     }
+
+    public static ApiName getImageUploadApi(){
+        ApiNameCtr apiNameCtr = new ApiNameCtr();
+        return apiNameCtr.getApiName(AppData.UPLOAD_IMAGE);
+    }
 }

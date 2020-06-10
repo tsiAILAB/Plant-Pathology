@@ -1,17 +1,19 @@
 package com.tsi.plantdiagnosissystem.ui.login;
 
+import com.tsi.plantdiagnosissystem.data.model.User;
+
 /**
  * Class exposing authenticated user details to the UI.
  */
 class LoggedInUserView {
-    private String userName;
+    private User user;
     //... other data fields that may be accessible to the UI
 
-    LoggedInUserView(String userName) {
-        this.userName = userName;
+    LoggedInUserView(User user) {
+        this.user = user;
     }
 
-    String getUserName() {
-        return userName;
+    User getUser() {
+        return user;
     }
 }

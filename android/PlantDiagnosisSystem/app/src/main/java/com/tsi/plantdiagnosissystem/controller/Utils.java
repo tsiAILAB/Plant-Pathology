@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -59,7 +60,12 @@ public class Utils {
         OutputStream out = null;
         try {
             in = assetManager.open(filename);
-            String newFileName = "/data/data/" + context.getPackageName() + "/" + filename;
+//            String newFileName = "/data/data/" + context.getPackageName() + "/" + filename;
+
+            String filePath = Environment.getExternalStorageDirectory() + context.getPackageName();
+            boolean isFileExist = Utils.createDirectoryIfNotExist(filePath);
+
+            String newFileName = filePath + File.separator +  filename;
             out = new FileOutputStream(newFileName);
 
             byte[] buffer = new byte[1024];
@@ -228,6 +234,9 @@ public class Utils {
 
         //Adding our dialog box to the view of alert dialog
         alert.setView(confirmDialog);
+
+        //adding title
+        alert.setTitle("OTP Verification!");
 
         //Creating an alert dialog
         final AlertDialog alertDialog = alert.create();

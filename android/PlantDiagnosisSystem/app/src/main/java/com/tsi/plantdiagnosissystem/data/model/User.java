@@ -13,9 +13,10 @@ public class User implements Serializable {
     private String isVerified;
     private String otp;
     private String role;
+    private boolean isLoggedIn;
 
     public User() {
-        }
+    }
 
     public User(String username, String password, String isVerified, String otp, String role) {
         this.username = username;
@@ -72,5 +73,14 @@ public class User implements Serializable {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+
+    public boolean isLoggedIn() {
+        return isLoggedIn;
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        isLoggedIn = loggedIn;
     }
 }

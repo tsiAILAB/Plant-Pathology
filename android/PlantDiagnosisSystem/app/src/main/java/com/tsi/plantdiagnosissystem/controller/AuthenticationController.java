@@ -23,6 +23,17 @@ public class AuthenticationController {
         editor.commit();
     }
 
+    public static User getLoginInfo(Context context){
+        User user = new User();
+        SharedPreferences sharedPref = context.getSharedPreferences(AppData.PDS_SHARED_PREFERENCE, Context.MODE_PRIVATE);
+        user.setLoggedIn(sharedPref.getBoolean(AppData.LOGIN_INFO_SHARED_PREFERENCE, false));
+        user.setUsername(sharedPref.getString(AppData.USER_EMAIL_SHARED_PREFERENCE, null));
+        user.setIsVerified(String.valueOf(sharedPref.getBoolean(AppData.IS_VERIFIED_SHARED_PREFERENCE, false)));
+        user.setRole(sharedPref.getString(AppData.ROLE_SHARED_PREFERENCE, null));
+
+        return user;
+    }
+
     //check authentication info
     public static User logInUser(String userEmail, String password) {
         LoginCtr loginCtr = new LoginCtr();

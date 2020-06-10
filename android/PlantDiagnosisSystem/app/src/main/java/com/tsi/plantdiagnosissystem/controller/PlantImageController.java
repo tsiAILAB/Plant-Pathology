@@ -28,8 +28,8 @@ public class PlantImageController {
         String imageName = String.valueOf(System.currentTimeMillis());
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.JPEG, 60, bytes);
-         //Environment.getExternalStorageDirectory()
-        String filePath = "/data/data/" + context.getPackageName() + File.separator + cropName;
+        //"/data/data/"
+        String filePath = Environment.getExternalStorageDirectory() + context.getPackageName() + File.separator + cropName;
         boolean isFileExist = Utils.createDirectoryIfNotExist(filePath);
         File f = new File(filePath + File.separator + imageName + ".jpg");
         f.createNewFile();
@@ -38,7 +38,8 @@ public class PlantImageController {
         fo.close();
         return f;
     }
-    public static ArrayList<PlantImage> getPlantImages(){
+
+    public static ArrayList<PlantImage> getPlantImages() {
         ArrayList<PlantImage> plantImages = new ArrayList<PlantImage>();
         PlantImageCtr plantImageCtr = new PlantImageCtr();
         return plantImageCtr.getPlantImages();

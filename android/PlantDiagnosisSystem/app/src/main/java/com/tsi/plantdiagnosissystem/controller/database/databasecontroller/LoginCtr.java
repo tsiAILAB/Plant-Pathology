@@ -136,6 +136,7 @@ public class LoginCtr {
             String otp = cursor.getString(4);
             String role = cursor.getString(5);
             user = new User(userNameDb, passwordDb, isVerified, otp, role);
+            user.setLoggedIn(true);
         }
         cursor.close();
         db.close();

@@ -88,6 +88,10 @@ public class RecoverPasswordFragment extends Fragment {
         //Creating an alert dialog
         final AlertDialog alertDialog = alert.create();
 
+
+        //adding title
+        alert.setTitle("OTP Verification!");
+
         //Displaying the alert dialog
         alertDialog.show();
 
