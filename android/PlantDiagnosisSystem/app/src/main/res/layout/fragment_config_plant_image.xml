@@ -18,11 +18,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="@string/hello_blank_fragment"
             android:textColor="#6699CC"
-            android:textSize="36sp"
+            android:textSize="30sp"
             android:textStyle="bold"
-            tools:text="Add New Crop" />
+            android:text="Add New Crop" />
 
         <Button
             android:id="@+id/apiNameButton"
@@ -44,11 +43,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="@string/hello_blank_fragment"
-            android:textColor="#6A0404"
+            android:textColor="#0A6A6A"
             android:textSize="24sp"
             android:textStyle="bold"
-            tools:text="No crop icon selected!" />
+            android:text="No crop icon selected!" />
 
         <EditText
             android:id="@+id/cropNameEditText"

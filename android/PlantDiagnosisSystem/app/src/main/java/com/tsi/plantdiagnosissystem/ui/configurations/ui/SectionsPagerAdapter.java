@@ -16,8 +16,7 @@ import com.tsi.plantdiagnosissystem.R;
  */
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-    @StringRes
-    private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2};
+    private static final String [] TAB_TITLES = {"Update API", "Add Crop"};
     private final Context mContext;
 
     public SectionsPagerAdapter(Context context, FragmentManager fm) {
@@ -29,13 +28,23 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
-        return PlaceholderFragment.newInstance(position + 1);
+        switch (position) {
+            case 0:
+                ConfigApiNameFragment configApiNameFragment = new ConfigApiNameFragment();
+                return configApiNameFragment;
+            case 1:
+                ConfigPlantImageFragment configPlantImageFragment = new ConfigPlantImageFragment();
+                return configPlantImageFragment;
+            default:
+                ConfigApiNameFragment configApiNameFragment2 = new ConfigApiNameFragment();
+                return configApiNameFragment2;
+        }
     }
 
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return mContext.getResources().getString(TAB_TITLES[position]);
+        return TAB_TITLES[position];
     }
 
     @Override

@@ -11,7 +11,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".ui.configurations.ConfigurationsActivity"
-            android:label="@string/title_activity_configurations" />
+            android:label="@string/title_activity_configurations"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity android:name=".ui.plantdiagnosis.PlantDiagnosisActivity" />
         <activity android:name=".ui.takepicture.TakePictureActivity" />

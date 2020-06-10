@@ -29,6 +29,8 @@ import android.widget.Toast;
 import com.tsi.plantdiagnosissystem.R;
 import com.tsi.plantdiagnosissystem.controller.AuthenticationController;
 import com.tsi.plantdiagnosissystem.data.model.User;
+import com.tsi.plantdiagnosissystem.ui.configurations.ConfigurationsActivity;
+import com.tsi.plantdiagnosissystem.ui.configurations.ui.ConfigPlantImageFragment;
 import com.tsi.plantdiagnosissystem.ui.forgotpassword.ForgotPasswordActivity;
 import com.tsi.plantdiagnosissystem.ui.landingpage.LandingPageActivity;
 import com.tsi.plantdiagnosissystem.ui.signup.SignUpActivity;
@@ -151,18 +153,18 @@ public class LoginActivity extends AppCompatActivity {
             forgotPasswordButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent home = new Intent();
-                    home.setClass(LoginActivity.this, ForgotPasswordActivity.class);
-                    startActivity(home);
+                    Intent forgetPasswordActivity = new Intent();
+                    forgetPasswordActivity.setClass(LoginActivity.this, ConfigurationsActivity.class);
+                    startActivity(forgetPasswordActivity);
                 }
             });
 
             signUpButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent home = new Intent();
-                    home.setClass(LoginActivity.this, SignUpActivity.class);
-                    startActivity(home);
+                    Intent signUpActivity = new Intent();
+                    signUpActivity.setClass(LoginActivity.this, SignUpActivity.class);
+                    startActivity(signUpActivity);
                 }
             });
         } else {

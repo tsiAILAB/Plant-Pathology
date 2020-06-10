@@ -18,22 +18,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:text="@string/hello_blank_fragment"
         android:textColor="#6699CC"
-        android:textSize="36sp"
+        android:textSize="30sp"
         android:textStyle="bold"
-        tools:text="Update API" />
-
+        android:text="Update API" />
         <TextView
             android:id="@+id/apiNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="@string/hello_blank_fragment"
-            android:textColor="#004747"
+            android:textColor="#0A6A6A"
             android:textSize="24sp"
             android:textStyle="bold"
-            tools:text="Api Name: UPLOAD_IMAGE" />
+            android:text="Api Name: UPLOAD_IMAGE" />
 
         <EditText
             android:id="@+id/apiUrlEditText"
@@ -52,6 +49,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
             android:text="Update"
+            android:textStyle="bold"
             android:textColor="#6699CC" />
 
     </LinearLayout>

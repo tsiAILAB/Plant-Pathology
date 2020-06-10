@@ -59,22 +59,21 @@ public class SignUpActivity extends AppCompatActivity {
         user = new User();
         String userEmail = userEmailEditText.getText().toString();
         String password = passwordEditText.getText().toString();
+        String confirmPassword = confirmPasswordEditText.getText().toString();
 
-        user.setUsername(userEmail);
-        user.setPassword(password);
+        if (password.equalsIgnoreCase(confirmPassword)) {
+            user.setUsername(userEmail);
+            user.setPassword(password);
 
-        String signUpStatus = AuthenticationController.signUpUser(userEmail, password);
+            String signUpStatus = AuthenticationController.signUpUser(userEmail, password);
 
-        if (AppData.SIGN_UP_SUCCESSFUL.equalsIgnoreCase(signUpStatus)) {
-            Utils.isValidOtpDialog(SignUpActivity.this, user);
+            if (AppData.SIGN_UP_SUCCESSFUL.equalsIgnoreCase(signUpStatus)) {
+                Utils.isValidOtpDialog(SignUpActivity.this, user);
+            } else {
+                Toast.makeText(this, signUpStatus, Toast.LENGTH_LONG).show();
+            }
         } else {
-            Toast.makeText(this, signUpStatus, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Confirm password does not match!", Toast.LENGTH_LONG).show();
         }
     }
-
-
-    private void verifyOtp() {
-
-    }
-
 }
