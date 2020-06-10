@@ -27,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tsi.plantdiagnosissystem.R;
+import com.tsi.plantdiagnosissystem.controller.Utils;
 import com.tsi.plantdiagnosissystem.data.model.User;
 import com.tsi.plantdiagnosissystem.ui.forgotpassword.ForgotPasswordActivity;
 import com.tsi.plantdiagnosissystem.ui.landingpage.LandingPageActivity;
@@ -42,9 +43,11 @@ public class LoginActivity extends AppCompatActivity {
     private LoginViewModel loginViewModel;
     private static LoginActivity instance;
     private User user;
+
     public static LoginActivity instance() {
         return instance;
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -165,7 +168,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void updateUiWithUser(LoggedInUserView model) {
-        String welcome = getString(R.string.welcome) + model.getDisplayName();
+        String welcome =getString(R.string.welcome);
         // TODO : initiate successful logged in experience
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
         Intent home = new Intent();
@@ -178,8 +181,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-
-    public void requestPermission(){
+    public void requestPermission() {
         String[] perms = {"android.permission.ACCESS_NETWORK_STATE", "android.permission.CAMERA", "android.permission.INTERNET",
                 "android.permission.READ_EXTERNAL_STORAGE", "android.permission.WRITE_EXTERNAL_STORAGE"};
 
@@ -188,17 +190,20 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int permsRequestCode, String[] permissions, int[] grantResults){
+    public void onRequestPermissionsResult(int permsRequestCode, String[] permissions, int[] grantResults) {
 
-        switch(permsRequestCode){
+        switch (permsRequestCode) {
 
             case 200:
 
-                boolean networkState = grantResults[0]== PackageManager.PERMISSION_GRANTED;
-                boolean cameraAccepted = grantResults[1]==PackageManager.PERMISSION_GRANTED;
-                boolean internet = grantResults[2]==PackageManager.PERMISSION_GRANTED;
-                boolean readExternalStorage = grantResults[3]==PackageManager.PERMISSION_GRANTED;
-                boolean writeExternalStorage = grantResults[4]==PackageManager.PERMISSION_GRANTED;
+                boolean networkState = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                boolean cameraAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
+                boolean internet = grantResults[2] == PackageManager.PERMISSION_GRANTED;
+                boolean readExternalStorage = grantResults[3] == PackageManager.PERMISSION_GRANTED;
+                boolean writeExternalStorage = grantResults[4] == PackageManager.PERMISSION_GRANTED;
+
+//                String[] assetImageNames = {""};
+                Utils.copyAssets(LoginActivity.this);
 
                 break;
 

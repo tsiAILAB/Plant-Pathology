@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.tsi.plantdiagnosissystem.R;
+import com.tsi.plantdiagnosissystem.controller.PlantImageController;
 import com.tsi.plantdiagnosissystem.controller.database.databasecontroller.PlantImageCtr;
 import com.tsi.plantdiagnosissystem.controller.email.EmailSender;
 import com.tsi.plantdiagnosissystem.data.model.PlantImage;
@@ -22,7 +23,6 @@ public class LandingPageActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     private CropRecyclerAdapter cropRecyclerAdapter;
     private ArrayList<PlantImage> plantImages;
-    private PlantImageCtr plantImageCtr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +33,9 @@ public class LandingPageActivity extends AppCompatActivity {
         //actonBar
         getSupportActionBar().setTitle(Html.fromHtml("<font color='#6699CC'>Select Crop</font>"));
 
-        plantImageCtr = new PlantImageCtr();
-        plantImages = plantImageCtr.getPlantImages();
+        plantImages = PlantImageController.getPlantImages();
 
-        Toast.makeText(getApplicationContext(), "IsMailSent: ", Toast.LENGTH_LONG).show();
+//        Toast.makeText(getApplicationContext(), "IsMailSent: ", Toast.LENGTH_LONG).show();
 
         cropListRecyclerView = findViewById(R.id.cropListRecyclerView);
 

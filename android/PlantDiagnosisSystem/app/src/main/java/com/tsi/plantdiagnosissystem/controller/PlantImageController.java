@@ -1,5 +1,6 @@
 package com.tsi.plantdiagnosissystem.controller;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Environment;
 
@@ -10,6 +11,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class PlantImageController {
 
@@ -22,12 +24,12 @@ public class PlantImageController {
         }
     }
 
-    public static File saveImageExternalStorage(Bitmap bmp, String cropName) throws IOException {
+    public static File saveImageExternalStorage(Context context, Bitmap bmp, String cropName) throws IOException {
         String imageName = String.valueOf(System.currentTimeMillis());
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.JPEG, 60, bytes);
-        String filePath = Environment.getExternalStorageDirectory()
-                + File.separator + cropName;
+         //Environment.getExternalStorageDirectory()
+        String filePath = "/data/data/" + context.getPackageName() + File.separator + cropName;
         boolean isFileExist = Utils.createDirectoryIfNotExist(filePath);
         File f = new File(filePath + File.separator + imageName + ".jpg");
         f.createNewFile();
@@ -35,5 +37,11 @@ public class PlantImageController {
         fo.write(bytes.toByteArray());
         fo.close();
         return f;
+    }
+    public static ArrayList<PlantImage> getPlantImages(){
+        ArrayList<PlantImage> plantImages = new ArrayList<PlantImage>();
+        PlantImageCtr plantImageCtr = new PlantImageCtr();
+        return plantImageCtr.getPlantImages();
+
     }
 }

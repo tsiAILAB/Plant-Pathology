@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.tsi.plantdiagnosissystem.R;
 import com.tsi.plantdiagnosissystem.controller.PlantImageController;
+import com.tsi.plantdiagnosissystem.controller.Utils;
 import com.tsi.plantdiagnosissystem.data.model.PlantImage;
 import com.tsi.plantdiagnosissystem.ui.plantdiagnosis.PlantDiagnosisActivity;
 
@@ -86,6 +87,7 @@ public class TakePictureActivity extends AppCompatActivity {
         if (requestCode == GALLERY_REQUEST && resultCode == RESULT_OK) {
             try {
                 final Uri imageUri = data.getData();
+                final String filename = Utils.getFileName(TakePictureActivity.this, imageUri);
                 final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                 final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
                 pictureImageView.setImageBitmap(selectedImage);
@@ -102,6 +104,8 @@ public class TakePictureActivity extends AppCompatActivity {
                                     public void onClick(DialogInterface dialog, int which) {
                                         // Continue with delete operation
                                         Intent plantDiagnosis = new Intent(context, PlantDiagnosisActivity.class);
+                                        plantDiagnosis.putExtra("file_name", filename);
+                                        plantDiagnosis.putExtra("image_uri", imageUri);
                                         startActivity(plantDiagnosis);
                                     }
                                 })
@@ -146,7 +150,7 @@ public class TakePictureActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     try {
-                                        File saveImage = PlantImageController.saveImageExternalStorage(photo, plantImage.getPlantName());
+                                        PlantImageController.saveImageExternalStorage(TakePictureActivity.this, photo, plantImage.getPlantName());
                                         Toast.makeText(context, "Image Saved!", Toast.LENGTH_LONG).show();
 
 
@@ -160,7 +164,7 @@ public class TakePictureActivity extends AppCompatActivity {
                                     }
                                 }
                             })
-                            .setIcon(android.R.drawable.ic_dialog_alert)
+//                            .setIcon(android.R.drawable.ic_dialog_alert)
                             .show();
 
                 }

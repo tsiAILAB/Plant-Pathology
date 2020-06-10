@@ -4,13 +4,25 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavArgument;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.tsi.plantdiagnosissystem.R;
+import com.tsi.plantdiagnosissystem.controller.AuthenticationController;
+import com.tsi.plantdiagnosissystem.data.model.User;
+
+import java.util.Map;
 
 public class ResetPasswordFragment extends Fragment {
+
+    User user;
+    EditText passwordEditText, confirmPasswordEditText;
+    Button resetPasswordSubmitButton;
 
     @Override
     public View onCreateView(
@@ -23,6 +35,27 @@ public class ResetPasswordFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        Map<String, NavArgument> naveBarArgumanes = NavHostFragment.findNavController(ResetPasswordFragment.this)
+                .getGraph().findNode(R.id.action_SecondFragment_to_FirstFragment)
+                .getArguments();
+
+        user = (User) naveBarArgumanes.values();
+
+        passwordEditText = view.findViewById(R.id.passwordEditText);
+        confirmPasswordEditText = view.findViewById(R.id.confirmPasswordEditText);
+        resetPasswordSubmitButton = view.findViewById(R.id.resetPasswordSubmitButton);
+
+        resetPasswordSubmitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                user.setPassword(passwordEditText.getText().toString());
+
+                AuthenticationController.resetPassword(user);
+            }
+        });
+
 
 //        view.findViewById(R.id.button_second).setOnClickListener(new View.OnClickListener() {
 //            @Override

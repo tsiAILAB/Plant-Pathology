@@ -86,7 +86,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("insert into " + LOGIN_TABLE_NAME
                 + " (ID, " + userNameColumn + " , " + passwordColumn
                 +" , " + isVerifiedColumn +" , " + otpColumn +" , " + roleColumn + ")"
-                + "values(3,'user','123456','true','otp', '"+ AppData.USER_ROLE +"') ;");
+                + "values(3,'firozsujan@gmail.com','123456','true','otp', '"+ AppData.USER_ROLE +"') ;");
 
     }
 

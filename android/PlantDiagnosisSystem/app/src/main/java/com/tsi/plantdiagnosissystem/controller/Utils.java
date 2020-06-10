@@ -4,7 +4,14 @@ package com.tsi.plantdiagnosissystem.controller;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
+import android.net.Uri;
+import android.provider.OpenableColumns;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +26,10 @@ import com.tsi.plantdiagnosissystem.data.model.User;
 import com.tsi.plantdiagnosissystem.ui.landingpage.LandingPageActivity;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.InetAddress;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -39,6 +50,113 @@ public class Utils {
             // Do something else on failure
         }
         return success;
+    }
+
+    public static void copyAssetToSdCard(Context context, String filename) {
+        AssetManager assetManager = context.getAssets();
+
+        InputStream in = null;
+        OutputStream out = null;
+        try {
+            in = assetManager.open(filename);
+            String newFileName = "/data/data/" + context.getPackageName() + "/" + filename;
+            out = new FileOutputStream(newFileName);
+
+            byte[] buffer = new byte[1024];
+            int read;
+            while ((read = in.read(buffer)) != -1) {
+                out.write(buffer, 0, read);
+            }
+            in.close();
+            in = null;
+            out.flush();
+            out.close();
+            out = null;
+        } catch (Exception e) {
+            Log.e("tag", e.getMessage());
+        }
+    }
+
+
+    public static void copyAssets(Context context) {
+        AssetManager assetManager = context.getAssets();
+        String[] files = null;
+        try {
+            files = assetManager.list("");
+        } catch (IOException e) {
+            Log.e("tag", "Failed to get asset file list.", e);
+        }
+        if (files != null) for (String filename : files) {
+            InputStream in = null;
+            OutputStream out = null;
+            try {
+                Log.d("FileName: ",""+filename);
+                if(!"pds.db".equalsIgnoreCase(filename)) {
+                    in = assetManager.open(filename);
+                    File outFile = new File("/data/data/" + context.getPackageName(), filename);
+                    out = new FileOutputStream(outFile);
+                    copyFile(in, out);
+                }
+            } catch (IOException e) {
+                Log.e("tag", "Failed to copy asset file: " + filename, e);
+            } finally {
+                if (in != null) {
+                    try {
+                        in.close();
+                    } catch (IOException e) {
+                        // NOOP
+                    }
+                }
+                if (out != null) {
+                    try {
+                        out.close();
+                    } catch (IOException e) {
+                        // NOOP
+                    }
+                }
+            }
+        }
+    }
+
+    private static void copyFile(InputStream in, OutputStream out) throws IOException {
+        byte[] buffer = new byte[1024];
+        int read;
+        while ((read = in.read(buffer)) != -1) {
+            out.write(buffer, 0, read);
+        }
+    }
+
+    //load image from directory
+    public static Bitmap loadImageFileFromDirectory(String filePath) {
+        File imgFile = new File(filePath);
+
+        if (imgFile.exists()) {
+            return BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+        }
+        return null;
+    }
+
+    //getFileName from URI
+    public static String getFileName(Context context, Uri uri) {
+        String result = null;
+        if (uri.getScheme().equals("content")) {
+            Cursor cursor = context.getContentResolver().query(uri, null, null, null, null);
+            try {
+                if (cursor != null && cursor.moveToFirst()) {
+                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                }
+            } finally {
+                cursor.close();
+            }
+        }
+        if (result == null) {
+            result = uri.getPath();
+            int cut = result.lastIndexOf('/');
+            if (cut != -1) {
+                result = result.substring(cut + 1);
+            }
+        }
+        return result;
     }
 
     public static void sendMail(final String userEmail, final String otp) {
@@ -74,11 +192,13 @@ public class Utils {
 
         return generatedToken.toString();
     }
+
     public static boolean isNetworkConnected(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
         return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
+
     public static boolean isInternetAvailable() {
         try {
             InetAddress ipAddr = InetAddress.getByName("www.google.com");
@@ -123,8 +243,8 @@ public class Utils {
                 alertDialog.dismiss();
 
                 //Displaying a progressbar
-                final ProgressDialog loading = ProgressDialog.show(context, "Authenticating",
-                        "Please wait while we check the entered code", false,false);
+//                final ProgressDialog loading = ProgressDialog.show(context, "Authenticating",
+//                        "Please wait while we check the entered code", false, false);
 
                 //Getting the user entered otp from editText
                 final String otp = editTextConfirmOtp.getText().toString().trim();
@@ -132,22 +252,21 @@ public class Utils {
                 //Creating an string request
                 User userOtpMatched = AuthenticationController.isValidOtp(user);
 
-                if(userOtpMatched != null){
-                    loading.dismiss();
+                if (userOtpMatched != null) {
+//                    loading.dismiss();
                     Toast.makeText(context, "Otp Matched!", Toast.LENGTH_LONG).show();
                     AuthenticationController.saveLogInInfo(context, userOtpMatched);
                     goToHome(context);
-                }else {
-                    loading.dismiss();
+
+                } else {
+//                    loading.dismiss();
                     isValidOtpDialog(context, user);
                 }
-
-
             }
         });
     }
 
-    public static void goToHome(Context context){
+    public static void goToHome(Context context) {
         Intent home = new Intent();
         home.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         home.setClass(context, LandingPageActivity.class);

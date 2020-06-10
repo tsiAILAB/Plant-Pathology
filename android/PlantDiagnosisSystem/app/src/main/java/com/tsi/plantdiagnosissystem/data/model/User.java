@@ -7,9 +7,6 @@ import java.io.Serializable;
  */
 public class User implements Serializable {
 
-    private String userId;
-    private String displayName;
-
     private int id;
     private String username;
     private String password;
@@ -26,14 +23,6 @@ public class User implements Serializable {
         this.isVerified = isVerified;
         this.otp = otp;
         this.role = role;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public String getDisplayName() {
-        return displayName;
     }
 
     //getterSetter
