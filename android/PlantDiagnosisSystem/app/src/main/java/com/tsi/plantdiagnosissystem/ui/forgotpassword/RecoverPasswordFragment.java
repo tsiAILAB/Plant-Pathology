@@ -1,7 +1,6 @@
 package com.tsi.plantdiagnosissystem.ui.forgotpassword;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,12 +12,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavArgument;
-import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.tsi.plantdiagnosissystem.R;
 import com.tsi.plantdiagnosissystem.controller.AuthenticationController;
-import com.tsi.plantdiagnosissystem.controller.Utils;
 import com.tsi.plantdiagnosissystem.data.model.User;
 
 public class RecoverPasswordFragment extends Fragment {
@@ -85,12 +83,11 @@ public class RecoverPasswordFragment extends Fragment {
         //Adding our dialog box to the view of alert dialog
         alert.setView(confirmDialog);
 
-        //Creating an alert dialog
-        final AlertDialog alertDialog = alert.create();
-
-
         //adding title
         alert.setTitle("OTP Verification!");
+
+        //Creating an alert dialog
+        final AlertDialog alertDialog = alert.create();
 
         //Displaying the alert dialog
         alertDialog.show();
@@ -110,15 +107,15 @@ public class RecoverPasswordFragment extends Fragment {
 
                 if (userOtpMatched != null) {
                     Toast.makeText(context, "Otp Matched!", Toast.LENGTH_LONG).show();
-                    AuthenticationController.saveLogInInfo(context, userOtpMatched);
 
-                    NavHostFragment.findNavController(RecoverPasswordFragment.this)
-                    .getGraph().findNode(R.id.action_FirstFragment_to_SecondFragment)
-                            .addArgument("user", new NavArgument.Builder().setDefaultValue(user).build());
+                    final Bundle bundle = new Bundle();
+                    bundle.putString("user_email", user.getUsername());
 
-//                    NavHostFragment.findNavController(RecoverPasswordFragment.this)
-//                            .navigate(R.id.action_FirstFragment_to_SecondFragment);
+                    final NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+                    navController.navigate(R.id.action_RecoverPasswordFragment_to_ResetPasswordFragment, bundle);
+
                 } else {
+                    Toast.makeText(context, "Wrong OTP!", Toast.LENGTH_LONG).show();
                     isValidOtpDialog();
                 }
             }

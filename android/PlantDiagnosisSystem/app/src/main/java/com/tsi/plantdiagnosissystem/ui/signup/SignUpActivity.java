@@ -44,7 +44,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                if (Utils.isNetworkConnected(SignUpActivity.this)) {
-                    signUp();
+                signUp();
 //                } else {
 //                    Toast.makeText(SignUpActivity.this, AppData.NO_INTERNET, Toast.LENGTH_LONG).show();
 //                }
@@ -63,10 +63,13 @@ public class SignUpActivity extends AppCompatActivity {
         user.setUsername(userEmail);
         user.setPassword(password);
 
-        String status = AuthenticationController.signUpUser(userEmail, password);
+        String signUpStatus = AuthenticationController.signUpUser(userEmail, password);
 
-
-        Utils.isValidOtpDialog(SignUpActivity.this, user);
+        if (AppData.SIGN_UP_SUCCESSFUL.equalsIgnoreCase(signUpStatus)) {
+            Utils.isValidOtpDialog(SignUpActivity.this, user);
+        } else {
+            Toast.makeText(this, signUpStatus, Toast.LENGTH_LONG).show();
+        }
     }
 
 

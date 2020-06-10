@@ -18,14 +18,17 @@
 
     <Button
         android:id="@+id/buttonConfirm"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
         android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
         android:background="@color/colorPrimary"
         android:padding="12dp"
         android:text="Confirm"
-        android:textColor="@color/colorAccent" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/colorBlueGray"
+        android:textStyle="bold" />
 
 
 </LinearLayout>

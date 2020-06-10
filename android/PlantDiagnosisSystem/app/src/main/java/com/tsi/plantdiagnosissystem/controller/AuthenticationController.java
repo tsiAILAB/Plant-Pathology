@@ -79,7 +79,9 @@ public class AuthenticationController {
         LoginCtr loginCtr = new LoginCtr();
         String generateOTP = Utils.generateOtp();
         String dbOperationStatus = loginCtr.addUser(userEmail, password, "false", generateOTP, AppData.USER_ROLE);
-        Utils.sendMail(userEmail, generateOTP);
+        if(AppData.SIGN_UP_SUCCESSFUL.equalsIgnoreCase(dbOperationStatus)) {
+            Utils.sendMail(userEmail, generateOTP);
+        }
         return dbOperationStatus;
     }
 }

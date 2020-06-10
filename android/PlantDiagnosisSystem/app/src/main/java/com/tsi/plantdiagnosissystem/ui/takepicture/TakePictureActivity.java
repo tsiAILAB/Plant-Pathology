@@ -99,6 +99,7 @@ public class TakePictureActivity extends AppCompatActivity {
                 uploadImageFileName = Utils.getFileName(TakePictureActivity.this, imageUri);
                 final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                 final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+//                pictureImageView.setVisibility(View.VISIBLE);
                 pictureImageView.setImageBitmap(selectedImage);
                 uploadImageButton.setVisibility(View.VISIBLE);
                 uploadImageButton.setOnClickListener(new View.OnClickListener() {
@@ -132,6 +133,7 @@ public class TakePictureActivity extends AppCompatActivity {
             //Do stuff with the camara data result
 
             final Bitmap photo = (Bitmap) data.getExtras().get("data");
+//            pictureImageView.setVisibility(View.VISIBLE);
             pictureImageView.setImageBitmap(photo);
 
             uploadImageButton.setVisibility(View.VISIBLE);

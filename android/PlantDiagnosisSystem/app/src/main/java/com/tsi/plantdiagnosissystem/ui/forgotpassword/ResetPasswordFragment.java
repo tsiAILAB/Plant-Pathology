@@ -1,22 +1,22 @@
 package com.tsi.plantdiagnosissystem.ui.forgotpassword;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavArgument;
-import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.tsi.plantdiagnosissystem.R;
 import com.tsi.plantdiagnosissystem.controller.AuthenticationController;
 import com.tsi.plantdiagnosissystem.data.model.User;
-
-import java.util.Map;
 
 public class ResetPasswordFragment extends Fragment {
 
@@ -36,11 +36,13 @@ public class ResetPasswordFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Map<String, NavArgument> naveBarArgumanes = NavHostFragment.findNavController(ResetPasswordFragment.this)
-                .getGraph().findNode(R.id.action_SecondFragment_to_FirstFragment)
-                .getArguments();
+        Log.d("user_email", "user_email: " + getArguments().getBoolean("user_email"));
 
-        user = (User) naveBarArgumanes.values();
+        //read from arguments
+        String userName = getArguments().getString("user_email");
+
+        user = new User();
+        user.setUsername(userName);
 
         passwordEditText = view.findViewById(R.id.passwordEditText);
         confirmPasswordEditText = view.findViewById(R.id.confirmPasswordEditText);
@@ -50,19 +52,16 @@ public class ResetPasswordFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                user.setPassword(passwordEditText.getText().toString());
-
-                AuthenticationController.resetPassword(user);
+                String password = passwordEditText.getText().toString();
+                String confirmPassword = confirmPasswordEditText.getText().toString();
+                if (password.equalsIgnoreCase(confirmPassword)) {
+                    user.setPassword(password);
+                    //updatePassword
+                    AuthenticationController.resetPassword(user);
+                } else {
+                    Toast.makeText(getActivity().getApplicationContext(), "Confirm password does not match!", Toast.LENGTH_LONG).show();
+                }
             }
         });
-
-
-//        view.findViewById(R.id.button_second).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                NavHostFragment.findNavController(ResetPasswordFragment.this)
-//                        .navigate(R.id.action_SecondFragment_to_FirstFragment);
-//            }
-//        });
     }
 }

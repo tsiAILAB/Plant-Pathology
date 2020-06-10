@@ -1,90 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.takepicture.TakePictureActivity">
-
-
-    <Button
-        android:id="@+id/cameraButton"
-        style="@style/Widget.AppCompat.Button.Borderless.Colored"
-        android:layout_width="wrap_content"
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
+        android:gravity="center"
         android:layout_marginTop="50dp"
-        android:layout_marginEnd="68dp"
-        android:drawableLeft="@android:drawable/ic_menu_camera"
-        android:background="@drawable/rounded_button"
-        android:text="Camera"
-        android:textStyle="bold"
-        android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/galleryButton"
-        app:layout_constraintTop_toBottomOf="@+id/diseaseImageView" />
+        android:orientation="vertical">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/plantImageView"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_marginBottom="10dp"
+            android:padding="10dp"
+            android:src="@drawable/brinjal"
+            app:civ_border_color="#6699CC"
+            app:civ_border_width="2dp"
+            app:civ_circle_background_color="#FFFFFF" />
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/plantImageView"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
-        android:layout_gravity="center"
-        android:layout_marginStart="157dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="158dp"
-        android:layout_marginBottom="16dp"
-        android:padding="10dp"
-        android:src="@drawable/brinjal"
-        app:civ_border_color="#FF000000"
-        app:civ_border_width="2dp"
-        app:civ_circle_background_color="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/diseaseImageView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+<!--        <TextView-->
+<!--            android:id="@+id/pickAnImageTextView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="#FFFFFF"-->
+<!--            android:text="Pick an Image"-->
+<!--            android:textAlignment="center"-->
+<!--            android:textColor="#000000"-->
+<!--            android:textStyle="bold" />-->
+        <ImageView
+            android:id="@+id/diseaseImageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            app:srcCompat="@drawable/no_image_selected"/>
+        <Button
+            android:id="@+id/uploadImageButton"
+            android:layout_width="30dp"
+            android:layout_height="26dp"
+            android:background="@android:drawable/ic_menu_upload"
+            android:visibility="invisible" />
+    </LinearLayout>
 
-    <ImageView
-        android:id="@+id/diseaseImageView"
-        android:layout_width="108dp"
-        android:layout_height="108dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="500dp"
-        app:layout_constraintBottom_toTopOf="@+id/cameraButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/plantImageView"
-        app:srcCompat="@drawable/ic_launcher_background" />
-
-    <Button
-        android:id="@+id/galleryButton"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="66dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="60dp"
-        android:text="Gallery"
-        android:textStyle="bold"
-        android:textColor="#FFFFFF"
-        android:background="@drawable/rounded_button"
-        android:drawableLeft="@android:drawable/ic_menu_gallery"
-        app:layout_constraintEnd_toStartOf="@+id/cameraButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/diseaseImageView" />
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/uploadImageButton"
-        android:visibility="invisible"
-        android:layout_width="30dp"
-        android:layout_height="26dp"
-        android:layout_marginStart="22dp"
-        android:layout_marginTop="7dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="3dp"
-        android:background="@android:drawable/ic_menu_upload"
-        app:layout_constraintBottom_toTopOf="@+id/cameraButton"
-        app:layout_constraintEnd_toStartOf="@+id/cameraButton"
-        app:layout_constraintStart_toEndOf="@+id/galleryButton"
-        app:layout_constraintTop_toBottomOf="@+id/diseaseImageView" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/cameraButton"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight = "20dp"
+            android:background="@drawable/rounded_button"
+            android:drawableLeft="@android:drawable/ic_menu_camera"
+            android:text="Camera"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/galleryButton"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/rounded_button"
+            android:drawableLeft="@android:drawable/ic_menu_gallery"
+            android:text="Gallery"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
+    </LinearLayout>
+</ScrollView>
+
+</LinearLayout>

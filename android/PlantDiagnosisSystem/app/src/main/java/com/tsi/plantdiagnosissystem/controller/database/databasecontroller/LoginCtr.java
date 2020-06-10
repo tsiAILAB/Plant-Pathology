@@ -210,25 +210,25 @@ public class LoginCtr {
                     this.userNameColumn + " = ?", new String[]{userEmail});
 
             sqLiteDatabase.close();
+
+
+            String select_query2 = "SELECT *FROM " + LOGIN_TABLE_NAME + " WHERE " + userNameColumn
+                    + " = '" + userEmail + "'";
+
+            SQLiteDatabase db2 = getDB();
+            Cursor cursor2 = db2.rawQuery(select_query2, null);
+
+            if (cursor2.moveToFirst()) {
+                String userNameDb = cursor2.getString(1);
+                String passwordDb = cursor2.getString(2);
+                String isVerifiedDb = cursor2.getString(3);
+                String otpDb = cursor2.getString(4);
+                String roleDb = cursor2.getString(5);
+                user = new User(userNameDb, passwordDb, isVerifiedDb, otpDb, roleDb);
+            }
+            cursor2.close();
+            db2.close();
         }
-
-        String select_query2 = "SELECT *FROM " + LOGIN_TABLE_NAME + " WHERE " + userNameColumn
-                + " = '" + userEmail + "'";
-
-        SQLiteDatabase db2 = getDB();
-        Cursor cursor2 = db2.rawQuery(select_query2, null);
-
-        if (cursor2.moveToFirst()) {
-            String userNameDb = cursor2.getString(1);
-            String passwordDb = cursor2.getString(2);
-            String isVerifiedDb = cursor2.getString(3);
-            String otpDb = cursor2.getString(4);
-            String roleDb = cursor2.getString(5);
-            user = new User(userNameDb, passwordDb, isVerifiedDb, otpDb, roleDb);
-        }
-        cursor2.close();
-        db2.close();
-
         return user;
     }
 

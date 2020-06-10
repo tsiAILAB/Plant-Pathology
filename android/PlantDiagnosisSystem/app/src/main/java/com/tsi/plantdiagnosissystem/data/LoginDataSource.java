@@ -20,7 +20,11 @@ public class LoginDataSource {
 //                            "Jane Doe");
 //            return new Result.Success<>(fakeUser);
             User loggedInUser = AuthenticationController.logInUser(username, password);
-            return new Result.Success<>(loggedInUser);
+            if(loggedInUser != null) {
+                return new Result.Success<>(loggedInUser);
+            }else {
+                return new Result.Error(new IOException("Invalid user email or password!"));
+            }
         } catch (Exception e) {
             return new Result.Error(new IOException("Error logging in", e));
         }

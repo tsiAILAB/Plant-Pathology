@@ -28,7 +28,6 @@ import android.widget.Toast;
 
 import com.tsi.plantdiagnosissystem.R;
 import com.tsi.plantdiagnosissystem.controller.AuthenticationController;
-import com.tsi.plantdiagnosissystem.controller.Utils;
 import com.tsi.plantdiagnosissystem.data.model.User;
 import com.tsi.plantdiagnosissystem.ui.forgotpassword.ForgotPasswordActivity;
 import com.tsi.plantdiagnosissystem.ui.landingpage.LandingPageActivity;
@@ -72,7 +71,6 @@ public class LoginActivity extends AppCompatActivity {
             final Button loginButton = findViewById(R.id.login);
             final Button forgotPasswordButton = findViewById(R.id.forgotPasswordButton);
             final Button signUpButton = findViewById(R.id.signUpButton);
-            final ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
             loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
                 @Override
@@ -96,7 +94,6 @@ public class LoginActivity extends AppCompatActivity {
                     if (loginResult == null) {
                         return;
                     }
-                    loadingProgressBar.setVisibility(View.GONE);
                     if (loginResult.getError() != null) {
                         showLoginFailed(loginResult.getError());
                     }
@@ -144,7 +141,6 @@ public class LoginActivity extends AppCompatActivity {
             loginButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    loadingProgressBar.setVisibility(View.VISIBLE);
                     loginViewModel.login(usernameEditText.getText().toString(),
                             passwordEditText.getText().toString());
 
