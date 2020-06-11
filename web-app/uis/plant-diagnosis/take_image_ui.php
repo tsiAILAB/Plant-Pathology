@@ -22,6 +22,10 @@ switch ($selectedCropName){
         $selectedCropImageSrc = null;
 }
 
+//if (isset($_POST['upload'])){
+//    $selectedImageForUpload = $_POST['selectedImageForUpload'];
+//}
+
 ?>
 
 <!DOCTYPE html>
@@ -47,10 +51,41 @@ switch ($selectedCropName){
             margin-top: 15px;
             margin-bottom: 10px;
         }
-        .uploadButton{
-            height: 20px;
-            width: 20px;
+
+        button:focus{
+            outline: none;
         }
+        /*.uploadButton{*/
+        /*    height: 20px;*/
+        /*    width: 20px;*/
+        /*}*/
+
+        .popup{
+            background: white;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            /*justify-content: center;*/
+            /*align-items: center;*/
+            display: none;
+        }
+        .popup-content{
+            background: white;
+            /*padding: 10px;*/
+            /*border-radius: 5px;*/
+            position: relative;
+        }
+        .close{
+            /*position: absolute;*/
+            /*right: 0;*/
+            /*top: 0;*/
+            cursor: pointer;
+        }
+        .otp-field{
+            display: none;
+        }
+
     </style>
 </head>
 <body>
@@ -72,23 +107,173 @@ switch ($selectedCropName){
     <div class="text-center">
         <h2 id="pickImagesText" class="d-block">Pick Images</h2>
     </div>
-    <div class="text-center">
-        <img src="" id="selectedImageOne" class="" height="2px;" width="2px">
-<!--        <img src="" id="selectedImageTwo" class="" height="2px;" width="2px">-->
-<!--        <img src="" id="selectedImageThree" class="" height="2px;" width="2px">-->
-    </div>
-    <div  class="text-center" id="uploadButton">
-        <button style="border: none; background-color: transparent;" class=""><i class="fa fa-upload text-secondary fa-lg" aria-hidden="true"></i></button>
-    </div>
+
+<!--    <form method="post" action="take_image_ui.php">-->
+        <div class="text-center">
+            <img name="selectedImageForUpload" src="" id="selectedImageOne" class="" height="2px;" width="2px">
+            <!--        <img src="" id="selectedImageTwo" class="" height="2px;" width="2px">-->
+            <!--        <img src="" id="selectedImageThree" class="" height="2px;" width="2px">-->
+        </div>
+        <div  class="text-center" id="uploadButton">
+            <button name="upload" style="border: none; background-color: transparent;" class="" data-toggle="modal" data-target="#myModal"><i class="fa fa-upload text-secondary fa-lg" aria-hidden="true"></i></button>
+        </div>
+<!--    </form>-->
     <div class="text-center mt-2">
         <input type="file" id="selecteImage" onchange="displayImage(this)" multiple accept="images/*">
         <label for="files" class="shadow pickImages" onclick="triggerClick()"><span style="padding-right: 10px"></span>Pick Images</label>
+    </div>
+
+<!--    <p >Modal</p>-->
+
+
+    <!-- Button to Open the Modal -->
+<!--    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">-->
+<!--        Open modal-->
+<!--    </button>-->
+
+    <!-- The Modal -->
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+<!--                <div class="modal-header">-->
+<!--                    <h4 class="modal-title text-blueGray">Do you want diagnosis of this Image ?</h4>-->
+<!--                    <button type="button" class="close" data-dismiss="modal">&times;</button>-->
+<!--                </div>-->
+
+                <!-- Modal body -->
+                <div class="modal-body text-center">
+                    <h4 class="modal-title text-blueGray">Do you want diagnosis of this Image ?</h4>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer d-flex justify-content-lg-around">
+                    <button id="wantToPlantDiagnosis" type="button" class="btn btn-outline-secondary" onclick="diagnosisCrop()" style="padding: 0 15px; border-radius: 20px" data-dismiss="modal">Yes</button>
+                    <button type="button" class="btn btn-outline-secondary" style="padding: 0 15px; border-radius: 20px" data-dismiss="modal">No</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="popup">
+    <div class="container col-sm-12 col-md-8 col-lg-8 popup-content">
+        <nav class="d-flex justify-content-between shadow ">
+            <h5 class="text-blueGray p-2">Early Blight</h5>
+            <div class="pt-2 float-right">
+                <p class="text-blueGray close">
+                    <i class="material-icons pr-2" aria-hidden="true">highlight_off</i>
+                </p>
+            </div>
+        </nav>
+
+        <div class="container col-sm-12 col-md-8 col-lg-8">
+            <div class="d-flex justify-content-center mt-3">
+                <img src="" id="DiagnosisCrop" style="height: 300px; width: 300px" alt="">
+            </div>
+            <div>
+                <h3 class="text-blueGray">Diagnosis Result</h3>
+            </div>
+            <div>
+                <p class="text-blueGray" id="diagnosisResult"></p>
+            </div>
+        </div>
     </div>
 </div>
 
 
 
 <script>
+
+    var x = 1;
+    function diagnosisCrop() {
+        var healthy = "Diseases Not Found, Probability-92.75%";
+        var earlyBlight = "Diseases Found, Probability-92.75%";
+        var lateBlight = "Diseases Found, Probability-98.12%";
+        var notAPlant = "This is not a Plant!";
+
+        // var x = 1;
+
+            // switch (x) {
+            //     case 1:
+            //         document.getElementById('diagnosisResult').innerText = healthy;
+            //         break;
+            //     case 2:
+            //         document.getElementById('diagnosisResult').innerText = earlyBlight;
+            //         break;
+            //     case 3:
+            //         document.getElementById('diagnosisResult').innerText = lateBlight;
+            //         break;
+            //     case 4:
+            //         document.getElementById('diagnosisResult').innerText = notAPlant;
+            //         break;
+            // }
+            // x += x ;
+
+        // if (x = 1){
+        //     document.getElementById('diagnosisResult').innerText = healthy;
+        //     x = 2;
+        // } elseif (x=2){
+        //     document.getElementById('diagnosisResult').innerText = earlyBlight;
+        //     x=3;
+        // } elseif (x=3){
+        //     document.getElementById('diagnosisResult').innerText = lateBlight;
+        //     x=4;
+        // } elseif (x=4){
+        //     document.getElementById('diagnosisResult').innerText = notAPlant;
+        //     x=1;
+        // }
+
+        // do {
+        //     switch (x) {
+        //         case 1:
+        //             document.getElementById('diagnosisResult').innerText = healthy;
+        //             break;
+        //         case 2:
+        //             document.getElementById('diagnosisResult').innerText = earlyBlight;
+        //             break;
+        //         case 3:
+        //             document.getElementById('diagnosisResult').innerText = lateBlight;
+        //             break;
+        //         case 4:
+        //             document.getElementById('diagnosisResult').innerText = notAPlant;
+        //             break;
+        //     }
+        //     x += x;
+        // }while (x>4){
+        //     x = 1;
+        // }
+
+        // while (x<=4){
+            switch (x) {
+                case 1:
+                    document.getElementById('diagnosisResult').innerText = healthy;
+                    break;
+                case 2:
+                    document.getElementById('diagnosisResult').innerText = earlyBlight;
+                    break;
+                case 3:
+                    document.getElementById('diagnosisResult').innerText = lateBlight;
+                    break;
+                case 4:
+                    document.getElementById('diagnosisResult').innerText = notAPlant;
+                    break;
+            }
+
+        while (x<= 4){
+            x +=1;
+            break;
+        }
+
+        while (x>= 5){
+            x = 1;
+        }
+
+    }
+
     function triggerClick() {
         document.querySelector('#selecteImage').click();
     }
@@ -99,9 +284,10 @@ switch ($selectedCropName){
 
             reader.onload = function (e) {
                 document.querySelector('#selectedImageOne').setAttribute('src', e.target.result);
+                document.querySelector('#DiagnosisCrop').setAttribute('src', e.target.result);
                 document.querySelector('#selectedImageOne').setAttribute('class', 'selectedImage');
                 document.querySelector('#pickImagesText').setAttribute('class', 'd-none');
-                document.querySelector('#uploadButton').setAttribute('class', 'uploadButton');
+                // document.querySelector('#uploadButton').setAttribute('class', 'uploadButton');
             }
             reader.readAsDataURL(e.files[0])
         }
@@ -133,6 +319,13 @@ switch ($selectedCropName){
 
     cropUr = "../../assets/images/tomato.jpg";
     cropN= "Tomato";
+
+    document.getElementById("wantToPlantDiagnosis").addEventListener("click", function () {
+        document.querySelector(".popup").style.display = "flex";
+    })
+    document.querySelector(".close").addEventListener("click", function () {
+        document.querySelector(".popup").style.display = "none";
+    })
 </script>
 </body>
 </html>

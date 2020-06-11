@@ -155,7 +155,7 @@
                 document.querySelector('#selectedIconImage').setAttribute('src', e.target.result);
                 document.querySelector('#selectedIconImage').setAttribute('class', 'selectedImage');
                 document.querySelector('#noCropIconSelectedText').setAttribute('class', 'd-none');
-                // localStorage.setItem('selectedCropIconImageUrl', e.target.result);
+                localStorage.setItem('selectedCropIconImageUrl', e.target.result);
             }
             reader.readAsDataURL(e.files[0]);
             localStorage.setItem('imgUrl', e.target.result);
