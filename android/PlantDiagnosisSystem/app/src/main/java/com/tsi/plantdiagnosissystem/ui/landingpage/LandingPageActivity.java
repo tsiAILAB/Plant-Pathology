@@ -14,10 +14,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.tsi.plantdiagnosissystem.R;
-import com.tsi.plantdiagnosissystem.controller.AppData;
-import com.tsi.plantdiagnosissystem.controller.AuthenticationController;
+import com.tsi.plantdiagnosissystem.data.AppData;
+import com.tsi.plantdiagnosissystem.controller.UserController;
 import com.tsi.plantdiagnosissystem.controller.PlantImageController;
-import com.tsi.plantdiagnosissystem.controller.Utils;
 import com.tsi.plantdiagnosissystem.data.model.PlantImage;
 import com.tsi.plantdiagnosissystem.data.model.User;
 import com.tsi.plantdiagnosissystem.ui.configurations.ConfigurationsActivity;
@@ -37,7 +36,7 @@ public class LandingPageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing_page);
 //        sendMail();
-        loggedInUser = AuthenticationController.getLoginInfo(this);
+        loggedInUser = UserController.getLoginInfo(this);
         //actonBar
 //        getSupportActionBar().setTitle(Html.fromHtml("<font color='#6699CC'>Select Crop</font>"));
 
@@ -93,7 +92,7 @@ public class LandingPageActivity extends AppCompatActivity {
                 startActivity(forgetPasswordActivity);
                 return true;
             case R.id.action_logout:
-                AuthenticationController.logout(LandingPageActivity.this);
+                UserController.logout(LandingPageActivity.this);
                 return true;
 
             default:

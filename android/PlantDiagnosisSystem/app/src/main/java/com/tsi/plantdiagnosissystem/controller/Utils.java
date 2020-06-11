@@ -1,21 +1,16 @@
 package com.tsi.plantdiagnosissystem.controller;
 
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.OpenableColumns;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,8 +22,8 @@ import androidx.appcompat.app.AlertDialog;
 
 import com.tsi.plantdiagnosissystem.R;
 import com.tsi.plantdiagnosissystem.controller.email.EmailSender;
+import com.tsi.plantdiagnosissystem.data.AppData;
 import com.tsi.plantdiagnosissystem.data.model.User;
-import com.tsi.plantdiagnosissystem.ui.configurations.ConfigurationsActivity;
 import com.tsi.plantdiagnosissystem.ui.landingpage.LandingPageActivity;
 
 import java.io.File;
@@ -39,8 +34,6 @@ import java.io.OutputStream;
 import java.net.InetAddress;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Utils {
 
@@ -268,12 +261,12 @@ public class Utils {
                 final String otp = editTextConfirmOtp.getText().toString().trim();
                 user.setOtp(otp);
                 //Creating an string request
-                User userOtpMatched = AuthenticationController.isValidOtp(user);
+                User userOtpMatched = UserController.isValidOtp(user);
 
                 if (userOtpMatched != null) {
 //                    loading.dismiss();
                     Toast.makeText(context, "Otp Matched!", Toast.LENGTH_LONG).show();
-                    AuthenticationController.saveLogInInfo(context, userOtpMatched);
+                    UserController.saveLogInInfo(context, userOtpMatched);
                     goToHome(context);
 
                 } else {

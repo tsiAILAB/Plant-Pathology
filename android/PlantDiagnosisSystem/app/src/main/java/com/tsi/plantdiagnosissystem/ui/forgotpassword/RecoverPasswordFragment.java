@@ -16,7 +16,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.tsi.plantdiagnosissystem.R;
-import com.tsi.plantdiagnosissystem.controller.AuthenticationController;
+import com.tsi.plantdiagnosissystem.controller.UserController;
 import com.tsi.plantdiagnosissystem.data.model.User;
 
 public class RecoverPasswordFragment extends Fragment {
@@ -51,7 +51,7 @@ public class RecoverPasswordFragment extends Fragment {
                 if (userName != null && userName != ""){
                     user = new User();
                 user.setUsername(userName);
-                AuthenticationController.recoverPassword(user.getUsername());
+                UserController.recoverPassword(user.getUsername());
 
                 //call alertDialog
                 isValidOtpDialog();
@@ -109,7 +109,7 @@ public class RecoverPasswordFragment extends Fragment {
                 final String otp = editTextConfirmOtp.getText().toString().trim();
                 user.setOtp(otp);
                 //Creating an string request
-                User userOtpMatched = AuthenticationController.isValidOtp(user);
+                User userOtpMatched = UserController.isValidOtp(user);
 
                 if (userOtpMatched != null) {
                     Toast.makeText(context, "Otp Matched!", Toast.LENGTH_LONG).show();

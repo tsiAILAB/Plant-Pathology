@@ -1,4 +1,4 @@
-package com.tsi.plantdiagnosissystem.controller;
+package com.tsi.plantdiagnosissystem.data;
 
 public class AppData {
 
@@ -28,7 +28,4 @@ public class AppData {
     public final static String SUCCESS = "Successful!";
 
     public final static String UPLOAD_IMAGE = "UPLOAD_IMAGE";
-
-
-
 }

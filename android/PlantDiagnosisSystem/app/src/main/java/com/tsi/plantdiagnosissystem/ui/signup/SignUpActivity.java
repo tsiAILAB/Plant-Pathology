@@ -1,16 +1,11 @@
 package com.tsi.plantdiagnosissystem.ui.signup;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -22,11 +17,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.tsi.plantdiagnosissystem.R;
-import com.tsi.plantdiagnosissystem.controller.AppData;
-import com.tsi.plantdiagnosissystem.controller.AuthenticationController;
+import com.tsi.plantdiagnosissystem.data.AppData;
+import com.tsi.plantdiagnosissystem.controller.UserController;
 import com.tsi.plantdiagnosissystem.controller.Utils;
 import com.tsi.plantdiagnosissystem.data.model.User;
-import com.tsi.plantdiagnosissystem.ui.landingpage.LandingPageActivity;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -72,7 +66,7 @@ public class SignUpActivity extends AppCompatActivity {
             user.setUsername(userEmail);
             user.setPassword(password);
 
-            String signUpStatus = AuthenticationController.signUpUser(userEmail, password);
+            String signUpStatus = UserController.signUpUser(userEmail, password);
 
             if (AppData.SIGN_UP_SUCCESSFUL.equalsIgnoreCase(signUpStatus)) {
                 Utils.isValidOtpDialog(SignUpActivity.this, user);

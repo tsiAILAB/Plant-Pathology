@@ -1,6 +1,7 @@
 package com.tsi.plantdiagnosissystem.controller;
 
 import com.tsi.plantdiagnosissystem.controller.database.databasecontroller.ApiNameCtr;
+import com.tsi.plantdiagnosissystem.data.AppData;
 import com.tsi.plantdiagnosissystem.data.model.ApiName;
 
 public class ApiNameController {

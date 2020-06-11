@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import com.tsi.plantdiagnosissystem.R;
 import com.tsi.plantdiagnosissystem.controller.ApiNameController;
-import com.tsi.plantdiagnosissystem.controller.AppData;
+import com.tsi.plantdiagnosissystem.data.AppData;
 import com.tsi.plantdiagnosissystem.data.model.ApiName;
 
 /**

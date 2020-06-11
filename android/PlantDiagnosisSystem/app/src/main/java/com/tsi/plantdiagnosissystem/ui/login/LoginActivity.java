@@ -22,16 +22,13 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tsi.plantdiagnosissystem.R;
-import com.tsi.plantdiagnosissystem.controller.AuthenticationController;
+import com.tsi.plantdiagnosissystem.controller.UserController;
 import com.tsi.plantdiagnosissystem.controller.Utils;
 import com.tsi.plantdiagnosissystem.data.model.User;
-import com.tsi.plantdiagnosissystem.ui.configurations.ConfigurationsActivity;
-import com.tsi.plantdiagnosissystem.ui.configurations.ui.ConfigPlantImageFragment;
 import com.tsi.plantdiagnosissystem.ui.forgotpassword.ForgotPasswordActivity;
 import com.tsi.plantdiagnosissystem.ui.landingpage.LandingPageActivity;
 import com.tsi.plantdiagnosissystem.ui.signup.SignUpActivity;
@@ -66,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         CONTEXT = this;
         requestPermission();
 
-        User user = AuthenticationController.getLoginInfo(CONTEXT);
+        User user = UserController.getLoginInfo(CONTEXT);
 
         if (!user.isLoggedIn()) {
             final EditText usernameEditText = findViewById(R.id.username);
@@ -184,7 +181,7 @@ public class LoginActivity extends AppCompatActivity {
         user = loggedInUserView.getUser();
 
         //saveLoginInfo
-        AuthenticationController.saveLogInInfo(LoginActivity.this, user);
+        UserController.saveLogInInfo(LoginActivity.this, user);
 
         String welcome = getString(R.string.welcome);
         // TODO : initiate successful logged in experience

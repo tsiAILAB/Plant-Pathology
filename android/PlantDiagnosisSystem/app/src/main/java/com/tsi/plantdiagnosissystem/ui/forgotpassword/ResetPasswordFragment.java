@@ -12,11 +12,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 
 import com.tsi.plantdiagnosissystem.R;
-import com.tsi.plantdiagnosissystem.controller.AuthenticationController;
+import com.tsi.plantdiagnosissystem.controller.UserController;
 import com.tsi.plantdiagnosissystem.data.model.User;
 import com.tsi.plantdiagnosissystem.ui.login.LoginActivity;
 
@@ -59,7 +57,7 @@ public class ResetPasswordFragment extends Fragment {
                 if (password.equalsIgnoreCase(confirmPassword)) {
                     user.setPassword(password);
                     //updatePassword
-                    boolean isResetSuccessful = AuthenticationController.resetPassword(user);
+                    boolean isResetSuccessful = UserController.resetPassword(user);
                     if (isResetSuccessful) {
                         Toast.makeText(getActivity().getApplicationContext(), "Password reset successful!", Toast.LENGTH_LONG).show();
                         //go to login ui

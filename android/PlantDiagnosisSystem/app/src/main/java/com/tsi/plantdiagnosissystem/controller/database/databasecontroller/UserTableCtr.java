@@ -4,13 +4,13 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.tsi.plantdiagnosissystem.controller.AppData;
+import com.tsi.plantdiagnosissystem.data.AppData;
 import com.tsi.plantdiagnosissystem.controller.database.DatabaseHelper;
 import com.tsi.plantdiagnosissystem.data.model.User;
 
 import java.util.ArrayList;
 
-public class LoginCtr {
+public class UserTableCtr {
 
     public static final String LOGIN_TABLE_NAME = "user";
 

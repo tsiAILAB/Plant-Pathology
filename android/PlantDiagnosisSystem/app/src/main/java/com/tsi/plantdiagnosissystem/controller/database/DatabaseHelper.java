@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Environment;
 
-import com.tsi.plantdiagnosissystem.controller.AppData;
+import com.tsi.plantdiagnosissystem.data.AppData;
 import com.tsi.plantdiagnosissystem.ui.login.LoginActivity;
 
 import java.io.File;

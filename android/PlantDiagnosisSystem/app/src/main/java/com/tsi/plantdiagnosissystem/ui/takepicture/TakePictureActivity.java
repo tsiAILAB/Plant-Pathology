@@ -10,13 +10,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -27,10 +25,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.squareup.picasso.Picasso;
 import com.tsi.plantdiagnosissystem.R;
-import com.tsi.plantdiagnosissystem.controller.AppData;
-import com.tsi.plantdiagnosissystem.controller.AuthenticationController;
+import com.tsi.plantdiagnosissystem.controller.UserController;
 import com.tsi.plantdiagnosissystem.controller.ImageUploadService;
 import com.tsi.plantdiagnosissystem.controller.PlantImageController;
 import com.tsi.plantdiagnosissystem.controller.Utils;
@@ -74,7 +70,7 @@ public class TakePictureActivity extends AppCompatActivity {
 
 
         //read bundle
-        user = AuthenticationController.getLoginInfo(this);
+        user = UserController.getLoginInfo(this);
         plantImage = (PlantImage) getIntent().getSerializableExtra("plant_image");
 
         cropImageView.setImageURI(Uri.parse(plantImage.getImageUrl()));
@@ -248,7 +244,7 @@ public class TakePictureActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_logout:
-                AuthenticationController.logout(TakePictureActivity.this);
+                UserController.logout(TakePictureActivity.this);
                 return true;
             case android.R.id.home:
                 onBackPressed();

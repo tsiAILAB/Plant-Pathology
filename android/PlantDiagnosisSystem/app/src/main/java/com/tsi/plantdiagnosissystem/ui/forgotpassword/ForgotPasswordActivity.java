@@ -3,7 +3,6 @@ package com.tsi.plantdiagnosissystem.ui.forgotpassword;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -11,12 +10,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
 import com.tsi.plantdiagnosissystem.R;
-import com.tsi.plantdiagnosissystem.controller.AuthenticationController;
-import com.tsi.plantdiagnosissystem.ui.takepicture.TakePictureActivity;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
 

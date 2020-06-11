@@ -1,6 +1,6 @@
 package com.tsi.plantdiagnosissystem.data;
 
-import com.tsi.plantdiagnosissystem.controller.AuthenticationController;
+import com.tsi.plantdiagnosissystem.controller.UserController;
 import com.tsi.plantdiagnosissystem.data.model.User;
 
 import java.io.IOException;
@@ -19,7 +19,7 @@ public class LoginDataSource {
 //                            java.util.UUID.randomUUID().toString(),
 //                            "Jane Doe");
 //            return new Result.Success<>(fakeUser);
-            User loggedInUser = AuthenticationController.logInUser(username, password);
+            User loggedInUser = UserController.logInUser(username, password);
             if(loggedInUser != null) {
                 return new Result.Success<>(loggedInUser);
             }else {

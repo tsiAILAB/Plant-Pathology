@@ -4,11 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
-import com.tsi.plantdiagnosissystem.controller.database.databasecontroller.LoginCtr;
+import com.tsi.plantdiagnosissystem.controller.database.databasecontroller.UserTableCtr;
+import com.tsi.plantdiagnosissystem.data.AppData;
 import com.tsi.plantdiagnosissystem.data.model.User;
 import com.tsi.plantdiagnosissystem.ui.login.LoginActivity;
 
-public class AuthenticationController {
+public class UserController {
 
     public static void logout(Context context) {
         SharedPreferences sharedPref = context.getSharedPreferences(AppData.PDS_SHARED_PREFERENCE, Context.MODE_PRIVATE);
@@ -44,26 +45,26 @@ public class AuthenticationController {
 
     //check authentication info
     public static User logInUser(String userEmail, String password) {
-        LoginCtr loginCtr = new LoginCtr();
-        User user = loginCtr.getLogin(userEmail, password);
+        UserTableCtr userTableCtr = new UserTableCtr();
+        User user = userTableCtr.getLogin(userEmail, password);
         return user;
     }
 
     //match otp
     public static User isValidOtp(User user) {
-        LoginCtr loginCtr = new LoginCtr();
-        user = loginCtr.isValidOTP(user.getUsername(), user.getOtp());
+        UserTableCtr userTableCtr = new UserTableCtr();
+        user = userTableCtr.isValidOTP(user.getUsername(), user.getOtp());
         return user;
     }
 
     //updateUserOtp and send otp email
     public static boolean recoverPassword(String userEmail) {
-        LoginCtr loginCtr = new LoginCtr();
-        User user = loginCtr.getUser(userEmail);
+        UserTableCtr userTableCtr = new UserTableCtr();
+        User user = userTableCtr.getUser(userEmail);
         if (user != null) {
             if ("".equalsIgnoreCase(user.getOtp())) {
                 String generateOTP = Utils.generateOtp();
-                user = loginCtr.updateUserOtp(userEmail, generateOTP);
+                user = userTableCtr.updateUserOtp(userEmail, generateOTP);
             }
             Utils.sendMail(user.getUsername(), user.getOtp());
             return true;
@@ -74,8 +75,8 @@ public class AuthenticationController {
 
     //reset password
     public static boolean resetPassword(User user) {
-        LoginCtr loginCtr = new LoginCtr();
-        user = loginCtr.changePassword(user.getUsername(), user.getPassword());
+        UserTableCtr userTableCtr = new UserTableCtr();
+        user = userTableCtr.changePassword(user.getUsername(), user.getPassword());
         if (user != null)
             return true;
         else
@@ -84,9 +85,9 @@ public class AuthenticationController {
 
     //signUp
     public static String signUpUser(String userEmail, String password){
-        LoginCtr loginCtr = new LoginCtr();
+        UserTableCtr userTableCtr = new UserTableCtr();
         String generateOTP = Utils.generateOtp();
-        String dbOperationStatus = loginCtr.addUser(userEmail, password, "false", generateOTP, AppData.USER_ROLE);
+        String dbOperationStatus = userTableCtr.addUser(userEmail, password, "false", generateOTP, AppData.USER_ROLE);
         if(AppData.SIGN_UP_SUCCESSFUL.equalsIgnoreCase(dbOperationStatus)) {
             Utils.sendMail(userEmail, generateOTP);
         }

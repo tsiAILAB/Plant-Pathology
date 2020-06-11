@@ -1,10 +1,8 @@
 package com.tsi.plantdiagnosissystem.ui.configurations;
 
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -18,7 +16,7 @@ import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.tsi.plantdiagnosissystem.R;
-import com.tsi.plantdiagnosissystem.controller.AuthenticationController;
+import com.tsi.plantdiagnosissystem.controller.UserController;
 import com.tsi.plantdiagnosissystem.ui.configurations.ui.SectionsPagerAdapter;
 
 public class ConfigurationsActivity extends AppCompatActivity {
@@ -87,7 +85,7 @@ public class ConfigurationsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_logout:
-                AuthenticationController.logout(ConfigurationsActivity.this);
+                UserController.logout(ConfigurationsActivity.this);
                 return true;
             case android.R.id.home:
                 onBackPressed();

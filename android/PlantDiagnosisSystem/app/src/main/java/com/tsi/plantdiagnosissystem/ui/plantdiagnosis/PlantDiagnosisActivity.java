@@ -3,14 +3,10 @@ package com.tsi.plantdiagnosissystem.ui.plantdiagnosis;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -20,9 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tsi.plantdiagnosissystem.R;
-import com.tsi.plantdiagnosissystem.controller.AuthenticationController;
-
-import java.io.InputStream;
+import com.tsi.plantdiagnosissystem.controller.UserController;
 
 public class PlantDiagnosisActivity extends AppCompatActivity {
     TextView diseaseName;
@@ -106,7 +100,7 @@ public class PlantDiagnosisActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_logout:
-                AuthenticationController.logout(PlantDiagnosisActivity.this);
+                UserController.logout(PlantDiagnosisActivity.this);
                 return true;
             case android.R.id.home:
                 onBackPressed();
