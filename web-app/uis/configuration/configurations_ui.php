@@ -1,6 +1,19 @@
 <?php
+
+    include '../../apis/all_apis.php';
+    $allApis = new AllApis();
+    if (isset($_POST['updateApi'])){
+        $apiName = $allApis->API_NAME;
+        $apiUrl = $_POST['apiUrl'];
+
+        $db = mysqli_connect("localhost", "root", "", "pds_web");
+        $query = "UPDATE apis SET api_url='$apiUrl' WHERE api_name='$apiName'";
+
+        mysqli_query($db, $query);
+    }
+
     session_start();
-    if (isset($_SESSION['IS_LOGIN'])) {
+    if (isset($_SESSION['IS_LOGIN_ADMIN'])) {
 
         $msg = "";
         if (isset($_POST['addNewCrop'])) {
@@ -86,18 +99,18 @@
     <div class="tab-content">
         <div class="tab-pane container active text-center" id="updateApiTab">
             <h3 class="text-blueGray mt-2">Update API</h3>
-            <h4 class="text-blueGray">Api Name : UPLOAD_IMAGE</h4>
+            <h4 class="text-blueGray">Api Name : <?php echo $allApis->API_NAME?></h4>
 
-<!--            <form action="">-->
-<!--                <div class="form-group">-->
-<!--                    <input type="text" id="updateApiField" required class="input-area">-->
-<!--                    <label for="updateApiField" class="label">API URL</label>-->
-<!--                    <span class="inputFieldIconStyle"><i class="material-icons text-secondary">border_color</i></span>-->
-<!--                </div>-->
-<!--            </form>-->
-            <div class="text-center mt-3">
-                <button class="btn rounded-btn text-blueGray w-25" style="border: 1px solid lightslategray; font-weight: bold">Update</button>
-            </div>
+            <form method="post" action="configurations_ui.php">
+                <div class="form-group">
+                    <input type="text" name="apiUrl" id="updateApiField" required class="input-area">
+                    <label for="updateApiField" class="label">API URL</label>
+                    <span class="inputFieldIconStyle"><i class="material-icons text-secondary">border_color</i></span>
+                </div>
+                <div class="text-center mt-3">
+                    <input type="submit" name="updateApi" class="btn rounded-btn text-blueGray w-25" style="border: 1px solid lightslategray; font-weight: bold" value="Update">
+                </div>
+            </form>
         </div>
         <div class="tab-pane container fade" id="uploadPlantTab">
             <div class="text-center">
@@ -142,7 +155,7 @@
                 document.querySelector('#selectedIconImage').setAttribute('src', e.target.result);
                 document.querySelector('#selectedIconImage').setAttribute('class', 'selectedImage');
                 document.querySelector('#noCropIconSelectedText').setAttribute('class', 'd-none');
-                localStorage.setItem('selectedCropIconImageUrl', e.target.result);
+                // localStorage.setItem('selectedCropIconImageUrl', e.target.result);
             }
             reader.readAsDataURL(e.files[0]);
             localStorage.setItem('imgUrl', e.target.result);
