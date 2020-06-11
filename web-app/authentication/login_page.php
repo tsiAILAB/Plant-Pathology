@@ -16,8 +16,16 @@ if (isset($_POST['signInSubmit'])){
 
     $count = mysqli_num_rows($result);
     if ($count == 1){
-        $_SESSION['IS_LOGIN'] = $email;
-        header('Location: ../uis/landing_page.php');
+        $role = mysqli_query($db, "SELECT * FROM user WHERE email='$email' AND role='admin_role'");
+        $roleCount = mysqli_num_rows($role);
+        if ($roleCount == 1){
+            $_SESSION['IS_LOGIN_ADMIN'] = $email;
+            header('Location: ../uis/admin_landing_page.php');
+        }else{
+            $_SESSION['IS_LOGIN_USER'] = $email;
+            header('Location: ../uis/landing_page.php');
+        }
+
     }else{
         echo "<script>alert('Invalid Credintials ....!!');</script>";
     }

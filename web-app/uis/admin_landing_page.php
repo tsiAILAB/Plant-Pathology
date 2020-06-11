@@ -11,9 +11,9 @@ if (isset($_POST['potato'])){
 }
 
 session_start();
-if (isset($_SESSION['IS_LOGIN_USER'])){
+if (isset($_SESSION['IS_LOGIN_ADMIN'])){
 
-?>
+    ?>
 
     <!DOCTYPE html>
     <html lang="en">
@@ -41,6 +41,7 @@ if (isset($_SESSION['IS_LOGIN_USER'])){
             <h5 class="text-blueGray p-2">Plant Selection</h5>
             <div class="float-right">
                 <p class="pt-2 text-blueGray">
+                    <a href="configuration/configurations_ui.php" class="text-blueGray" style="text-decoration: none"><i class="fa fa-cog fa-lg" aria-hidden="true"></i></a>
                     <span class="text-blueGray">
                         <a href="../authentication/logout.php" class="text-blueGray"><i class="fa fa-power-off fa-lg pr-2 pl-4" aria-hidden="true"></i></a>
                     </span>
