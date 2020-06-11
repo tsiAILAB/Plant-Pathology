@@ -1,16 +1,24 @@
 package com.tsi.plantdiagnosissystem.controller;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 
 import com.tsi.plantdiagnosissystem.controller.database.databasecontroller.LoginCtr;
 import com.tsi.plantdiagnosissystem.data.model.User;
+import com.tsi.plantdiagnosissystem.ui.login.LoginActivity;
 
 public class AuthenticationController {
 
     public static void logout(Context context) {
         SharedPreferences sharedPref = context.getSharedPreferences(AppData.PDS_SHARED_PREFERENCE, Context.MODE_PRIVATE);
         sharedPref.edit().clear().commit();
+
+        Intent loginActivity = new Intent();
+        loginActivity.setClass(context, LoginActivity.class);
+        loginActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+        context.startActivity(loginActivity);
     }
 
     public static void saveLogInInfo(Context context, User user) {
@@ -53,7 +61,7 @@ public class AuthenticationController {
         LoginCtr loginCtr = new LoginCtr();
         User user = loginCtr.getUser(userEmail);
         if (user != null) {
-            if (user.getOtp() == null) {
+            if ("".equalsIgnoreCase(user.getOtp())) {
                 String generateOTP = Utils.generateOtp();
                 user = loginCtr.updateUserOtp(userEmail, generateOTP);
             }

@@ -1,20 +1,26 @@
 package com.tsi.plantdiagnosissystem.ui.landingpage;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.tsi.plantdiagnosissystem.R;
+import com.tsi.plantdiagnosissystem.controller.AppData;
+import com.tsi.plantdiagnosissystem.controller.AuthenticationController;
 import com.tsi.plantdiagnosissystem.controller.PlantImageController;
 import com.tsi.plantdiagnosissystem.controller.Utils;
-import com.tsi.plantdiagnosissystem.controller.database.databasecontroller.PlantImageCtr;
-import com.tsi.plantdiagnosissystem.controller.email.EmailSender;
 import com.tsi.plantdiagnosissystem.data.model.PlantImage;
+import com.tsi.plantdiagnosissystem.data.model.User;
+import com.tsi.plantdiagnosissystem.ui.configurations.ConfigurationsActivity;
 
 import java.util.ArrayList;
 
@@ -24,24 +30,18 @@ public class LandingPageActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     private CropRecyclerAdapter cropRecyclerAdapter;
     private ArrayList<PlantImage> plantImages;
+    private User loggedInUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing_page);
 //        sendMail();
-
+        loggedInUser = AuthenticationController.getLoginInfo(this);
         //actonBar
-        getSupportActionBar().setTitle(Html.fromHtml("<font color='#6699CC'>Select Crop</font>"));
+//        getSupportActionBar().setTitle(Html.fromHtml("<font color='#6699CC'>Select Crop</font>"));
 
-        //copyAsset
-
-        String[] assetImageNames = {"early_blight.JPG", "healthy_leaf.JPG", "late_blight.JPG", "pillow.JPG",
-                "maze.jpg", "potato.jpg", "tomato.jpg"};
-        for (int i = 0; i < assetImageNames.length; i++) {
-            Utils.copyAssetToSdCard(this, assetImageNames[i]);
-        }
-
+        setActionBar("Select Crop");
 
         plantImages = PlantImageController.getPlantImages();
 
@@ -64,12 +64,36 @@ public class LandingPageActivity extends AppCompatActivity {
 //        startActivity(home);
     }
 
+    //set custom actionBar
+    public void setActionBar(String title) {
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setTitle(title);
+        Spannable text = new SpannableString(getSupportActionBar().getTitle());
+        text.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.colorBlueGray)), 0, text.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        getSupportActionBar().setTitle(text);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        if (AppData.ADMIN_ROLE.equalsIgnoreCase(loggedInUser.getRole())) {
+            MenuItem item = menu.findItem(R.id.action_settings);
+            item.setVisible(true);
+        }
+        return true;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case android.R.id.home:
-                // API 5+ solution
-                onBackPressed();
+            case R.id.action_settings:
+                Intent forgetPasswordActivity = new Intent();
+                forgetPasswordActivity.setClass(LandingPageActivity.this, ConfigurationsActivity.class);
+                startActivity(forgetPasswordActivity);
+                return true;
+            case R.id.action_logout:
+                AuthenticationController.logout(LandingPageActivity.this);
                 return true;
 
             default:

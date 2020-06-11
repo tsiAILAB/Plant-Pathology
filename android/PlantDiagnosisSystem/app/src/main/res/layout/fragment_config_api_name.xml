@@ -11,15 +11,16 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="10dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:orientation="vertical">
     <TextView
         android:id="@+id/titleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:padding="10dp"
         android:textColor="#6699CC"
-        android:textSize="30sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         android:text="Update API" />
         <TextView
@@ -29,7 +30,7 @@
             android:layout_marginTop="10dp"
             android:padding="10dp"
             android:textColor="#0A6A6A"
-            android:textSize="24sp"
+            android:textSize="16sp"
             android:textStyle="bold"
             android:text="Api Name: UPLOAD_IMAGE" />
 
@@ -39,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:ems="10"
-            android:hint="API URL"
+            android:hint="Enter api url"
             android:inputType="textUri|textPersonName"
             android:textColor="#6699CC"
             android:textSize="18sp" />

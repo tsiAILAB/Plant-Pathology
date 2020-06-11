@@ -1,5 +1,6 @@
 package com.tsi.plantdiagnosissystem.ui.forgotpassword;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import androidx.navigation.Navigation;
 import com.tsi.plantdiagnosissystem.R;
 import com.tsi.plantdiagnosissystem.controller.AuthenticationController;
 import com.tsi.plantdiagnosissystem.data.model.User;
+import com.tsi.plantdiagnosissystem.ui.login.LoginActivity;
 
 public class ResetPasswordFragment extends Fragment {
 
@@ -57,7 +59,17 @@ public class ResetPasswordFragment extends Fragment {
                 if (password.equalsIgnoreCase(confirmPassword)) {
                     user.setPassword(password);
                     //updatePassword
-                    AuthenticationController.resetPassword(user);
+                    boolean isResetSuccessful = AuthenticationController.resetPassword(user);
+                    if (isResetSuccessful) {
+                        Toast.makeText(getActivity().getApplicationContext(), "Password reset successful!", Toast.LENGTH_LONG).show();
+                        //go to login ui
+                        Intent home = new Intent();
+                        home.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        home.setClass(getContext(), LoginActivity.class);
+                        getContext().startActivity(home);
+                    } else {
+                        Toast.makeText(getActivity().getApplicationContext(), "Password reset failed! Please try again.", Toast.LENGTH_LONG).show();
+                    }
                 } else {
                     Toast.makeText(getActivity().getApplicationContext(), "Confirm password does not match!", Toast.LENGTH_LONG).show();
                 }

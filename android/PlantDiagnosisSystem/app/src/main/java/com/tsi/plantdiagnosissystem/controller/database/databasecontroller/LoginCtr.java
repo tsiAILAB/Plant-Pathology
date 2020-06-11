@@ -28,7 +28,7 @@ public class LoginCtr {
     //add the new User
     public String addUser(String userName, String password, String isVerified, String otp, String role) {
         User user = getUser(userName);
-        if (user != null) {
+        if (user == null) {
             SQLiteDatabase sqLiteDatabase = getDB();
             ContentValues values = new ContentValues();
             values.put(this.userNameColumn, userName);

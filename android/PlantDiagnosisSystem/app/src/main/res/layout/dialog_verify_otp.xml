@@ -11,10 +11,10 @@
         android:id="@+id/editTextOtp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxLines="1"
-        android:maxLength="5"
         android:hint="Enter the code received"
-        android:inputType="textEmailAddress" />
+        android:inputType="number"
+        android:maxLength="5"
+        android:maxLines="1" />
 
     <Button
         android:id="@+id/buttonConfirm"

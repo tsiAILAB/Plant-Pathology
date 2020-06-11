@@ -13,19 +13,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="200dp"
-        android:padding="10dp"
         android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:orientation="vertical">
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/plantImageView"
             android:layout_width="96dp"
             android:layout_height="96dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="5dp"
             android:padding="10dp"
             android:src="@drawable/brinjal"
             app:civ_border_color="#6699CC"
@@ -44,8 +43,8 @@
         <ImageView
             android:id="@+id/diseaseImageView"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_marginBottom="10dp"
+            android:layout_height="250dp"
+            android:layout_marginBottom="5dp"
             app:srcCompat="@drawable/no_image_selected"/>
         <Button
             android:id="@+id/uploadImageButton"
@@ -58,7 +57,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:gravity="center"
         android:orientation="horizontal">
 

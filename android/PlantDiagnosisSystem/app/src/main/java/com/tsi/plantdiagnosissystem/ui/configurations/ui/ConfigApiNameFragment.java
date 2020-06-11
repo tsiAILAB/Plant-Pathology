@@ -102,10 +102,16 @@ public class ConfigApiNameFragment extends Fragment {
                 if(apiUrl != null && apiUrl != "") {
                     ApiName apiName = new ApiName(name, apiUrl);
                     ApiNameController.saveImageToDatabase(apiName);
+                    Toast.makeText(getActivity().getApplicationContext(), "API saving successful!", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(getActivity().getApplicationContext(), "API URL cannot be empty!", Toast.LENGTH_LONG).show();
                 }
             }
         });
+    }
+
+    private void resetUi() {
+        apiUrlEditText.setText("");
+        apiUrlEditText.setHint("Enter api url");
     }
 }

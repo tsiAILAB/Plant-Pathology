@@ -1,6 +1,5 @@
 package com.tsi.plantdiagnosissystem.ui.configurations.ui;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,7 +8,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -18,15 +16,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tsi.plantdiagnosissystem.R;
-import com.tsi.plantdiagnosissystem.controller.AppData;
 import com.tsi.plantdiagnosissystem.controller.PlantImageController;
 import com.tsi.plantdiagnosissystem.controller.Utils;
 import com.tsi.plantdiagnosissystem.data.model.PlantImage;
-import com.tsi.plantdiagnosissystem.ui.takepicture.TakePictureActivity;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -122,11 +117,19 @@ public class ConfigPlantImageFragment extends Fragment {
                 if(name != null && name != "") {
                     PlantImage plantImage = new PlantImage(name, imageUri);
                     PlantImageController.saveImageToDatabase(plantImage);
+                    Toast.makeText(getActivity().getApplicationContext(), name+" saving successful!", Toast.LENGTH_LONG).show();
+                    resetUi();
                 } else {
                     Toast.makeText(getActivity().getApplicationContext(), "Crop name cannot be empty!", Toast.LENGTH_LONG).show();
                 }
             }
         });
+    }
+
+    private void resetUi() {
+        cropNameEditText.setText("");
+        cropNameEditText.setHint("Enter crop name");
+        cropImageView.setImageResource(R.drawable.no_image_selected);
     }
 
     @Override

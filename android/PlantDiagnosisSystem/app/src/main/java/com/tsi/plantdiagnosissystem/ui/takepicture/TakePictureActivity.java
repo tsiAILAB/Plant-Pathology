@@ -2,6 +2,7 @@ package com.tsi.plantdiagnosissystem.ui.takepicture;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -9,10 +10,17 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +28,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.tsi.plantdiagnosissystem.R;
+import com.tsi.plantdiagnosissystem.controller.AppData;
 import com.tsi.plantdiagnosissystem.controller.AuthenticationController;
 import com.tsi.plantdiagnosissystem.controller.ImageUploadService;
 import com.tsi.plantdiagnosissystem.controller.PlantImageController;
@@ -36,7 +45,7 @@ import java.io.InputStream;
 public class TakePictureActivity extends AppCompatActivity {
     private static final int CAMERA_REQUEST = 1888;
     private static final int GALLERY_REQUEST = 1889;
-    ImageView pictureImageView;
+    ImageView pictureImageView, cropImageView;
     Button galleryButton, cameraButton, uploadImageButton;
 
     Context context;
@@ -49,17 +58,25 @@ public class TakePictureActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_take_picture);
+        cropImageView = findViewById(R.id.plantImageView);
         pictureImageView = findViewById(R.id.diseaseImageView);
         galleryButton = findViewById(R.id.galleryButton);
         cameraButton = findViewById(R.id.cameraButton);
         uploadImageButton = findViewById(R.id.uploadImageButton);
         context = this;
-        //actonBar
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(Html.fromHtml("<font color='#6699CC'>Take Picture</font>"));
 
+
+        //actonBar
+        setActionBar("Take Picture");
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setTitle(Html.fromHtml("<font color='#6699CC'>Take Picture</font>"));
+
+
+        //read bundle
         user = AuthenticationController.getLoginInfo(this);
         plantImage = (PlantImage) getIntent().getSerializableExtra("plant_image");
+
+        cropImageView.setImageURI(Uri.parse(plantImage.getImageUrl()));
 
         galleryButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -200,14 +217,38 @@ public class TakePictureActivity extends AppCompatActivity {
         startActivity(plantDiagnosis);
     }
 
+    //set custom actionBar
+    public void setActionBar(String title) {
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setTitle(title);
+        Spannable text = new SpannableString(getSupportActionBar().getTitle());
+        text.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.colorBlueGray)), 0, text.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        getSupportActionBar().setTitle(text);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        final Drawable upArrow = ContextCompat.getDrawable(this, R.drawable.abc_ic_ab_back_material);
+        upArrow.setColorFilter(ContextCompat.getColor(this, R.color.colorBlueGray), PorterDuff.Mode.SRC_ATOP);
+        getSupportActionBar().setHomeAsUpIndicator(upArrow);
+
+        return true;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.action_logout:
+                AuthenticationController.logout(TakePictureActivity.this);
+                return true;
             case android.R.id.home:
-                // API 5+ solution
                 onBackPressed();
                 return true;
-
             default:
                 return super.onOptionsItemSelected(item);
         }

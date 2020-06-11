@@ -8,10 +8,14 @@ import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.OpenableColumns;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +28,7 @@ import androidx.appcompat.app.AlertDialog;
 import com.tsi.plantdiagnosissystem.R;
 import com.tsi.plantdiagnosissystem.controller.email.EmailSender;
 import com.tsi.plantdiagnosissystem.data.model.User;
+import com.tsi.plantdiagnosissystem.ui.configurations.ConfigurationsActivity;
 import com.tsi.plantdiagnosissystem.ui.landingpage.LandingPageActivity;
 
 import java.io.File;
@@ -65,7 +70,7 @@ public class Utils {
             String filePath = Environment.getExternalStorageDirectory() + context.getPackageName();
             boolean isFileExist = Utils.createDirectoryIfNotExist(filePath);
 
-            String newFileName = filePath + File.separator +  filename;
+            String newFileName = filePath + File.separator + filename;
             out = new FileOutputStream(newFileName);
 
             byte[] buffer = new byte[1024];
@@ -96,8 +101,8 @@ public class Utils {
             InputStream in = null;
             OutputStream out = null;
             try {
-                Log.d("FileName: ",""+filename);
-                if(!"pds.db".equalsIgnoreCase(filename)) {
+                Log.d("FileName: ", "" + filename);
+                if (!"pds.db".equalsIgnoreCase(filename)) {
                     in = assetManager.open(filename);
                     File outFile = new File("/data/data/" + context.getPackageName(), filename);
                     out = new FileOutputStream(outFile);
@@ -277,10 +282,38 @@ public class Utils {
 
     public static void goToHome(Context context) {
         Intent home = new Intent();
-        home.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        home.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
         home.setClass(context, LandingPageActivity.class);
         context.startActivity(home);
     }
 
+    public static String saveFromDrawable(Context context, int imageDrawable, String imageName) {
+        try {
+            File root = new File(Environment.getExternalStorageDirectory() + File.separator + context.getPackageName(), "IMAGES");
+
+
+            if (!root.exists()) {
+                root.mkdirs();
+            }
+
+            final Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), imageDrawable);
+//            int height = (bitmap.getHeight() * 512 / bitmap.getWidth());
+//            Bitmap scale = Bitmap.createScaledBitmap(bitmap, 512, height, true);
+            String imageFilePath = root + File.separator + imageName;
+
+            File file = new File(imageFilePath);
+            Log.e("Path", "" + file);
+            file.createNewFile();
+
+            FileOutputStream fos = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            fos.flush();
+            fos.close();
+            return imageFilePath;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 }

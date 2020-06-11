@@ -3,12 +3,15 @@ package com.tsi.plantdiagnosissystem.controller.database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Environment;
 
 import com.tsi.plantdiagnosissystem.controller.AppData;
 import com.tsi.plantdiagnosissystem.ui.login.LoginActivity;
 
-public class DatabaseHelper extends SQLiteOpenHelper {
+import java.io.File;
 
+public class DatabaseHelper extends SQLiteOpenHelper {
+    Context context;
     //database name
     public static final String DATABASE_NAME = "pds";
     //database version
@@ -34,6 +37,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context = context;
     }
 
     // lazy-loaded singleton (Initialization on Demand Holder)
@@ -44,49 +48,51 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         //creating LOGIN_TABLE
-        String query = "CREATE TABLE " + LOGIN_TABLE_NAME + "(ID INTEGER PRIMARY KEY, " + userNameColumn + " TEXT unique, " + passwordColumn + " TEXT,"
+        String query = "CREATE TABLE " + LOGIN_TABLE_NAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, " + userNameColumn + " TEXT unique, " + passwordColumn + " TEXT,"
                 + isVerifiedColumn + " TEXT, " + otpColumn + " TEXT, " + roleColumn + " TEXT)";
         db.execSQL(query);
 
         //creating table
-        String query2 = "CREATE TABLE " + PLANT_IMAGE_TABLE_NAME + "(ID INTEGER PRIMARY KEY, " + nameColumn + " TEXT unique, " + urlColumn + " TEXT)";
+        String query2 = "CREATE TABLE " + PLANT_IMAGE_TABLE_NAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, " + nameColumn + " TEXT unique, " + urlColumn + " TEXT)";
         db.execSQL(query2);
 
         //creating table
-        String query3 = "CREATE TABLE " + API_TABLE_NAME + "(ID INTEGER PRIMARY KEY, " + nameColumn + " TEXT unique, " + urlColumn + " TEXT)";
+        String query3 = "CREATE TABLE " + API_TABLE_NAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, " + nameColumn + " TEXT unique, " + urlColumn + " TEXT)";
         db.execSQL(query3);
 
         addDefaultCrops(db);
     }
 
     private void addDefaultCrops(SQLiteDatabase db) {
+        String imageRootPath = Environment.getExternalStorageDirectory() + File.separator + this.context.getPackageName()
+                + File.separator + "IMAGES" + File.separator;
         //default api
         db.execSQL("insert into " + API_TABLE_NAME
-                + " (ID, " + nameColumn + " , " + urlColumn + ")" + "values(1,'"+AppData.UPLOAD_IMAGE+"','http://testurl.com') ;");
+                + " (ID, " + nameColumn + " , " + urlColumn + ")" + "values(1,'" + AppData.UPLOAD_IMAGE + "','http://testurl.com') ;");
 
         //PlantImage default data
         db.execSQL("insert into " + PLANT_IMAGE_TABLE_NAME
-                + " (ID, " + nameColumn + " , " + urlColumn + ")" + "values(1,'Potato','potato.jpg') ;");
+                + " (ID, " + nameColumn + " , " + urlColumn + ")" + "values(1,'Potato','" + imageRootPath + "potato.jpg') ;");
         db.execSQL("insert into " + PLANT_IMAGE_TABLE_NAME
-                + " (ID, " + nameColumn + " , " + urlColumn + ")" + "values(2,'Tomato','tomato.jpg') ;");
+                + " (ID, " + nameColumn + " , " + urlColumn + ")" + "values(2,'Tomato','" + imageRootPath + "tomato.jpg') ;");
         db.execSQL("insert into " + PLANT_IMAGE_TABLE_NAME
-                + " (ID, " + nameColumn + " , " + urlColumn + ")" + "values(3,'Maize','maze.jpg') ;");
+                + " (ID, " + nameColumn + " , " + urlColumn + ")" + "values(3,'Maize','" + imageRootPath + "maze.jpg') ;");
 
         //admin login
         db.execSQL("insert into " + LOGIN_TABLE_NAME
                 + " (ID, " + userNameColumn + " , " + passwordColumn
-                +" , " + isVerifiedColumn +" , " + otpColumn +" , " + roleColumn + ")"
-                + "values(1,'ADMIN','123456','true','otp', '"+ AppData.ADMIN_ROLE +"') ;");
+                + " , " + isVerifiedColumn + " , " + otpColumn + " , " + roleColumn + ")"
+                + "values(1,'plant.diagnosis.system@gmail.com','123456','true','', '" + AppData.ADMIN_ROLE + "') ;");
 
         db.execSQL("insert into " + LOGIN_TABLE_NAME
                 + " (ID, " + userNameColumn + " , " + passwordColumn
-                +" , " + isVerifiedColumn +" , " + otpColumn +" , " + roleColumn + ")"
-                + "values(2,'adm','123456','true','otp', '"+ AppData.ADMIN_ROLE +"') ;");
+                + " , " + isVerifiedColumn + " , " + otpColumn + " , " + roleColumn + ")"
+                + "values(2,'adm','123456','true','otp', '" + AppData.ADMIN_ROLE + "') ;");
 
         db.execSQL("insert into " + LOGIN_TABLE_NAME
                 + " (ID, " + userNameColumn + " , " + passwordColumn
-                +" , " + isVerifiedColumn +" , " + otpColumn +" , " + roleColumn + ")"
-                + "values(3,'firozsujan@gmail.com','123456','true','otp', '"+ AppData.USER_ROLE +"') ;");
+                + " , " + isVerifiedColumn + " , " + otpColumn + " , " + roleColumn + ")"
+                + "values(3,'testUser','123456','true','otp', '" + AppData.USER_ROLE + "') ;");
 
     }
 

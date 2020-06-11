@@ -12,8 +12,8 @@
     <de.hdodenhof.circleimageview.CircleImageView
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/cropImageView"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_gravity="center"
         android:padding="10dp"
         android:src="@drawable/brinjal"
@@ -28,6 +28,7 @@
         android:layout_gravity="center"
         android:textColor="#6699CC"
         android:textStyle="bold"
+        android:textSize="14dp"
         android:text="Brinjal"/>
 
 </LinearLayout>

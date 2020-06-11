@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.tsi.plantdiagnosissystem.R;
 import com.tsi.plantdiagnosissystem.controller.AuthenticationController;
+import com.tsi.plantdiagnosissystem.controller.Utils;
 import com.tsi.plantdiagnosissystem.data.model.User;
 import com.tsi.plantdiagnosissystem.ui.configurations.ConfigurationsActivity;
 import com.tsi.plantdiagnosissystem.ui.configurations.ui.ConfigPlantImageFragment;
@@ -174,6 +175,7 @@ public class LoginActivity extends AppCompatActivity {
             Intent home = new Intent();
             home.setClass(LoginActivity.this, LandingPageActivity.class);
             startActivity(home);
+            finish();
         }
     }
 
@@ -190,6 +192,7 @@ public class LoginActivity extends AppCompatActivity {
         Intent home = new Intent();
         home.setClass(LoginActivity.this, LandingPageActivity.class);
         startActivity(home);
+        finish();
     }
 
     private void showLoginFailed(@StringRes Integer errorString) {
@@ -217,6 +220,16 @@ public class LoginActivity extends AppCompatActivity {
                 boolean internet = grantResults[2] == PackageManager.PERMISSION_GRANTED;
                 boolean readExternalStorage = grantResults[3] == PackageManager.PERMISSION_GRANTED;
                 boolean writeExternalStorage = grantResults[4] == PackageManager.PERMISSION_GRANTED;
+
+
+                //copyAsset
+                String[] assetImageNames = {"early_blight.JPG", "healthy_leaf.JPG", "late_blight.JPG", "pillow.JPG",
+                        "maze.jpg", "potato.jpg", "tomato.jpg"};
+                int[] assetImageResource = {R.drawable.early_blight, R.drawable.healthy_leaf, R.drawable.late_blight,
+                        R.drawable.pillow, R.drawable.maze, R.drawable.potato, R.drawable.tomato};
+                for (int i = 0; i < assetImageNames.length; i++) {
+                    Utils.saveFromDrawable(this, assetImageResource[i], assetImageNames[i]);
+                }
 
                 break;
 

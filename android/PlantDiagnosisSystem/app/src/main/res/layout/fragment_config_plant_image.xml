@@ -13,15 +13,16 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="10dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:orientation="vertical">
         <TextView
             android:id="@+id/titleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
+            android:layout_marginTop="10dp"
             android:textColor="#6699CC"
-            android:textSize="30sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:text="Add New Crop" />
 

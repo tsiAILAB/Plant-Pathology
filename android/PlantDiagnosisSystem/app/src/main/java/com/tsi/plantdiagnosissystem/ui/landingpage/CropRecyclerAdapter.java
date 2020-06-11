@@ -2,6 +2,7 @@ package com.tsi.plantdiagnosissystem.ui.landingpage;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,8 +42,8 @@ public class CropRecyclerAdapter extends RecyclerView.Adapter<CropRecyclerAdapte
     public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
         PlantImage plantImage = plantImages.get(position);
         String imageUri = plantImage.getImageUrl();
-        holder.cropImageView.setImageResource(R.drawable.potato);
-//        holder.cropImageView.setImageURI(Uri.parse(imageUri));
+//        holder.cropImageView.setImageResource(R.drawable.potato);
+        holder.cropImageView.setImageURI(Uri.parse(imageUri));
         holder.cropNameTextView.setText(plantImage.getPlantName());
         Log.d("Crop: ", "Name: " + plantImage.getPlantName() + " Url: " + plantImage.getImageUrl());
     }

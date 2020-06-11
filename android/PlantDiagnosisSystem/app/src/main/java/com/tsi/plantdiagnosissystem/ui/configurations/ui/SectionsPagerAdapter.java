@@ -3,12 +3,10 @@ package com.tsi.plantdiagnosissystem.ui.configurations.ui;
 import android.content.Context;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.tsi.plantdiagnosissystem.R;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
@@ -27,7 +25,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         // getItem is called to instantiate the fragment for the given page.
-        // Return a PlaceholderFragment (defined as a static inner class below).
+        // Return a placeholderFragment (defined as a static inner class below).
         switch (position) {
             case 0:
                 ConfigApiNameFragment configApiNameFragment = new ConfigApiNameFragment();
