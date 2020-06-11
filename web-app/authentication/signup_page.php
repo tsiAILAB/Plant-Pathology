@@ -16,7 +16,7 @@
 
                 $otp = rand(11111, 99999);
 
-                $sql = "INSERT INTO user (email, password, verification_status, otp) VALUES ('$email', '$password', 0, '$otp')";
+                $sql = "INSERT INTO user (email, password, verification_status, otp, role) VALUES ('$email', '$password', 0, '$otp', 'user_role')";
                 mysqli_query($con, $sql);
                 $msg = "<p style='color: #1c7430'>Sign Up Successfully</p>";
 
