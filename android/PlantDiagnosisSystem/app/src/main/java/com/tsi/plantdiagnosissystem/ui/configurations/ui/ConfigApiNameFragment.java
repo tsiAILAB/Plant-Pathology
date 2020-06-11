@@ -99,10 +99,11 @@ public class ConfigApiNameFragment extends Fragment {
             public void onClick(View v) {
                 String name = AppData.UPLOAD_IMAGE;
                 String apiUrl = apiUrlEditText.getText().toString().trim();
-                if(apiUrl != null && apiUrl != "") {
+                if(!"".equalsIgnoreCase(apiUrl)) {
                     ApiName apiName = new ApiName(name, apiUrl);
                     ApiNameController.saveImageToDatabase(apiName);
                     Toast.makeText(getActivity().getApplicationContext(), "API saving successful!", Toast.LENGTH_LONG).show();
+                    resetUi();
                 } else {
                     Toast.makeText(getActivity().getApplicationContext(), "API URL cannot be empty!", Toast.LENGTH_LONG).show();
                 }

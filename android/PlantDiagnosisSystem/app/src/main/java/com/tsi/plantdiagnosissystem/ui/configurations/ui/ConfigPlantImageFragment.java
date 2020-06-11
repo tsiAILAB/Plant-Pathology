@@ -23,7 +23,9 @@ import com.tsi.plantdiagnosissystem.controller.PlantImageController;
 import com.tsi.plantdiagnosissystem.controller.Utils;
 import com.tsi.plantdiagnosissystem.data.model.PlantImage;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 
 import static android.app.Activity.RESULT_OK;
@@ -44,7 +46,7 @@ public class ConfigPlantImageFragment extends Fragment {
     Button addNewCropButton;
     Button imageFromGalleryButton;
     ImageView cropImageView;
-    String imageUri;
+    String savedImageUri;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -113,8 +115,8 @@ public class ConfigPlantImageFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String name = cropNameEditText.getText().toString().trim();
-                String imageUri = "";
-                if(name != null && name != "") {
+                String imageUri = savedImageUri;
+                if(name != null && name != "" && !"".equalsIgnoreCase(imageUri)) {
                     PlantImage plantImage = new PlantImage(name, imageUri);
                     PlantImageController.saveImageToDatabase(plantImage);
                     Toast.makeText(getActivity().getApplicationContext(), name+" saving successful!", Toast.LENGTH_LONG).show();
@@ -145,9 +147,13 @@ public class ConfigPlantImageFragment extends Fragment {
                 final InputStream imageStream = getActivity().getContentResolver().openInputStream(imageUri);
                 final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
 //                pictureImageView.setVisibility(View.VISIBLE);
+                File savedFile = PlantImageController.saveImageExternalStorage(getActivity().getApplicationContext(), selectedImage, "");
+                savedImageUri = savedFile.getAbsolutePath();
                 cropImageView.setImageBitmap(selectedImage);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
+                Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_LONG).show();
+            } catch (IOException e){
                 Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_LONG).show();
             }
         }

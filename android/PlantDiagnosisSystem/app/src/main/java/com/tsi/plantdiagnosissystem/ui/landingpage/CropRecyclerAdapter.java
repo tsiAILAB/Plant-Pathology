@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
 import com.tsi.plantdiagnosissystem.R;
 import com.tsi.plantdiagnosissystem.data.model.PlantImage;
 import com.tsi.plantdiagnosissystem.ui.takepicture.TakePictureActivity;
@@ -44,6 +45,10 @@ public class CropRecyclerAdapter extends RecyclerView.Adapter<CropRecyclerAdapte
         String imageUri = plantImage.getImageUrl();
 //        holder.cropImageView.setImageResource(R.drawable.potato);
         holder.cropImageView.setImageURI(Uri.parse(imageUri));
+
+//        Uri jg = Uri.parse(imageUri);
+//        Picasso.with(context).load(jg).into(holder.cropImageView);
+
         holder.cropNameTextView.setText(plantImage.getPlantName());
         Log.d("Crop: ", "Name: " + plantImage.getPlantName() + " Url: " + plantImage.getImageUrl());
     }

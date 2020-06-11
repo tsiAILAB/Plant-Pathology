@@ -48,5 +48,6 @@ dependencies {
 
     implementation 'android.arch.navigation:navigation-fragment:1.0.0-alpha04'
     implementation 'android.arch.navigation:navigation-ui:1.0.0-alpha04'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
 
 }

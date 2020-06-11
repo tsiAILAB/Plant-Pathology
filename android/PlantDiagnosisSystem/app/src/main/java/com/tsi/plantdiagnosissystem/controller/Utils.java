@@ -150,15 +150,19 @@ public class Utils {
     //getFileName from URI
     public static String getFileName(Context context, Uri uri) {
         String result = null;
-        if (uri.getScheme().equals("content")) {
-            Cursor cursor = context.getContentResolver().query(uri, null, null, null, null);
-            try {
-                if (cursor != null && cursor.moveToFirst()) {
-                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+        try {
+            if (uri.getScheme() != null && uri.getScheme().equals("content")) {
+                Cursor cursor = context.getContentResolver().query(uri, null, null, null, null);
+                try {
+                    if (cursor != null && cursor.moveToFirst()) {
+                        result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                    }
+                } finally {
+                    cursor.close();
                 }
-            } finally {
-                cursor.close();
             }
+        }catch (Exception e){
+            e.printStackTrace();
         }
         if (result == null) {
             result = uri.getPath();

@@ -27,6 +27,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
 import com.tsi.plantdiagnosissystem.R;
 import com.tsi.plantdiagnosissystem.controller.AppData;
 import com.tsi.plantdiagnosissystem.controller.AuthenticationController;
@@ -78,6 +79,9 @@ public class TakePictureActivity extends AppCompatActivity {
 
         cropImageView.setImageURI(Uri.parse(plantImage.getImageUrl()));
 
+//        Uri jg = Uri.parse(plantImage.getImageUrl());
+//        Picasso.with(context).load(jg).into(cropImageView);
+
         galleryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,7 +116,7 @@ public class TakePictureActivity extends AppCompatActivity {
         if (requestCode == GALLERY_REQUEST && resultCode == RESULT_OK) {
             try {
                 final Uri imageUri = data.getData();
-                imageUploadFilePath = imageUri.getPath();
+                imageUploadFilePath = imageUri.getLastPathSegment();
                 uploadImageFileName = Utils.getFileName(TakePictureActivity.this, imageUri);
                 final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                 final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
@@ -130,7 +134,7 @@ public class TakePictureActivity extends AppCompatActivity {
                                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
                                         //go to plantDiagnosis
-                                        goToPlantDiagnosis(uploadImageFileName, imageUri);
+                                        goToPlantDiagnosis(uploadImageFileName, imageUploadFilePath);
 
                                     }
                                 })
@@ -175,7 +179,7 @@ public class TakePictureActivity extends AppCompatActivity {
                                         imageUri = Uri.parse(imageUploadFilePath);
                                         uploadImageFileName = Utils.getFileName(TakePictureActivity.this, imageUri);
                                         //go to plantDiagnosis
-                                        goToPlantDiagnosis(uploadImageFileName, imageUri);
+                                        goToPlantDiagnosis(uploadImageFileName, imageUploadFilePath);
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
@@ -210,7 +214,7 @@ public class TakePictureActivity extends AppCompatActivity {
     }
 
     //start plant Diagnosis activity
-    private void goToPlantDiagnosis(String filename, Uri imageUri) {
+    private void goToPlantDiagnosis(String filename, String imageUri) {
         Intent plantDiagnosis = new Intent(context, PlantDiagnosisActivity.class);
         plantDiagnosis.putExtra("file_name", filename);
         plantDiagnosis.putExtra("image_uri", imageUri);

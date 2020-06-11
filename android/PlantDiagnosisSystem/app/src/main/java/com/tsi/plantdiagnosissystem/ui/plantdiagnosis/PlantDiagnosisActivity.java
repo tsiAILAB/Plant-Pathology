@@ -43,18 +43,16 @@ public class PlantDiagnosisActivity extends AppCompatActivity {
 //        getSupportActionBar().setTitle(Html.fromHtml("<font color='#6699CC'>" + titleText + "</font>"));
 
 
-
-
-
         diseaseName = findViewById(R.id.diagnosisResultTextView);
         sampleImage = findViewById(R.id.imageView);
-        try {
-            InputStream imageStream = getContentResolver().openInputStream(Uri.parse(imageUri));
-            final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-            sampleImage.setImageBitmap(selectedImage);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        sampleImage.setImageURI(Uri.parse(imageUri));
+//        try {
+//            InputStream imageStream = getContentResolver().openInputStream(Uri.parse(imageUri));
+//            final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+//            sampleImage.setImageBitmap(selectedImage);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         setDiagnosisResult(imageFileName);
 
 
@@ -63,15 +61,15 @@ public class PlantDiagnosisActivity extends AppCompatActivity {
     private void setDiagnosisResult(String imageFileName) {
 
         switch (imageFileName) {
-            case "early_blight":
+            case "early_blight.JPG":
                 setActionBar("Early Blight");
                 diseaseName.setText("Disease Found, Probability-92.75%");
                 break;
-            case "late_blight":
+            case "late_blight.JPG":
                 setActionBar("Late Blight");
                 diseaseName.setText("Disease Found, Probability-98.12%");
                 break;
-            case "healthy_leaf":
+            case "healthy_leaf.JPG":
                 setActionBar("Disease not found");
                 diseaseName.setText("Disease Not Found, Probability-92.75%");
                 break;
