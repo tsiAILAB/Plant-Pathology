@@ -151,27 +151,27 @@
 
 
 
-<!--<div class="popup">-->
-<!--    <div class="popup-content">-->
-<!--        <div class="close">-->
-<!--            <i class="material-icons text-secondary">highlight_off</i>-->
-<!--        </div>-->
-<!--        <div class="text-center">-->
-<!--            <h4 class="text-blueGray">OTP Verification</h4>-->
-<!--            <hr/>-->
-<!--        </div>-->
-<!--        <form action="">-->
-<!--            <div class="form-group">-->
-<!--                <input name="email" type="text" id="emailField" required class="input-area">-->
-<!--                <label for="emailField" class="label">OTP</label>-->
-<!--                <span class="inputFieldIconStyle"><i class="material-icons text-secondary">border_color</i></span>-->
-<!--            </div>-->
-<!--            <div class="text-center mt-3">-->
-<!--                <input type="submit" name="otpSubmit" id="signupFormSubmit" class="btn rounded-btn text-def w-100" style="border: 1px solid gray; color: #6B9790; font-weight: bold" value="Submit">-->
-<!--            </div>-->
-<!--        </form>-->
-<!--    </div>-->
-<!--</div>-->
+<div class="popup">
+    <div class="popup-content">
+        <div class="close">
+            <i class="material-icons text-secondary">highlight_off</i>
+        </div>
+        <div class="text-center">
+            <h4 class="text-blueGray">OTP Verification</h4>
+            <hr/>
+        </div>
+        <form action="">
+            <div class="form-group">
+                <input name="email" type="text" id="emailField" required class="input-area">
+                <label for="emailField" class="label">OTP</label>
+                <span class="inputFieldIconStyle"><i class="material-icons text-secondary">border_color</i></span>
+            </div>
+            <div class="text-center mt-3">
+                <input type="submit" name="otpSubmit" id="signupFormSubmit" class="btn rounded-btn text-def w-100" style="border: 1px solid gray; color: #6B9790; font-weight: bold" value="Submit">
+            </div>
+        </form>
+    </div>
+</div>
 
 <script>
 
@@ -192,12 +192,12 @@
     //     })
     // }
 
-    // document.getElementById("signupFormSubmit").addEventListener("click", function () {
-    //     document.querySelector(".popup").style.display = "flex";
-    // })
-    // document.querySelector(".close").addEventListener("click", function () {
-    //     document.querySelector(".popup").style.display = "none";
-    // })
+    document.getElementById("signupFormSubmit").addEventListener("click", function () {
+        document.querySelector(".popup").style.display = "flex";
+    })
+    document.querySelector(".close").addEventListener("click", function () {
+        document.querySelector(".popup").style.display = "none";
+    })
 </script>
 </body>
 </html>
