@@ -10,22 +10,28 @@ if (isset($_POST['signInSubmit'])){
     $password = $_POST['password'];
 
 //    $sql = "INSERT INTO landing_page_crops (crop_icon_image, crop_name) VALUES ('$cropIconImage', '$cropName')";
-    $sql = "SELECT * FROM user WHERE email='$email' AND password='$password'";
-    $result = mysqli_query($db, $sql); //stores the submitted data into the database table : landing_page_crops
+    $sqlAdmin = "SELECT * FROM user WHERE email='$email' AND password='$password' AND role='admin_role'";
+    $sqlUser = "SELECT * FROM user WHERE email='$email' AND password='$password' AND role='user_role'";
+    $resultAdmin = mysqli_query($db, $sqlAdmin); //stores the submitted data into the database table : landing_page_crops
+    $resultUser = mysqli_query($db, $sqlUser); //stores the submitted data into the database table : landing_page_crops
 
 
-    $count = mysqli_num_rows($result);
-    if ($count == 1){
-        $role = mysqli_query($db, "SELECT * FROM user WHERE email='$email' AND role='admin_role'");
-        $roleCount = mysqli_num_rows($role);
-        if ($roleCount == 1){
+    $countAdmin = mysqli_num_rows($resultAdmin);
+    $countUser = mysqli_num_rows($resultUser);
+    if ($countAdmin == 1){
+//        $role = mysqli_query($db, "SELECT * FROM user WHERE email='$email' AND role='admin_role'");
+//        $roleCount = mysqli_num_rows($role);
+//        if ($roleCount == 1){
             $_SESSION['IS_LOGIN_ADMIN'] = $email;
-            header('Location: ../uis/admin_landing_page.php');
-        }else{
-            $_SESSION['IS_LOGIN_USER'] = $email;
             header('Location: ../uis/landing_page.php');
-        }
-
+//        }else{
+//            $_SESSION['IS_LOGIN_USER'] = $email;
+////            header('Location: ../uis/landing_page.php');
+//        }
+//            header('Location: ../uis/landing_page.php');
+    }elseif ($countUser == 1){
+        $_SESSION['IS_LOGIN_USER'] = $email;
+        header('Location: ../uis/landing_page.php');
     }else{
         echo "<script>alert('Invalid Credintials ....!!');</script>";
     }
