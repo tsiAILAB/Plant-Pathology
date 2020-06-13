@@ -1,4 +1,6 @@
 <?php
+
+require '../models/db.php';
     session_start();
     $msg= "";
     if (isset($_POST['submit'])){
@@ -6,9 +8,9 @@
         $password = $_POST['password'];
         $confirmPassword = $_POST['confirmPassword'];
 
-        $con = mysqli_connect("localhost", "root", "", "pds_web");
+//        $con = mysqli_connect("localhost", "root", "", "pds_web");
 
-        $check = mysqli_num_rows(mysqli_query($con, "select * from user where email='$email'"));
+        $check = mysqli_num_rows(mysqli_query($conn, "select * from user where email='$email'"));
         if ($check>0){
             $msg = "<p style='color: red;'>Email already exists</p>";
         }else{
@@ -17,7 +19,7 @@
                 $otp = rand(11111, 99999);
 
                 $sql = "INSERT INTO user (email, password, verification_status, otp, role) VALUES ('$email', '$password', 0, '$otp', 'user_role')";
-                mysqli_query($con, $sql);
+                mysqli_query($conn, $sql);
                 $msg = "<p style='color: #1c7430'>Sign Up Successfully</p>";
 
                 $html = "Your Signup email OTP verification code is ".$otp;
