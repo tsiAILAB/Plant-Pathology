@@ -116,13 +116,13 @@ public class ConfigPlantImageFragment extends Fragment {
             public void onClick(View v) {
                 String name = cropNameEditText.getText().toString().trim();
                 String imageUri = savedImageUri;
-                if(name != null && name != "" && !"".equalsIgnoreCase(imageUri)) {
+                if(!"".equalsIgnoreCase(name) && imageUri != null && !"".equalsIgnoreCase(imageUri)) {
                     PlantImage plantImage = new PlantImage(name, imageUri);
                     PlantImageController.saveImageToDatabase(plantImage);
                     Toast.makeText(getActivity().getApplicationContext(), name+" saving successful!", Toast.LENGTH_LONG).show();
                     resetUi();
                 } else {
-                    Toast.makeText(getActivity().getApplicationContext(), "Crop name cannot be empty!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity().getApplicationContext(), "Crop name or image cannot be empty!", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -145,7 +145,8 @@ public class ConfigPlantImageFragment extends Fragment {
                 String imageFilePath = imageUri.getPath();
                 String imageFileName = Utils.getFileName(getActivity(), imageUri);
                 final InputStream imageStream = getActivity().getContentResolver().openInputStream(imageUri);
-                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                final Bitmap selectedImage = PlantImageController.getBitmapFromUri(getActivity().getApplicationContext(), imageUri);
+                //BitmapFactory.decodeStream(imageStream);
 //                pictureImageView.setVisibility(View.VISIBLE);
                 File savedFile = PlantImageController.saveImageExternalStorage(getActivity().getApplicationContext(), selectedImage, "");
                 savedImageUri = savedFile.getAbsolutePath();

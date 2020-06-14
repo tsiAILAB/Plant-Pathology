@@ -22,8 +22,8 @@ import java.util.ArrayList;
 
 public class CropRecyclerAdapter extends RecyclerView.Adapter<CropRecyclerAdapter.ImageViewHolder> {
 
-    Context context;
-    ArrayList<PlantImage> plantImages;
+    private static Context context;
+    private static ArrayList<PlantImage> plantImages;
 
     CropRecyclerAdapter(ArrayList<PlantImage> plantImages, Context context) {
         this.plantImages = plantImages;
@@ -44,12 +44,16 @@ public class CropRecyclerAdapter extends RecyclerView.Adapter<CropRecyclerAdapte
         PlantImage plantImage = plantImages.get(position);
         String imageUri = plantImage.getImageUrl();
 //        holder.cropImageView.setImageResource(R.drawable.potato);
-        holder.cropImageView.setImageURI(Uri.parse(imageUri));
+        try {
+            holder.cropImageView.setImageURI(Uri.parse(imageUri));
 
 //        Uri jg = Uri.parse(imageUri);
 //        Picasso.with(context).load(jg).into(holder.cropImageView);
 
-        holder.cropNameTextView.setText(plantImage.getPlantName());
+            holder.cropNameTextView.setText(plantImage.getPlantName());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         Log.d("Crop: ", "Name: " + plantImage.getPlantName() + " Url: " + plantImage.getImageUrl());
     }
 

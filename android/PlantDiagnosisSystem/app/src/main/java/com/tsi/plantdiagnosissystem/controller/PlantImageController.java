@@ -2,13 +2,17 @@ package com.tsi.plantdiagnosissystem.controller;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Environment;
+import android.os.ParcelFileDescriptor;
 
 import com.tsi.plantdiagnosissystem.controller.database.databasecontroller.PlantImageCtr;
 import com.tsi.plantdiagnosissystem.data.model.PlantImage;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -44,5 +48,14 @@ public class PlantImageController {
         PlantImageCtr plantImageCtr = new PlantImageCtr();
         return plantImageCtr.getPlantImages();
 
+    }
+
+    public static Bitmap getBitmapFromUri(Context context, Uri uri) throws IOException {
+        ParcelFileDescriptor parcelFileDescriptor =
+                context.getContentResolver().openFileDescriptor(uri, "r");
+        FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+        Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
+        parcelFileDescriptor.close();
+        return image;
     }
 }

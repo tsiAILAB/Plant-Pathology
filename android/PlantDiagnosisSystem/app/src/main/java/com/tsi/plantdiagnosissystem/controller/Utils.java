@@ -140,6 +140,20 @@ public class Utils {
         return null;
     }
 
+    //getImageSize
+    public static String calculateFileSize(String filepath) {
+        File file = new File(filepath);
+        // Get length of file in bytes
+        long fileSizeInBytes = file.length();
+
+        float fileSizeInKB = fileSizeInBytes / 1024;
+        // Convert the KB to MegaBytes (1 MB = 1024 KBytes)
+        float fileSizeInMB = fileSizeInKB / 1024;
+
+        String calString = Float.toString(fileSizeInMB);
+        return calString;
+    }
+
     //getFileName from URI
     public static String getFileName(Context context, Uri uri) {
         String result = null;
@@ -154,7 +168,7 @@ public class Utils {
                     cursor.close();
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         if (result == null) {
@@ -279,7 +293,7 @@ public class Utils {
 
     public static void goToHome(Context context) {
         Intent home = new Intent();
-        home.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        home.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         home.setClass(context, LandingPageActivity.class);
         context.startActivity(home);
     }
@@ -312,5 +326,6 @@ public class Utils {
         }
         return null;
     }
+
 
 }

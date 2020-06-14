@@ -42,8 +42,9 @@ public class LandingPageActivity extends AppCompatActivity {
 
         setActionBar("Select Crop");
 
-        plantImages = PlantImageController.getPlantImages();
-
+        try {
+            plantImages = PlantImageController.getPlantImages();
+        }catch (Exception e){}
 //        Toast.makeText(getApplicationContext(), "IsMailSent: ", Toast.LENGTH_LONG).show();
 
         cropListRecyclerView = findViewById(R.id.cropListRecyclerView);
@@ -61,6 +62,14 @@ public class LandingPageActivity extends AppCompatActivity {
 //        Intent home = new Intent();
 //        home.setClass(LandingPageActivity.this, TakePictureActivity.class);
 //        startActivity(home);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        try {
+            plantImages = PlantImageController.getPlantImages();
+        }catch (Exception e){}
     }
 
     //set custom actionBar

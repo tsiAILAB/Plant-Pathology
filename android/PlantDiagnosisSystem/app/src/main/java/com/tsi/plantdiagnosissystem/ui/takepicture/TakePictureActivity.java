@@ -23,6 +23,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tsi.plantdiagnosissystem.R;
@@ -44,12 +46,15 @@ public class TakePictureActivity extends AppCompatActivity {
     private static final int GALLERY_REQUEST = 1889;
     ImageView pictureImageView, cropImageView;
     Button galleryButton, cameraButton, uploadImageButton;
+    LinearLayout imageDetailsLinearLayout;
+    TextView imageTypeTextView, sizeTypeTextView, heightTextView, widthTextView;
 
     Context context;
 
     String imageUploadFilePath, uploadImageFileName;
     PlantImage plantImage = null;
     User user;
+    Bitmap selectedImageBitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +62,13 @@ public class TakePictureActivity extends AppCompatActivity {
         setContentView(R.layout.activity_take_picture);
         cropImageView = findViewById(R.id.plantImageView);
         pictureImageView = findViewById(R.id.diseaseImageView);
+        imageDetailsLinearLayout = findViewById(R.id.imageDetailsLinearLayout);
+
+        imageTypeTextView = findViewById(R.id.imageTypeTextView);
+        sizeTypeTextView = findViewById(R.id.imageSizeTextView);
+        heightTextView = findViewById(R.id.imageHeightTextView);
+        widthTextView = findViewById(R.id.imageWidthTextView);
+
         galleryButton = findViewById(R.id.galleryButton);
         cameraButton = findViewById(R.id.cameraButton);
         uploadImageButton = findViewById(R.id.uploadImageButton);
@@ -114,32 +126,61 @@ public class TakePictureActivity extends AppCompatActivity {
                 final Uri imageUri = data.getData();
                 imageUploadFilePath = imageUri.getLastPathSegment();
                 uploadImageFileName = Utils.getFileName(TakePictureActivity.this, imageUri);
+
+
+                final String imageTypeString = uploadImageFileName.substring(uploadImageFileName.lastIndexOf("."));
                 final InputStream imageStream = getContentResolver().openInputStream(imageUri);
-                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-//                pictureImageView.setVisibility(View.VISIBLE);
-                pictureImageView.setImageBitmap(selectedImage);
+//                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+//                selectedImageBitmap = selectedImage;
+//                if (selectedImageBitmap == null) {
+                    try {
+                        selectedImageBitmap = PlantImageController.getBitmapFromUri(TakePictureActivity.this, imageUri);
+                        //save image
+                        File file = PlantImageController.saveImageExternalStorage(TakePictureActivity.this, selectedImageBitmap, plantImage.getPlantName());
+                        //getFilePath
+                        imageUploadFilePath = file.getAbsolutePath();
+                    } catch (Exception e) {
+                    }
+//                }
+
+
+
+                String imageSize = String.valueOf(selectedImageBitmap.getByteCount());
+
+                imageDetailsLinearLayout.setVisibility(View.VISIBLE);
+                imageTypeTextView.setText("Type: " + imageTypeString);
+                sizeTypeTextView.setText("Size: " + imageSize);
+                heightTextView.setText("Height: " + selectedImageBitmap.getHeight());
+                widthTextView.setText("Width: " + selectedImageBitmap.getWidth());
+
+
+                pictureImageView.setImageBitmap(selectedImageBitmap);
                 uploadImageButton.setVisibility(View.VISIBLE);
                 uploadImageButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        new AlertDialog.Builder(context)
-                                .setMessage("Do you want diagnosis of this Image?")
+                        if (!imageTypeString.equalsIgnoreCase(".bmp")) {
+                            new AlertDialog.Builder(context)
+                                    .setMessage("Do you want diagnosis of this Image?")
 
-                                // Specifying a listener allows you to take an action before dismissing the dialog.
-                                // The dialog is automatically dismissed when a dialog button is clicked.
-                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        //go to plantDiagnosis
-                                        goToPlantDiagnosis(uploadImageFileName, imageUploadFilePath);
+                                    // Specifying a listener allows you to take an action before dismissing the dialog.
+                                    // The dialog is automatically dismissed when a dialog button is clicked.
+                                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            //go to plantDiagnosis
+                                            goToPlantDiagnosis(uploadImageFileName, imageUploadFilePath);
 
-                                    }
-                                })
+                                        }
+                                    })
 
-                                // A null listener allows the button to dismiss the dialog and take no further action.
-                                .setNegativeButton(android.R.string.no, null)
+                                    // A null listener allows the button to dismiss the dialog and take no further action.
+                                    .setNegativeButton("No", null)
 //                                .setIcon(android.R.drawable.ic_dialog_alert)
-                                .show();
+                                    .show();
+                        } else {
 
+                            Toast.makeText(TakePictureActivity.this, "Image type not supported", Toast.LENGTH_LONG).show();
+                        }
                     }
                 });
             } catch (FileNotFoundException e) {

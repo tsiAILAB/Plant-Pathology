@@ -38,13 +38,13 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final int PERMISSION_REQUEST_CODE = 200;
 
-    Context CONTEXT;
+    private static Context CONTEXT;
 
     private LoginViewModel loginViewModel;
-    private static LoginActivity instance;
+    private static Context instance;
     private User user;
 
-    public static LoginActivity instance() {
+    public static Context instance() {
         return instance;
     }
 
@@ -53,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        instance = this;
+        instance = getApplication().getApplicationContext();//LoginActivity.this;
 
         getSupportActionBar().setTitle(Html.fromHtml("<font color='#6699CC'>Plant Diagnosis System </font>"));
 
