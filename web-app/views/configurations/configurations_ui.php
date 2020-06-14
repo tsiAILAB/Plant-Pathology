@@ -1,44 +1,11 @@
 <?php
 
-    require '../../models/db.php';
-    require '../../apis/all_apis.php';
-    $allApis = new AllApis();
-    if (isset($_POST['updateApi'])){
-        $apiName = $allApis->API_NAME;
-        $apiUrl = $_POST['apiUrl'];
-
-//        $db = mysqli_connect("localhost", "root", "", "pds_web");
-        $query = "UPDATE apis SET api_url='$apiUrl' WHERE api_name='$apiName'";
-
-        mysqli_query($conn, $query);
-    }
+    require '../../controllers/configuration_controller.php';
 
     session_start();
     if (isset($_SESSION['IS_LOGIN_ADMIN'])) {
 
-        $msg = "";
-        if (isset($_POST['addNewCrop'])) {
-            //the path to store the uploaded image
-            $target = "../../assets/images/" . basename($_FILES['selectIconImage']['name']);
-
-            //connect to databse
-//            $db = mysqli_connect("localhost", "root", "", "pds_web");
-
-            //get all the submitted data from the form
-            $cropIconImage = $_FILES['selectIconImage']['name'];
-            $cropName = $_POST['cropName'];
-
-            $sql = "INSERT INTO landing_page_crops (crop_icon_image, crop_name) VALUES ('$cropIconImage', '$cropName')";
-            mysqli_query($conn, $sql); //stores the submitted data into the database table : landing_page_crops
-
-            //Move the uploaded image into the folder: assets/images
-            if (move_uploaded_file($_FILES['selectIconImage']['tmp_name'], $target)) {
-                $msg = "Crop Upladed successfully";
-            } else {
-                $msg = "Somethings went wrong";
-            }
-        }
-    ?>
+?>
 
 
 
@@ -51,10 +18,10 @@
     <meta id="Viewport" name="viewport" content="initial-scale=1, maximum-scale=1,
         minimum-scale=1, user-scalable=no">
     <title>Configurations</title>
-    <link rel="stylesheet" href="../../css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../css/main.css">
-    <link rel="stylesheet" href="../../css/material_design_input_field.css">
-    <link rel="stylesheet" href="../../css/configurations.css">
+    <link rel="stylesheet" href="../../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/css/material_design_input_field.css">
+    <link rel="stylesheet" href="../../assets/css/configurations.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -78,7 +45,7 @@
             <p class="pt-2 text-blueGray">
 <!--                <i class="fa fa-cog fa-lg" aria-hidden="true"></i>-->
                 <span class="text-blueGray">
-                    <a href="../../authentication/logout.php" class="text-blueGray"><i class="fa fa-power-off fa-lg pr-2 pl-4" aria-hidden="true"></i></a>
+                    <a href="../../controllers/logout_controller.php" class="text-blueGray"><i class="fa fa-power-off fa-lg pr-2 pl-4" aria-hidden="true"></i></a>
                 </span>
             </p>
         </div>
@@ -142,7 +109,7 @@
 
 </div>
 
-<script src="../../js/bootstrap.min.js"></script>
+<script src="../../assets/js/bootstrap.min.js"></script>
 <script>
     function triggerClick() {
         document.querySelector('#selectIconImage').click();

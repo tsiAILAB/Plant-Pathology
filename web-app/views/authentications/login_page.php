@@ -1,42 +1,10 @@
 <?php
-session_start();
-$msg = "";
-if (isset($_POST['signInSubmit'])){
+//require 'models/db.php';
 
-    //connect to databse
-    $db = mysqli_connect("localhost", "root", "", "pds_web");
+require '../../controllers/login_controller.php';
 
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-
-//    $sql = "INSERT INTO landing_page_crops (crop_icon_image, crop_name) VALUES ('$cropIconImage', '$cropName')";
-    $sqlAdmin = "SELECT * FROM user WHERE email='$email' AND password='$password' AND role='admin_role'";
-    $sqlUser = "SELECT * FROM user WHERE email='$email' AND password='$password' AND role='user_role'";
-    $resultAdmin = mysqli_query($db, $sqlAdmin); //stores the submitted data into the database table : landing_page_crops
-    $resultUser = mysqli_query($db, $sqlUser); //stores the submitted data into the database table : landing_page_crops
-
-
-    $countAdmin = mysqli_num_rows($resultAdmin);
-    $countUser = mysqli_num_rows($resultUser);
-    if ($countAdmin == 1){
-//        $role = mysqli_query($db, "SELECT * FROM user WHERE email='$email' AND role='admin_role'");
-//        $roleCount = mysqli_num_rows($role);
-//        if ($roleCount == 1){
-            $_SESSION['IS_LOGIN_ADMIN'] = $email;
-            header('Location: ../uis/landing_page.php');
-//        }else{
-//            $_SESSION['IS_LOGIN_USER'] = $email;
-////            header('Location: ../uis/landing_page.php');
-//        }
-//            header('Location: ../uis/landing_page.php');
-    }elseif ($countUser == 1){
-        $_SESSION['IS_LOGIN_USER'] = $email;
-        header('Location: ../uis/landing_page.php');
-    }else{
-        echo "<script>alert('Invalid Credintials ....!!');</script>";
-    }
-}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -45,10 +13,12 @@ if (isset($_POST['signInSubmit'])){
     <meta id="Viewport" name="viewport" content="initial-scale=1, maximum-scale=1,
         minimum-scale=1, user-scalable=no">
     <title>Plant Diagnosis System</title>
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/material_design_input_field.css">
+    <link rel="stylesheet" href="../../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../assets/css/toastr.min.css">
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/css/material_design_input_field.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css">
+    <link rel="stylesheet" href="../../assets/js/toastr.min.js">
 </head>
 <body>
     <div class="container col-sm-12 col-md-8 col-lg-8">
@@ -62,11 +32,13 @@ if (isset($_POST['signInSubmit'])){
                     <input type="text" name="email" id="emailField" required class="input-area">
                     <label for="emailField" class="label">Email</label>
                     <span class="inputFieldIconStyle"><i class="material-icons text-secondary">email</i></span>
+                    <span style="display: block"><?php echo "$emailError" ?></span>
                 </div>
                 <div class="form-group" style="margin-top: 15px">
                     <input type="text" name="password" id="passwordField" required class="input-area">
                     <label for="passwordField" class="label">Password</label>
                     <span class="inputFieldIconStyle"><i class="material-icons text-secondary">security</i></span>
+                    <span style="display: block"><?php echo "$emailError" ?></span>
                 </div>
                 <p class="text-center text-secondary">Already Registered?</p>
                 <div class="text-center">
