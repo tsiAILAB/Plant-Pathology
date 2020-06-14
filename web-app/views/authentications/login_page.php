@@ -18,7 +18,7 @@ require '../../controllers/login_controller.php';
     <link rel="stylesheet" href="../../assets/css/main.css">
     <link rel="stylesheet" href="../../assets/css/material_design_input_field.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css">
-    <link rel="stylesheet" href="../../assets/js/toastr.min.js">
+<!--    <link rel="stylesheet" href="../../assets/js/toastr.min.js">-->
 </head>
 <body>
     <div class="container col-sm-12 col-md-8 col-lg-8">
@@ -51,5 +51,40 @@ require '../../controllers/login_controller.php';
             </form>
         </div>
     </div>
+
+    <script src="../../assets/js/toastr.min.js"></script>
+    <script>
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-bottom-center",
+            "preventDuplicates": false,
+            "onclick": null,
+            // "showDuration": "300",
+            "showDuration": "300",
+            // "hideDuration": "1000",
+            "hideDuration": "1000",
+            // "timeOut": "5000",
+            "timeOut": "3000",
+            // "extendedTimeOut": "1000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+    </script>
+    <script>
+        <?php if (isset($_SESSION['invalid_credintials'])) : ?>
+        toastr.error("<?php echo flashMessage('Invalid Credintials...!!!'); ?>");
+        <?php endif ?>
+<!--        --><?php //}elseif (isset($_SESSION['login_as_user'])){ ?>
+        //toastr.success("<?php //echo flashMessage('login_as_user'); ?>//");
+<!--        --><?php //} ?>
+        //toastr.success("<?php //echo flashMessage('message'); ?>//");
+
+    </script>
 </body>
 </html>
