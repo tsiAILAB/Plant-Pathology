@@ -1,0 +1,149 @@
+<?php
+
+require '../../controllers/signup_controller.php';
+
+?>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta id="Viewport" name="viewport" content="initial-scale=1, maximum-scale=1,
+        minimum-scale=1, user-scalable=no">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="../../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/css/material_design_input_field.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <style>
+        .popup{
+            background: rgba(0, 0, 0, 0.6);
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            justify-content: center;
+            align-items: center;
+            display: none;
+        }
+        .popup-content{
+            height: 200px;
+            width: 300px;
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            position: relative;
+        }
+        .close{
+            position: absolute;
+            right: 0;
+            top: 0;
+            cursor: pointer;
+        }
+        .otp-field{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container col-sm-12 col-md-8 col-lg-8">
+    <nav class="d-flex justify-content-center shadow">
+        <h5 class="text-blueGray p-2">Sign Up</h5>
+    </nav>
+
+    <div class="container col-md-8">
+        <form method="post" action="signup_page.php" style="margin-top: 35%">
+<!--            <div class="text-center">-->
+<!--                <h2>--><?php //echo $msg?><!--</h2>-->
+<!--            </div>-->
+            <div class="form-group signup-field">
+                <input name="email" type="text" id="emailField" required class="input-area">
+                <label for="emailField" class="label">Email</label>
+                <span class="inputFieldIconStyle"><i class="material-icons text-secondary">email</i></span>
+                <span style="display: block"><?php echo "$emailExistError" ?></span>
+            </div>
+            <div class="form-group signup-field" style="margin-top: 15px">
+                <input name="password" type="text" id="passwordField" required class="input-area">
+                <label for="passwordField" class="label">Password</label>
+                <span class="inputFieldIconStyle"><i class="material-icons text-secondary">security</i></span>
+                <span style="display: block"><?php echo "$msg" ?></span>
+            </div>
+            <div class="form-group signup-field" style="margin-top: 15px">
+                <input name="confirmPassword" type="text" id="confirmPasswordField" required class="input-area">
+                <label for="confirmPasswordField" class="label">Confirm Password</label>
+                <span class="inputFieldIconStyle"><i class="material-icons text-secondary">security</i></span>
+                <span style="display: block"><?php echo "$msg" ?></span>
+            </div>
+            <div class="text-center mt-3 signup-field">
+                <input type="submit" name="signUpSubmit" id="signupFormSubmit" class="btn rounded-btn text-def w-100" style="border: 1px solid gray; color: #6B9790; font-weight: bold" value="Submit">
+            </div>
+
+<!--            OTP Verification section-->
+<!--            <div class="form-group otp-field" style="margin-top: 15px">-->
+<!--                <input name="otp" type="text" id="otpField" class="input-area">-->
+<!--                <label for="otp" class="label">OTP</label>-->
+<!--                <span class="inputFieldIconStyle"><i class="material-icons text-secondary">border_color</i></span>-->
+<!--            </div>-->
+<!--            <div class="text-center mt-3 otp-field">-->
+<!--                <input type="submit" name="otpSubmit" id="otpSubmit" class="btn rounded-btn text-def w-100" style="border: 1px solid gray; color: #6B9790; font-weight: bold" value="Submit">-->
+<!--            </div>-->
+        </form>
+    </div>
+</div>
+
+
+
+<!--<div class="popup">-->
+<!--    <div class="popup-content">-->
+<!--        <div class="close">-->
+<!--            <i class="material-icons text-secondary">highlight_off</i>-->
+<!--        </div>-->
+<!--        <div class="text-center">-->
+<!--            <h4 class="text-blueGray">OTP Verification</h4>-->
+<!--            <hr/>-->
+<!--        </div>-->
+<!--        <form action="">-->
+<!--            <div class="form-group">-->
+<!--                <input name="email" type="text" id="emailField" required class="input-area">-->
+<!--                <label for="emailField" class="label">OTP</label>-->
+<!--                <span class="inputFieldIconStyle"><i class="material-icons text-secondary">border_color</i></span>-->
+<!--            </div>-->
+<!--            <div class="text-center mt-3">-->
+<!--                <input type="submit" name="otpSubmit" id="signupFormSubmit" class="btn rounded-btn text-def w-100" style="border: 1px solid gray; color: #6B9790; font-weight: bold" value="Submit">-->
+<!--            </div>-->
+<!--        </form>-->
+<!--    </div>-->
+<!--</div>-->
+
+<script>
+
+    // function send_otp() {
+    //     var email = jQery('#email').val();
+    //     jQery.ajax({
+    //         url: 'send_otp.php',
+    //         type: 'post',
+    //         data: 'email='+email,
+    //         success:function (result) {
+    //             if (result === yes){
+    //                 jQuery('.otp-field').show();
+    //                 jQuery('.signup-field').hide();
+    //             }else{
+    //                 console.log("Something Went Wrong JK");
+    //             }
+    //         }
+    //     })
+    // }
+
+    // document.getElementById("signupFormSubmit").addEventListener("click", function () {
+    //     document.querySelector(".popup").style.display = "flex";
+    // })
+    // document.querySelector(".close").addEventListener("click", function () {
+    //     document.querySelector(".popup").style.display = "none";
+    // })
+</script>
+</body>
+</html>

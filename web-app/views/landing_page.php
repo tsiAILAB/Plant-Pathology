@@ -1,6 +1,6 @@
 <?php
 
-require '../models/db.php';
+//require '../models/db.php';
 //
 //$tomatoObj = new CropDetails("Tomato", "../assets/images/tomato.jpg");
 //$potatoObj = new CropDetails("Potato", "../assets/images/potato.jpg");
@@ -22,8 +22,8 @@ if (isset($_SESSION['IS_LOGIN_ADMIN']) || isset($_SESSION['IS_LOGIN_USER'])){
         <meta id="Viewport" name="viewport" content="initial-scale=1, maximum-scale=1,
         minimum-scale=1, user-scalable=no">
         <title>Plant Selection</title>
-        <link rel="stylesheet" href="../css/bootstrap.min.css">
-        <link rel="stylesheet" href="../css/main.css">
+        <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../assets/css/main.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -42,10 +42,10 @@ if (isset($_SESSION['IS_LOGIN_ADMIN']) || isset($_SESSION['IS_LOGIN_USER'])){
             <div class="float-right">
                 <p class="pt-2 text-blueGray">
                     <?php if (isset($_SESSION['IS_LOGIN_ADMIN']))  {?>
-                        <a href="configuration/configurations_ui.php" class="text-blueGray" style="text-decoration: none"><i class="fa fa-cog fa-lg" aria-hidden="true"></i></a>
+                        <a href="configurations/configurations_ui.php" class="text-blueGray" style="text-decoration: none"><i class="fa fa-cog fa-lg" aria-hidden="true"></i></a>
                     <?php } ?>
                     <span class="text-blueGray">
-                        <a href="../authentication/logout.php" class="text-blueGray"><i class="fa fa-power-off fa-lg pr-2 pl-4" aria-hidden="true"></i></a>
+                        <a href="../controllers/logout_controller.php" class="text-blueGray"><i class="fa fa-power-off fa-lg pr-2 pl-4" aria-hidden="true"></i></a>
                     </span>
                 </p>
             </div>
@@ -73,9 +73,9 @@ if (isset($_SESSION['IS_LOGIN_ADMIN']) || isset($_SESSION['IS_LOGIN_USER'])){
 <!--            </div>-->
 <!--        </a>-->
         <?php
-//        $db = mysqli_connect("localhost", "root", "", "pds_web");
+        $db = mysqli_connect("localhost", "root", "", "pds_web");
         $sql = "SELECT * FROM landing_page_crops";
-        $result = mysqli_query($conn, $sql);
+        $result = mysqli_query($db, $sql);
         while ($row = mysqli_fetch_array($result)) {
             echo "<a href=\"plant-diagnosis/take_image_ui.php?id=".$row['id']."\" style=\"text-decoration: none\">";
             echo " <div class=\"text-center\">";
@@ -88,7 +88,7 @@ if (isset($_SESSION['IS_LOGIN_ADMIN']) || isset($_SESSION['IS_LOGIN_USER'])){
     </div>
 
     <script>
-        $(document.readyState)
+        // $(document.readyState)
         $('#cropMainA').click(function () {
             cropName = document.getElementById('#tomato').innerHTML;
             localStorage.setItem("cropName", cropName);
@@ -100,7 +100,7 @@ if (isset($_SESSION['IS_LOGIN_ADMIN']) || isset($_SESSION['IS_LOGIN_USER'])){
     </html>
 
 <?php }else{
-    header('Location:../authentication/login_page.php');
+    header('Location:../views/authentications/login_page.php');
     die();
 }
 

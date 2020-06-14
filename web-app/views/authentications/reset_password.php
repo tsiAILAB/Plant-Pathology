@@ -1,35 +1,7 @@
 <?php
-session_start();
-$msg = "";
-if (isset($_POST['submit'])){
 
-    //connect to databse
-    $db = mysqli_connect("localhost", "root", "", "pds_web");
+require '../../controllers/reset_password_controller.php';
 
-    $password = $_POST['password'];
-    $confirmPassword = $_POST['confirmPassword'];
-    $email = $_SESSION['EMAIL'];
-
-    if ($password === $confirmPassword){
-        $sql = "UPDATE user SET password='$password' WHERE email='$email'";
-        mysqli_query($db, $sql);
-
-        header('Location:login_page.php');
-    }else{
-        $msg = "<p class='text-danger'>Password did not match</p>";
-    }
-
-
-//    $count = mysqli_num_rows($result);
-//    if ($count == 1){
-////        $_SESSION['IS_LOGIN'] = $email;
-//        mysqli_query($db, "UPDATE user SET verification_status=1 WHERE email='$email'");
-//
-//        header('Location: ../uis/landing_page.php');
-//    }else{
-//        header('Location: signup_otp_email_verification.php');
-//    }
-}
 ?>
 
 
@@ -40,9 +12,9 @@ if (isset($_POST['submit'])){
     <meta id="Viewport" name="viewport" content="initial-scale=1, maximum-scale=1,
         minimum-scale=1, user-scalable=no">
     <title>Reset Password</title>
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/material_design_input_field.css">
+    <link rel="stylesheet" href="../../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/css/material_design_input_field.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css">
     <style>
         input[type="text"]:focus{

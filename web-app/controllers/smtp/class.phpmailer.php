@@ -120,7 +120,7 @@ class PHPMailer {
    * Sets the text-only body of the message.  This automatically sets the
    * email to multipart/alternative.  This body can be read by mail
    * clients that do not have HTML email capability such as mutt. Clients
-   * that can read HTML will view the normal Body.
+   * that can read HTML will views the normal Body.
    * @var string
    */
   public $AltBody           = '';
@@ -753,7 +753,7 @@ class PHPMailer {
   /**
    * Creates message and assigns Mailer. If the message is
    * not sent successfully then it returns false.  Use the ErrorInfo
-   * variable to view description of the error.
+   * variable to views description of the error.
    * @throws phpmailerException
    * @return bool
    */
@@ -2508,7 +2508,7 @@ class PHPMailer {
         }
     }
     if (empty($this->AltBody)) {
-      $this->AltBody = 'To view this email message, open it in a program that understands HTML!' . "\n\n";
+      $this->AltBody = 'To views this email message, open it in a program that understands HTML!' . "\n\n";
     }
     return $message;
   }
