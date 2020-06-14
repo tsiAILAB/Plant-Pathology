@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:ems="10"
-            android:hint="Enter api url"
+            android:hint="API URL"
             android:inputType="textUri|textPersonName"
             android:textColor="#6699CC"
             android:textSize="18sp" />
@@ -53,6 +53,7 @@
             android:layout_marginTop="10dp"
             android:paddingTop="10dp"
             android:text="Update"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textStyle="bold"
             android:textSize="18sp"
             android:textColor="#6699CC" />

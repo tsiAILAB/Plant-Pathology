@@ -190,9 +190,39 @@ public class TakePictureActivity extends AppCompatActivity {
         } else if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
             //Do stuff with the camara data result
 
+
             final Bitmap photo = (Bitmap) data.getExtras().get("data");
 //            pictureImageView.setVisibility(View.VISIBLE);
+            selectedImageBitmap = photo;
+
             pictureImageView.setImageBitmap(photo);
+
+            File file;
+            String filename;
+            Uri imageUri;
+            try {
+                //save image
+                file = PlantImageController.saveImageExternalStorage(TakePictureActivity.this, photo, plantImage.getPlantName());
+                //getFilePath
+                imageUploadFilePath = file.getAbsolutePath();
+                imageUri = Uri.parse(imageUploadFilePath);
+                uploadImageFileName = Utils.getFileName(TakePictureActivity.this, imageUri);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            String imageTypeString = uploadImageFileName.substring(uploadImageFileName.lastIndexOf("."));
+
+            String imageSize = String.valueOf(selectedImageBitmap.getByteCount());
+
+            imageDetailsLinearLayout.setVisibility(View.VISIBLE);
+            imageTypeTextView.setText("Type: " + imageTypeString);
+            sizeTypeTextView.setText("Size: " + imageSize);
+            heightTextView.setText("Height: " + selectedImageBitmap.getHeight());
+            widthTextView.setText("Width: " + selectedImageBitmap.getWidth());
+
+            imageDetailsLinearLayout.setVisibility(View.VISIBLE);
 
             uploadImageButton.setVisibility(View.VISIBLE);
             uploadImageButton.setOnClickListener(new View.OnClickListener() {
@@ -203,28 +233,15 @@ public class TakePictureActivity extends AppCompatActivity {
 
                             // Specifying a listener allows you to take an action before dismissing the dialog.
                             // The dialog is automatically dismissed when a dialog button is clicked.
-                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-                                    File file;
-                                    String filename;
-                                    Uri imageUri;
-                                    try {
-                                        //save image
-                                        file = PlantImageController.saveImageExternalStorage(TakePictureActivity.this, photo, plantImage.getPlantName());
-                                        //getFilePath
-                                        imageUploadFilePath = file.getAbsolutePath();
-                                        imageUri = Uri.parse(imageUploadFilePath);
-                                        uploadImageFileName = Utils.getFileName(TakePictureActivity.this, imageUri);
-                                        //go to plantDiagnosis
-                                        goToPlantDiagnosis(uploadImageFileName, imageUploadFilePath);
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
+                                    //go to plantDiagnosis
+                                    goToPlantDiagnosis(uploadImageFileName, imageUploadFilePath);
                                 }
                             })
 
                             // A null listener allows the button to dismiss the dialog and take no further action.
-                            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     try {

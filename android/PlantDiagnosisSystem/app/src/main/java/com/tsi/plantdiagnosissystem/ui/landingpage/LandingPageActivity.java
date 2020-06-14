@@ -5,6 +5,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Spannable;
@@ -30,7 +31,11 @@ public class LandingPageActivity extends AppCompatActivity {
     private CropRecyclerAdapter cropRecyclerAdapter;
     private ArrayList<PlantImage> plantImages;
     private User loggedInUser;
+    private static Context instance;
 
+    public static Context instance() {
+        return instance;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

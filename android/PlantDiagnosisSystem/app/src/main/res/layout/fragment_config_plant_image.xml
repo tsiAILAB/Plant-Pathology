@@ -35,7 +35,8 @@
             android:paddingTop="10dp"
             android:text="Upload Image Icon"
             android:textColor="#6699CC"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <ImageView
             android:id="@+id/cropImageView"
@@ -75,7 +76,8 @@
             android:paddingTop="10dp"
             android:text="Add New Crop"
             android:textColor="#6699CC"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 
     </LinearLayout>
 </ScrollView>

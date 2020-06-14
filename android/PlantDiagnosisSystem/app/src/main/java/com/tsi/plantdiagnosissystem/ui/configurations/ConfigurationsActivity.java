@@ -35,7 +35,7 @@ public class ConfigurationsActivity extends AppCompatActivity {
 
         tabs.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        setActionBar("Configurations");
+        setActionBar("Configuration");
         //actonBar
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        getSupportActionBar().setTitle(Html.fromHtml("<font color='#6699CC'>Configurations</font>"));
