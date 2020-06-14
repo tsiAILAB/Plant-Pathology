@@ -11,6 +11,24 @@
 //}
 
 session_start();
+function flashMessage ($name, $text = ''){
+    if ($name !=null){
+        return $name;
+    }else{
+        $name = $text;
+    }
+    return '';
+}
+//function flashMessage ($name, $text = ''){
+//    if (isset($_SESSION[$name])){
+//        $message = $_SESSION[$name];
+//        unset($_SESSION[$name]);
+//        return $message;
+//    }else{
+//        $_SESSION[$name] = $text;
+//    }
+//    return '';
+//}
 if (isset($_SESSION['IS_LOGIN_ADMIN']) || isset($_SESSION['IS_LOGIN_USER'])){
 
 ?>
@@ -24,6 +42,7 @@ if (isset($_SESSION['IS_LOGIN_ADMIN']) || isset($_SESSION['IS_LOGIN_USER'])){
         <title>Plant Selection</title>
         <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
         <link rel="stylesheet" href="../assets/css/main.css">
+        <link rel="stylesheet" href="../assets/css/toastr.min.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -87,6 +106,39 @@ if (isset($_SESSION['IS_LOGIN_ADMIN']) || isset($_SESSION['IS_LOGIN_USER'])){
         ?>
     </div>
 
+    <script src="../assets/js/toastr.min.js"></script>
+    <script>
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-bottom-center",
+            "preventDuplicates": false,
+            "onclick": null,
+            // "showDuration": "300",
+            "showDuration": "300",
+            // "hideDuration": "1000",
+            "hideDuration": "1000",
+            // "timeOut": "5000",
+            "timeOut": "3000",
+            // "extendedTimeOut": "1000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+    </script>
+    <script>
+        <?php if (isset($_SESSION['IS_LOGIN_ADMIN'])) {?>
+        toastr.success("<?php echo flashMessage('Successfully Login as Admin...'); ?>");
+        <?php }elseif (isset($_SESSION['IS_LOGIN_USER'])){ ?>
+        toastr.success("<?php echo flashMessage('Successfully Login as User...'); ?>");
+        <?php } ?>
+        //toastr.success("<?php //echo flashMessage('message'); ?>//");
+
+    </script>
     <script>
         // $(document.readyState)
         $('#cropMainA').click(function () {
