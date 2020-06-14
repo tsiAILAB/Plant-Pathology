@@ -97,6 +97,11 @@ if (isset($_SESSION['IS_LOGIN_ADMIN']) || isset($_SESSION['IS_LOGIN_USER']))
             .otp-field{
                 display: none;
             }
+            .upload-button{
+                display: block;
+                margin: auto;
+                margin-bottom: 15px;
+            }
 
         </style>
     </head>
@@ -183,7 +188,7 @@ if (isset($_SESSION['IS_LOGIN_ADMIN']) || isset($_SESSION['IS_LOGIN_USER']))
             <!--        <img src="" id="selectedImageTwo" class="" height="2px;" width="2px">-->
             <!--        <img src="" id="selectedImageThree" class="" height="2px;" width="2px">-->
         </div>
-        <div  class="text-center" id="uploadButton">
+        <div  class="text-center d-none" style="text-align: center!important;" id="uploadButton">
             <button name="upload" style="border: none; background-color: transparent;" class="" data-toggle="modal" data-target="#myModal"><i class="fa fa-upload text-secondary fa-lg" aria-hidden="true"></i></button>
         </div>
         <!--    </form>-->
@@ -231,7 +236,7 @@ if (isset($_SESSION['IS_LOGIN_ADMIN']) || isset($_SESSION['IS_LOGIN_USER']))
     <div class="popup">
         <div class="container col-sm-12 col-md-8 col-lg-8 popup-content">
             <nav class="d-flex justify-content-between shadow ">
-                <h5 class="text-blueGray p-2">Early Blight</h5>
+                <h5 class="text-blueGray p-2" id="diagnosisResultHeading"></h5>
                 <div class="pt-2 float-right">
                     <p class="text-blueGray close">
                         <i class="material-icons pr-2" aria-hidden="true">highlight_off</i>
@@ -279,15 +284,19 @@ if (isset($_SESSION['IS_LOGIN_ADMIN']) || isset($_SESSION['IS_LOGIN_USER']))
             switch (x) {
                 case 1:
                     document.getElementById('diagnosisResult').innerText = healthy;
+                    document.getElementById('diagnosisResultHeading').innerText = "Healthy";
                     break;
                 case 2:
                     document.getElementById('diagnosisResult').innerText = earlyBlight;
+                    document.getElementById('diagnosisResultHeading').innerText = "Early Blight";
                     break;
                 case 3:
                     document.getElementById('diagnosisResult').innerText = lateBlight;
+                    document.getElementById('diagnosisResultHeading').innerText = "Late Blight";
                     break;
                 case 4:
                     document.getElementById('diagnosisResult').innerText = notAPlant;
+                    document.getElementById('diagnosisResultHeading').innerText = "Not a Plant";
                     break;
             }
 
@@ -315,6 +324,7 @@ if (isset($_SESSION['IS_LOGIN_ADMIN']) || isset($_SESSION['IS_LOGIN_USER']))
                     document.querySelector('#DiagnosisCrop').setAttribute('src', e.target.result);
                     document.querySelector('#selectedImageOne').setAttribute('class', 'selectedImage');
                     document.querySelector('#pickImagesText').setAttribute('class', 'd-none');
+                    document.querySelector('#uploadButton').setAttribute('class', 'upload-button');
                     // document.querySelector('#uploadButton').setAttribute('class', 'uploadButton');
                 }
                 reader.readAsDataURL(e.files[0])
