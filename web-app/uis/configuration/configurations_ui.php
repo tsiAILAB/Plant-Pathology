@@ -1,15 +1,16 @@
 <?php
 
-    include '../../apis/all_apis.php';
+    require '../../models/db.php';
+    require '../../apis/all_apis.php';
     $allApis = new AllApis();
     if (isset($_POST['updateApi'])){
         $apiName = $allApis->API_NAME;
         $apiUrl = $_POST['apiUrl'];
 
-        $db = mysqli_connect("localhost", "root", "", "pds_web");
+//        $db = mysqli_connect("localhost", "root", "", "pds_web");
         $query = "UPDATE apis SET api_url='$apiUrl' WHERE api_name='$apiName'";
 
-        mysqli_query($db, $query);
+        mysqli_query($conn, $query);
     }
 
     session_start();
@@ -21,14 +22,14 @@
             $target = "../../assets/images/" . basename($_FILES['selectIconImage']['name']);
 
             //connect to databse
-            $db = mysqli_connect("localhost", "root", "", "pds_web");
+//            $db = mysqli_connect("localhost", "root", "", "pds_web");
 
             //get all the submitted data from the form
             $cropIconImage = $_FILES['selectIconImage']['name'];
             $cropName = $_POST['cropName'];
 
             $sql = "INSERT INTO landing_page_crops (crop_icon_image, crop_name) VALUES ('$cropIconImage', '$cropName')";
-            mysqli_query($db, $sql); //stores the submitted data into the database table : landing_page_crops
+            mysqli_query($conn, $sql); //stores the submitted data into the database table : landing_page_crops
 
             //Move the uploaded image into the folder: assets/images
             if (move_uploaded_file($_FILES['selectIconImage']['tmp_name'], $target)) {
@@ -155,10 +156,10 @@
                 document.querySelector('#selectedIconImage').setAttribute('src', e.target.result);
                 document.querySelector('#selectedIconImage').setAttribute('class', 'selectedImage');
                 document.querySelector('#noCropIconSelectedText').setAttribute('class', 'd-none');
-                localStorage.setItem('selectedCropIconImageUrl', e.target.result);
+                // localStorage.setItem('selectedCropIconImageUrl', e.target.result);
             }
             reader.readAsDataURL(e.files[0]);
-            localStorage.setItem('imgUrl', e.target.result);
+            // localStorage.setItem('imgUrl', e.target.result);
         }
     }
 </script>

@@ -1,31 +1,43 @@
 <?php
 
-include '../../models/crop_details.php';
+require '../../models/db.php';
 
-$cropName = "Tomato";
-$cropSrcUrl = "../../assets/images/tomato.jpg";
+session_start();
 
-$selectedCropName = "Tomato";
-$selectedCropImageSrc = "";
+//$cU = $_SESSION['cU'];
+//include '../../models/crop_details.php';
 
-switch ($selectedCropName){
-    case "Tomato":
-        $selectedCropImageSrc = "../../assets/images/tomato.jpg";
-        break;
-    case "Potato":
-        $selectedCropImageSrc = "../../assets/images/potato.jpg";
-        break;
-    case "Mage":
-        $selectedCropImageSrc = "../../assets/images/maze.jpg";
-        break;
-    default:
-        $selectedCropImageSrc = null;
-}
+
+
+//$cropName = "Tomato";
+//$cropSrcUrl = "../../assets/images/tomato.jpg";
+//
+//$selectedCropName = "Tomato";
+//$selectedCropImageSrc = "";
+//
+//switch ($selectedCropName){
+//    case "Tomato":
+//        $selectedCropImageSrc = "../../assets/images/tomato.jpg";
+//        break;
+//    case "Potato":
+//        $selectedCropImageSrc = "../../assets/images/potato.jpg";
+//        break;
+//    case "Mage":
+//        $selectedCropImageSrc = "../../assets/images/maze.jpg";
+//        break;
+//    default:
+//        $selectedCropImageSrc = null;
+//}
 
 //if (isset($_POST['upload'])){
 //    $selectedImageForUpload = $_POST['selectedImageForUpload'];
 //}
 
+//$crpN = $_POST['crop_name'];
+
+if (isset($_SESSION['IS_LOGIN_ADMIN']) || isset($_SESSION['IS_LOGIN_USER']))
+
+{
 ?>
 
 <!DOCTYPE html>
@@ -93,24 +105,81 @@ switch ($selectedCropName){
     <nav class="d-flex justify-content-between shadow ">
         <h5 class="text-blueGray p-2">Plant Diagnosis Systems</h5>
         <div class="float-right">
+
             <p class="pt-2 text-blueGray">
-                <i class="fa fa-power-off fa-lg pr-2" aria-hidden="true"></i>
+                <?php if (isset($_SESSION['IS_LOGIN_ADMIN']))  {?>
+                    <a href="../configuration/configurations_ui.php" class="text-blueGray" style="text-decoration: none"><i class="fa fa-cog fa-lg" aria-hidden="true"></i></a>
+                <?php } ?>
+
+                <span class="text-blueGray">
+                    <a href="../../authentication/logout.php" class="text-blueGray"><i class="fa fa-power-off fa-lg pr-2 pl-4" aria-hidden="true"></i></a>
+                </span>
             </p>
         </div>
     </nav>
 </div>
 <div class="container d-flex flex-column justify-content-center" style="margin-top: 2%">
-    <div class="text-center">
-        <img src="<?php echo ($selectedCropImageSrc != null) ? $selectedCropImageSrc : $cropSrcUrl ?>" style="border-radius: 50%; height: 125px; width: 125px">
-        <p class="text-center" style="font-weight: bold"><?php echo $cropName?></p>
-    </div>
+
+    <ul class="text-center d-flex flex-column">
+
+        <?php
+
+        $cropId = $_GET['id'];
+//        $cN = $_SESSION['cropName'];
+
+//        $db = mysqli_connect("localhost", "root", "", "pds_web");
+        $sql = "SELECT * FROM landing_page_crops WHERE id='$cropId'";
+        $result = mysqli_query($conn, $sql);
+        while ($row = mysqli_fetch_array($result)) {
+            ?>
+
+            <button type="submit" name="potato" style="background-color: transparent; border: none;" class="text-secondary">
+                <li style="list-style: none" value="<?php echo $row['id']?>">
+                    <img src=" <?php echo "../../assets/images/".$row['crop_icon_image'] ?>" style="border-radius: 50%; height: 125px; width: 125px">
+                    <p id="cropName" class="text-center" style="font-weight: bold"><?php echo $row['crop_name']?></p>
+                </li>
+            </button>
+
+        <?php } ?>
+
+    </ul>
+
+<!--    --><?php
+//    $db = mysqli_connect("localhost", "root", "", "pds_web");
+//    $sql = "SELECT * FROM landing_page_crops WHERE id=1";
+//    $result = mysqli_query($db, $sql);
+//    $count = mysqli_num_rows($result);
+//    if ($count == 1) {
+//        ?>
+<!---->
+<!--        <<div class="text-center">-->
+<!--            <img src="--><?php //echo "../../assets/images/".$count['crop_icon_image'] ?><!--" style="border-radius: 50%; height: 125px; width: 125px">-->
+<!--            <p class="text-center" style="font-weight: bold">--><?php //echo $count['crop_name'] ?><!--</p>-->
+<!--        </div>-->
+<!---->
+<!--    --><?php //} ?>
+
+
+<!--    <div class="text-center">-->
+<!--        <img src="--><?php //echo ($selectedCropImageSrc != null) ? $selectedCropImageSrc : $cropSrcUrl ?><!--" style="border-radius: 50%; height: 125px; width: 125px">-->
+<!--        <p class="text-center" style="font-weight: bold">--><?php //echo $cropName?><!--</p>-->
+<!--    </div>-->
+<!--    <div class="text-center">-->
+<!--        <img src="--><?php //echo "../../assets/images/".$cU ?><!--" style="border-radius: 50%; height: 125px; width: 125px">-->
+<!--        <p class="text-center" style="font-weight: bold">--><?php //echo $cN ?><!--</p>-->
+<!--    </div>-->
+<!--    <div class="text-center">-->
+<!--        <img id="cropUrlJsta" src="" style="border-radius: 50%; height: 125px; width: 125px">-->
+<!--        <p id="cropNameJs" class="text-center" style="font-weight: bold"></p>-->
+<!--    </div>-->
+
     <div class="text-center">
         <h2 id="pickImagesText" class="d-block">Pick Images</h2>
     </div>
 
 <!--    <form method="post" action="take_image_ui.php">-->
         <div class="text-center">
-            <img name="selectedImageForUpload" src="" id="selectedImageOne" class="" height="2px;" width="2px">
+            <img name="selectedImageForUpload" src="../" id="selectedImageOne" class="" height="2px;" width="2px">
             <!--        <img src="" id="selectedImageTwo" class="" height="2px;" width="2px">-->
             <!--        <img src="" id="selectedImageThree" class="" height="2px;" width="2px">-->
         </div>
@@ -188,6 +257,18 @@ switch ($selectedCropName){
 
 <script>
 
+    // window.onload = function () {
+    //     var cropUrlJsP = localStorage.getItem("cropUrlJs");
+    //     // var cropNameJsP = localStorage.getItem("cropNameJs");
+    //
+    //     console.log("URL_FROM_LOCAL_STORAGE : "+cropUrlJsP);
+    //     console.log("NAME_FROM_LOCAL_STORAGE : "+localStorage.getItem("cropNameJs"));
+    //
+    //     document.querySelector('#cropUrlJsta').setAttribute("src", cropUrlJsP);
+    //     // document.getElementById('cropNameJs').innerHTML= cropNameJsP;
+    // }
+
+
     var x = 1;
     function diagnosisCrop() {
         var healthy = "Diseases Not Found, Probability-92.75%";
@@ -195,59 +276,6 @@ switch ($selectedCropName){
         var lateBlight = "Diseases Found, Probability-98.12%";
         var notAPlant = "This is not a Plant!";
 
-        // var x = 1;
-
-            // switch (x) {
-            //     case 1:
-            //         document.getElementById('diagnosisResult').innerText = healthy;
-            //         break;
-            //     case 2:
-            //         document.getElementById('diagnosisResult').innerText = earlyBlight;
-            //         break;
-            //     case 3:
-            //         document.getElementById('diagnosisResult').innerText = lateBlight;
-            //         break;
-            //     case 4:
-            //         document.getElementById('diagnosisResult').innerText = notAPlant;
-            //         break;
-            // }
-            // x += x ;
-
-        // if (x = 1){
-        //     document.getElementById('diagnosisResult').innerText = healthy;
-        //     x = 2;
-        // } elseif (x=2){
-        //     document.getElementById('diagnosisResult').innerText = earlyBlight;
-        //     x=3;
-        // } elseif (x=3){
-        //     document.getElementById('diagnosisResult').innerText = lateBlight;
-        //     x=4;
-        // } elseif (x=4){
-        //     document.getElementById('diagnosisResult').innerText = notAPlant;
-        //     x=1;
-        // }
-
-        // do {
-        //     switch (x) {
-        //         case 1:
-        //             document.getElementById('diagnosisResult').innerText = healthy;
-        //             break;
-        //         case 2:
-        //             document.getElementById('diagnosisResult').innerText = earlyBlight;
-        //             break;
-        //         case 3:
-        //             document.getElementById('diagnosisResult').innerText = lateBlight;
-        //             break;
-        //         case 4:
-        //             document.getElementById('diagnosisResult').innerText = notAPlant;
-        //             break;
-        //     }
-        //     x += x;
-        // }while (x>4){
-        //     x = 1;
-        // }
-
-        // while (x<=4){
             switch (x) {
                 case 1:
                     document.getElementById('diagnosisResult').innerText = healthy;
@@ -329,3 +357,10 @@ switch ($selectedCropName){
 </script>
 </body>
 </html>
+
+<?php }else{
+    header('Location: ../../authentication/login_page.php');
+    die();
+}
+
+?>
