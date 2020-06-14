@@ -1,29 +1,5 @@
 <?php
-session_start();
-$msg = "";
-if (isset($_POST['otpSubmit'])){
-
-    //connect to databse
-    $db = mysqli_connect("localhost", "root", "", "pds_web");
-
-    $otpCode = $_POST['otp'];
-    $email = $_SESSION['EMAIL'];
-
-//    $sql = "INSERT INTO landing_page_crops (crop_icon_image, crop_name) VALUES ('$cropIconImage', '$cropName')";
-    $sql = "SELECT * FROM user WHERE email='$email' AND otp='$otpCode'";
-    $result = mysqli_query($db, $sql); //stores the submitted data into the database table : landing_page_crops
-
-
-    $count = mysqli_num_rows($result);
-    if ($count == 1){
-        $_SESSION['EMAIL'] = $email;
-        mysqli_query($db, "UPDATE user SET verification_status=1 WHERE email='$email'");
-
-        header('Location:reset_password.php');
-    }else{
-        header('Location: signup_otp_email_verification.php');
-    }
-}
+require '../../controllers/reset_password_otp_email_verification_controller.php';
 ?>
 
 <!DOCTYPE html>
@@ -33,9 +9,9 @@ if (isset($_POST['otpSubmit'])){
     <meta id="Viewport" name="viewport" content="initial-scale=1, maximum-scale=1,
         minimum-scale=1, user-scalable=no">
     <title>OTP Verification</title>
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/material_design_input_field.css">
+    <link rel="stylesheet" href="../../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/css/material_design_input_field.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css">
 </head>
 <body>
