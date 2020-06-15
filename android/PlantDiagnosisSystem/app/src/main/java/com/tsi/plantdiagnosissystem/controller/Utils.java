@@ -235,6 +235,7 @@ public class Utils {
     //This method would confirm the otp
     public static void isValidOtpDialog(final Context context, final User user) {
         Button buttonConfirm;
+        Button buttonResendOtp;
         final EditText editTextConfirmOtp;
         //Creating a LayoutInflater object for the dialog box
         LayoutInflater li = LayoutInflater.from(context);
@@ -243,6 +244,7 @@ public class Utils {
 
         //Initializing confirm button fo dialog box and editText of dialog box
         buttonConfirm = (Button) confirmDialog.findViewById(R.id.buttonConfirm);
+        buttonResendOtp = (Button) confirmDialog.findViewById(R.id.buttonResendOtp);
         editTextConfirmOtp = (EditText) confirmDialog.findViewById(R.id.editTextOtp);
 
         //Creating an alertDialog builder
@@ -287,6 +289,12 @@ public class Utils {
 //                    loading.dismiss();
                     isValidOtpDialog(context, user);
                 }
+            }
+        });
+        buttonResendOtp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserController.verifyEmailOtpSend(user.getUsername());
             }
         });
     }

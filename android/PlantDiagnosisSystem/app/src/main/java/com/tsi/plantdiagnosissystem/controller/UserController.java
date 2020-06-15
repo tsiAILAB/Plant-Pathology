@@ -58,7 +58,7 @@ public class UserController {
     }
 
     //updateUserOtp and send otp email
-    public static boolean recoverPassword(String userEmail) {
+    public static boolean verifyEmailOtpSend(String userEmail) {
         UserTableCtr userTableCtr = new UserTableCtr();
         User user = userTableCtr.getUser(userEmail);
         if (user != null) {

@@ -51,7 +51,7 @@ public class RecoverPasswordFragment extends Fragment {
                 if (userName != null && userName != ""){
                     user = new User();
                 user.setUsername(userName);
-                UserController.recoverPassword(user.getUsername());
+                UserController.verifyEmailOtpSend(user.getUsername());
 
                 //call alertDialog
                 isValidOtpDialog();
@@ -73,6 +73,7 @@ public class RecoverPasswordFragment extends Fragment {
     private void isValidOtpDialog() {
 
         Button buttonConfirm;
+        Button buttonResendOtp;
         final EditText editTextConfirmOtp;
         //Creating a LayoutInflater object for the dialog box
         LayoutInflater li = LayoutInflater.from(context);
@@ -81,6 +82,7 @@ public class RecoverPasswordFragment extends Fragment {
 
         //Initializing confirm button fo dialog box and editText of dialog box
         buttonConfirm = (Button) confirmDialog.findViewById(R.id.buttonConfirm);
+        buttonResendOtp = (Button) confirmDialog.findViewById(R.id.buttonResendOtp);
         editTextConfirmOtp = (EditText) confirmDialog.findViewById(R.id.editTextOtp);
 
         //Creating an alertDialog builder
@@ -124,6 +126,12 @@ public class RecoverPasswordFragment extends Fragment {
                     Toast.makeText(context, "Wrong OTP!", Toast.LENGTH_LONG).show();
                     isValidOtpDialog();
                 }
+            }
+        });
+        buttonResendOtp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserController.verifyEmailOtpSend(user.getUsername());
             }
         });
     }

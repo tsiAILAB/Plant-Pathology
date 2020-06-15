@@ -22,10 +22,23 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/colorPrimary"
+        android:padding="12dp"
+        android:text="Submit"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/colorBlueGray"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/buttonResendOtp"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
         android:background="@color/colorPrimary"
         android:padding="12dp"
-        android:text="Confirm"
+        android:text="Re-send OTP"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/colorBlueGray"
         android:textStyle="bold" />
