@@ -14,6 +14,13 @@ function flashMessage ($name, $text = ''){
     return '';
 }
 
+function validate($data){
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
+
 //Add New Crop Controller Section Start
 
 $emptyCropIconImage = "";
@@ -21,11 +28,12 @@ $emptyCropName = "";
 $addNewCropSuccess = "";
 
 if (isset($_POST['addNewCrop'])) {
+
     //the path to store the uploaded image
     $target = "../../assets/images/" . basename($_FILES['selectIconImage']['name']);
 
     $cropIconImage = $_FILES['selectIconImage']['name'];
-    $cropName = $_POST['cropName'];
+    $cropName = validate($_POST['cropName']);
 
     if (empty($cropIconImage)){
         $emptyCropIconImage = "<p class='text-danger'>Crop icon image can not be null.!</p>";
@@ -53,7 +61,7 @@ $apiFieldEmptyError = "";
 
 if (isset($_POST['updateApi'])){
 
-    $apiUrl = $_POST['apiUrl'];
+    $apiUrl = validate($_POST['apiUrl']);
 
     if (empty($apiUrl)){
         $apiFieldEmptyError = "<p class='text-danger'>This field can not be empty.!</p>";

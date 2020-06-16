@@ -7,8 +7,16 @@ $emailNotRegisteredError = "";
 $invalidCredentials = "";
 
 if (isset($_POST['signInSubmit'])){
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+
+    function validate($data){
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
+
+    $email = validate($_POST['email']);
+    $password = validate($_POST['password']);
     $password = md5($password);
 
     if (empty($email) && empty($passwordEmpty)){

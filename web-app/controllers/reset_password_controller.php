@@ -15,12 +15,19 @@ function flashMessage ($name, $text = ''){
 $msg = "";
 if (isset($_POST['submit'])){
 
+    function validate($data){
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
+
     //connect to databse
     $db = mysqli_connect("localhost", "root", "", "pds_web");
 
-    $password = $_POST['password'];
-    $confirmPassword = $_POST['confirmPassword'];
-    $email = $_SESSION['EMAIL'];
+    $password = validate($_POST['password']);
+    $confirmPassword = validate($_POST['confirmPassword']);
+    $email = validate($_SESSION['EMAIL']);
 
     if ($password === $confirmPassword){
 
