@@ -1,24 +1,43 @@
 <?php
 
-//require '../models/db.php';
-
 session_start();
-$msg= "";
-$emailExistError = "";
+
+function flashMessage ($name, $text = ''){
+    if ($name !=null){
+        return $name;
+    }else{
+        $name = $text;
+    }
+    return '';
+}
+
+$emptyEmail = "";
+$emptyPassword = "";
+$emptyConfirmPassword = "";
+$emailExists = "";
+$unmatchedPassword = "";
+
 if (isset($_POST['signUpSubmit'])){
+
     $email = $_POST['email'];
     $password = $_POST['password'];
     $confirmPassword = $_POST['confirmPassword'];
 
+    if (empty($email)){
+        $emptyEmail = "<p class='text-danger'>Email field cant not be empty.!</p>";
+    }elseif (empty($password)){
+        $emptyPassword = "<p class='text-danger'>Password cant not be empty.!</p>";
+    }elseif (empty($confirmPassword)){
+        $emptyConfirmPassword = "<p class='text-danger'>Confirm Password can not be empty.!</p>";
+    }else {
         $db = mysqli_connect("localhost", "root", "", "pds_web");
+        $check = mysqli_num_rows(mysqli_query($db, "select * from user where email='$email'"));
 
-    $check = mysqli_num_rows(mysqli_query($db, "select * from user where email='$email'"));
-    if ($check>0){
-        $emailExistError = "<p style='color: red; font-size: 14px'>Email already exists.......!!</p>";
-//        header('Location: ../authentication/signup_page.php');
-    }else{
-        if ($password === $confirmPassword){
-
+        if ($check> 0){
+            $emailExists = "<p style='color: red; font-size: 14px'>Email already exists try a new one..!</p>";
+        }elseif ($password != $confirmPassword){
+            $unmatchedPassword = "<p style='color: red; font-size: 14px'>Password did not match.!</p>";
+        }elseif ($password === $confirmPassword){
             $password = md5($password);
 
             $otp = rand(11111, 99999);
@@ -29,18 +48,12 @@ if (isset($_POST['signUpSubmit'])){
 
             $html = "Your Signup email OTP verification code is ".$otp;
             $_SESSION['EMAIL'] =  $email;
+            flashMessage("check_otp", "check_otp");
             smtp_mailer($email,'PDS - Email OTP Verification', $html);
-
-//                echo "<script>document.getElementById(\"signupFormSubmit\").addEventListener(\"click\", function () {
-//                    document.querySelector(\".popup\").style.display = \"flex\";
-//                })</script>";
-
             header("Location:signup_otp_email_verification.php");
-//                echo "<script>alert('Sign Up Successfully')</script>";
-        }else{
-            $msg = "<p style='color: red; font-size: 14px'>Password did not match.........!!</p>";
         }
     }
+
 }
 
 function smtp_mailer($to, $subject, $msg){

@@ -47,9 +47,9 @@ if (isset($_SESSION['IS_LOGIN_ADMIN']) || isset($_SESSION['IS_LOGIN_USER']))
         <meta id="Viewport" name="viewport" content="initial-scale=1, maximum-scale=1,
         minimum-scale=1, user-scalable=no">
         <title>PDS-Take Image</title>
-        <link rel="stylesheet" href="../../css/bootstrap.min.css">
-        <link rel="stylesheet" href="../../css/main.css">
-        <link rel="stylesheet" href="../../css/take_image_ui.css">
+        <link rel="stylesheet" href="../../assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../../assets/css/main.css">
+        <link rel="stylesheet" href="../../assets/css/take_image_ui.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -57,9 +57,8 @@ if (isset($_SESSION['IS_LOGIN_ADMIN']) || isset($_SESSION['IS_LOGIN_USER']))
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
         <style>
             .selectedImage{
-                height: 150px;
-                width: 150px;
-                border-radius: 50%;
+                height: 250px;
+                width: 250px;
                 margin-top: 15px;
                 margin-bottom: 10px;
             }
@@ -113,7 +112,7 @@ if (isset($_SESSION['IS_LOGIN_ADMIN']) || isset($_SESSION['IS_LOGIN_USER']))
 
                 <p class="pt-2 text-blueGray">
                     <?php if (isset($_SESSION['IS_LOGIN_ADMIN']))  {?>
-                        <a href="../configuration/configurations_ui.php" class="text-blueGray" style="text-decoration: none"><i class="fa fa-cog fa-lg" aria-hidden="true"></i></a>
+                        <a href="../configurations/configurations_ui.php" class="text-blueGray" style="text-decoration: none"><i class="fa fa-cog fa-lg" aria-hidden="true"></i></a>
                     <?php } ?>
 
                     <span class="text-blueGray">
@@ -189,7 +188,7 @@ if (isset($_SESSION['IS_LOGIN_ADMIN']) || isset($_SESSION['IS_LOGIN_USER']))
             <!--        <img src="" id="selectedImageThree" class="" height="2px;" width="2px">-->
         </div>
         <div  class="text-center d-none" style="text-align: center!important;" id="uploadButton">
-            <button name="upload" style="border: none; background-color: transparent;" class="" data-toggle="modal" data-target="#myModal"><i class="fa fa-upload text-secondary fa-lg" aria-hidden="true"></i></button>
+            <button name="upload" style="border: none; background-color: transparent;" class="" data-toggle="modal" data-target="#myModal"><i class="material-icons text-blueGray" aria-hidden="true" style="font-size: 35px">backup</i></button>
         </div>
         <!--    </form>-->
         <div class="text-center mt-2">
@@ -284,7 +283,7 @@ if (isset($_SESSION['IS_LOGIN_ADMIN']) || isset($_SESSION['IS_LOGIN_USER']))
             switch (x) {
                 case 1:
                     document.getElementById('diagnosisResult').innerText = healthy;
-                    document.getElementById('diagnosisResultHeading').innerText = "Healthy";
+                    document.getElementById('diagnosisResultHeading').innerText = "Diseases not found";
                     break;
                 case 2:
                     document.getElementById('diagnosisResult').innerText = earlyBlight;

@@ -3,6 +3,15 @@
 //require '../models/db.php';
 
 session_start();
+
+function flashMessage ($name, $text = ''){
+    if ($name !=null){
+        return $name;
+    }else{
+        $name = $text;
+    }
+    return '';
+}
 $msg = "";
 if (isset($_POST['otpSubmit'])){
 
@@ -21,6 +30,7 @@ if (isset($_POST['otpSubmit'])){
     if ($count == 1){
         $_SESSION['EMAIL'] = $email;
         mysqli_query($db, "UPDATE user SET verification_status=1 WHERE email='$email'");
+        flashMessage("reset_pass", "reset_pass");
 
         header('Location:reset_password.php');
     }else{

@@ -1,8 +1,16 @@
 <?php
 
-//require '../models/db.php';
-
 session_start();
+//require '../models/db.php';
+function flashMessage ($name, $text = ''){
+    if ($name !=null){
+        return $name;
+    }else{
+        $name = $text;
+    }
+    return '';
+}
+
 $msg = "";
 if (isset($_POST['signUpOtpSubmit'])){
 
@@ -19,11 +27,14 @@ if (isset($_POST['signUpOtpSubmit'])){
 
     $count = mysqli_num_rows($result);
     if ($count == 1){
-        $_SESSION['IS_LOGIN'] = $email;
         mysqli_query($db, "UPDATE user SET verification_status=1 WHERE email='$email'");
+        $_SESSION['SIGNUP_SUCCESS'] = $email;
+        flashMessage("reset_pass_auto_login", "reset_pass_auto_login_done");
 
         header('Location: ../landing_page.php');
     }else{
+//        $_SESSION['PASS_RESET'] = $email;
+//        flashMessage("reset_pass", "reset_pass");
         header('Location: login_page.php');
     }
 }

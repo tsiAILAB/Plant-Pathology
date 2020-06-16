@@ -4,6 +4,15 @@
 
 session_start();
 
+function flashMessage ($name, $text = ''){
+    if ($name !=null){
+        return $name;
+    }else{
+        $name = $text;
+    }
+    return '';
+}
+
 $msg = "";
 if (isset($_POST['submit'])){
 
@@ -32,10 +41,14 @@ if (isset($_POST['submit'])){
 //        $updateOTPsql = "UPDATE user SET opt='$otp' WHERE email='$email'";
 
 //        $_SESSION['IS_LOGIN'] = $email;
+        flashMessage("recover_pass", "recover_pass");
 
         header('Location:reset_password_otp_email_verification.php');
     }else{
-        $msg = "Email is not Exists";
+        $_SESSION['EMAIL_NOT_REGISTERED'] =  $email;
+        flashMessage("invalid_email", "invalid_email_address");
+//        header('Location:forgot_password.php');
+//        $msg = "Email is not Exists";
     }
 }
 

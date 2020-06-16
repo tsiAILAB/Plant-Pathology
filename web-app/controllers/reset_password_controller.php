@@ -3,6 +3,15 @@
 //require '../models/db.php';
 
 session_start();
+
+function flashMessage ($name, $text = ''){
+    if ($name !=null){
+        return $name;
+    }else{
+        $name = $text;
+    }
+    return '';
+}
 $msg = "";
 if (isset($_POST['submit'])){
 
@@ -19,6 +28,7 @@ if (isset($_POST['submit'])){
 
         $sql = "UPDATE user SET password='$password' WHERE email='$email'";
         mysqli_query($db, $sql);
+        $_SESSION['PASSWORD_RESET_SUCCESSFULLY'] = $email;
 
         header('Location:login_page.php');
     }else{
