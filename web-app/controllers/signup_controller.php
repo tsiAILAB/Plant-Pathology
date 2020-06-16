@@ -19,9 +19,21 @@ $unmatchedPassword = "";
 
 if (isset($_POST['signUpSubmit'])){
 
+    function validate($data){
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
+
     $email = $_POST['email'];
-    $password = $_POST['password'];
-    $confirmPassword = $_POST['confirmPassword'];
+
+    if (filter_var($email, FILTER_VALIDATE_EMAIL == true)){
+        $email = validate($email);
+    }
+
+    $password = validate($_POST['password']);
+    $confirmPassword = validate($_POST['confirmPassword']);
 
     if (empty($email)){
         $emptyEmail = "<p class='text-danger'>Email field cant not be empty.!</p>";

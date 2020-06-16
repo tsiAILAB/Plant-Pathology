@@ -107,7 +107,7 @@ if (isset($_SESSION['IS_LOGIN_ADMIN']) || isset($_SESSION['IS_LOGIN_USER']))
     <body>
     <div class="container col-sm-12 col-md-8 col-lg-8">
         <nav class="d-flex justify-content-between shadow ">
-            <h5 class="text-blueGray p-2">Plant Diagnosis Systems</h5>
+            <h5 class="text-blueGray p-2">Plant Diagnosis System</h5>
             <div class="float-right">
 
                 <p class="pt-2 text-blueGray">
@@ -178,7 +178,7 @@ if (isset($_SESSION['IS_LOGIN_ADMIN']) || isset($_SESSION['IS_LOGIN_USER']))
         <!--    </div>-->
 
         <div class="text-center">
-            <h2 id="pickImagesText" class="d-block">Pick Images</h2>
+            <h2 id="pickImagesText" class="d-block">Pick Image</h2>
         </div>
 
         <!--    <form method="post" action="take_image_ui.php">-->
@@ -193,7 +193,7 @@ if (isset($_SESSION['IS_LOGIN_ADMIN']) || isset($_SESSION['IS_LOGIN_USER']))
         <!--    </form>-->
         <div class="text-center mt-2">
             <input type="file" id="selecteImage" onchange="displayImage(this)" multiple accept="images/*">
-            <label for="files" class="shadow pickImages" onclick="triggerClick()"><span style="padding-right: 10px"></span>Pick Images</label>
+            <label for="files" class="shadow pickImages" onclick="triggerClick()"><span style="padding-right: 10px"></span>Pick Image</label>
         </div>
 
         <!--    <p >Modal</p>-->

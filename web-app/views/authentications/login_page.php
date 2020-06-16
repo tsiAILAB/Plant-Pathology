@@ -45,7 +45,7 @@ function flashMessage ($name, $text = ''){
                     <input type="text" name="email" id="emailField" class="input-area">
                     <label for="emailField" class="label">Email</label>
                     <span class="inputFieldIconStyle"><i class="material-icons text-secondary">email</i></span>
-                    <span style="display: block"><?php echo $emailPasswordEmpty, $emailEmpty, $emailNotRegisteredError, $invalidCredentials  ?></span>
+                    <span style="display: block"><?php echo $emailPasswordEmpty, $emailEmpty, $emailNotRegisteredError ?></span>
                 </div>
                 <div class="form-group" style="margin-top: 15px">
                     <input type="password" name="password" id="passwordField" class="input-area">
@@ -55,11 +55,11 @@ function flashMessage ($name, $text = ''){
                 </div>
                 <p class="text-center text-secondary">Already Registered?</p>
                 <div class="text-center">
-                    <input type="submit" id="signInSubmit" name="signInSubmit" class="btn text-success w-100" style="font-size: 25px" value="Sign In">
+                    <button type="submit" id="signInSubmit" name="signInSubmit" class="btn text-success w-100" style="font-size: 25px"><b>Sign In</b></button>
                     <a href="forgot_password.php" class="text-info w-100" style="text-decoration: none">Forgot Password?</a>
                 </div>
                 <div class="text-center mt-2">
-                    <a href="signup_page.php" class="text-info w-100" style="text-decoration: none">New to Plant Diagnosis System? Sign Up</a>
+                    <a href="signup_page.php" class="text-info w-100" style="text-decoration: none">New to Plant Diagnosis System? <b>Sign Up</b></a>
                 </div>
             </form>
             <div class="text-center mt-5">

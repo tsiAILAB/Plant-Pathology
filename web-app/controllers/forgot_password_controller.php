@@ -16,10 +16,17 @@ function flashMessage ($name, $text = ''){
 $msg = "";
 if (isset($_POST['submit'])){
 
+    function validate($data){
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
+
     //connect to databse
     $db = mysqli_connect("localhost", "root", "", "pds_web");
 
-    $email = $_POST['email'];
+    $email = validate($_POST['email']);
 //    $email = $_SESSION['EMAIL'];
 
 //    $sql = "INSERT INTO landing_page_crops (crop_icon_image, crop_name) VALUES ('$cropIconImage', '$cropName')";
