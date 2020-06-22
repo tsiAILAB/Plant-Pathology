@@ -133,16 +133,15 @@ public class TakePictureActivity extends AppCompatActivity {
 //                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
 //                selectedImageBitmap = selectedImage;
 //                if (selectedImageBitmap == null) {
-                    try {
-                        selectedImageBitmap = PlantImageController.getBitmapFromUri(TakePictureActivity.this, imageUri);
-                        //save image
-                        File file = PlantImageController.saveImageExternalStorage(TakePictureActivity.this, selectedImageBitmap, plantImage.getPlantName());
-                        //getFilePath
-                        imageUploadFilePath = file.getAbsolutePath();
-                    } catch (Exception e) {
-                    }
+                try {
+                    selectedImageBitmap = PlantImageController.getBitmapFromUri(TakePictureActivity.this, imageUri);
+                    //save image
+                    File file = PlantImageController.saveImageExternalStorage(TakePictureActivity.this, selectedImageBitmap, plantImage.getPlantName());
+                    //getFilePath
+                    imageUploadFilePath = file.getAbsolutePath();
+                } catch (Exception e) {
+                }
 //                }
-
 
 
                 String imageSize = String.valueOf(selectedImageBitmap.getByteCount());
@@ -169,6 +168,9 @@ public class TakePictureActivity extends AppCompatActivity {
                                         public void onClick(DialogInterface dialog, int which) {
                                             //go to plantDiagnosis
                                             goToPlantDiagnosis(uploadImageFileName, imageUploadFilePath);
+
+                                            //upload image to the server
+//                                            new UploadToServerAsyncTask().execute();
 
                                         }
                                     })
@@ -237,6 +239,9 @@ public class TakePictureActivity extends AppCompatActivity {
                                 public void onClick(DialogInterface dialog, int which) {
                                     //go to plantDiagnosis
                                     goToPlantDiagnosis(uploadImageFileName, imageUploadFilePath);
+
+                                    //upload image to the server
+//                                    new UploadToServerAsyncTask().execute();
                                 }
                             })
 
@@ -313,7 +318,7 @@ public class TakePictureActivity extends AppCompatActivity {
     }
 
     //imageUpload AsyncTask
-    public class uploadToServer extends AsyncTask<Void, Void, String> {
+    public class UploadToServerAsyncTask extends AsyncTask<Void, Void, String> {
 
         private ProgressDialog pd = new ProgressDialog(TakePictureActivity.this);
 
