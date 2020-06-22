@@ -4,13 +4,29 @@
 
 session_start();
 
+function flashMessage ($name, $text = ''){
+    if ($name !=null){
+        return $name;
+    }else{
+        $name = $text;
+    }
+    return '';
+}
+
 $msg = "";
 if (isset($_POST['submit'])){
+
+    function validate($data){
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
 
     //connect to databse
     $db = mysqli_connect("localhost", "root", "", "pds_web");
 
-    $email = $_POST['email'];
+    $email = validate($_POST['email']);
 //    $email = $_SESSION['EMAIL'];
 
 //    $sql = "INSERT INTO landing_page_crops (crop_icon_image, crop_name) VALUES ('$cropIconImage', '$cropName')";
@@ -32,10 +48,14 @@ if (isset($_POST['submit'])){
 //        $updateOTPsql = "UPDATE user SET opt='$otp' WHERE email='$email'";
 
 //        $_SESSION['IS_LOGIN'] = $email;
+        flashMessage("recover_pass", "recover_pass");
 
         header('Location:reset_password_otp_email_verification.php');
     }else{
-        $msg = "Email is not Exists";
+        $_SESSION['EMAIL_NOT_REGISTERED'] =  $email;
+        flashMessage("invalid_email", "invalid_email_address");
+//        header('Location:forgot_password.php');
+//        $msg = "Email is not Exists";
     }
 }
 

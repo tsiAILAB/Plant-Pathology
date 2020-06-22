@@ -47,9 +47,9 @@ if (isset($_SESSION['IS_LOGIN_ADMIN']) || isset($_SESSION['IS_LOGIN_USER']))
         <meta id="Viewport" name="viewport" content="initial-scale=1, maximum-scale=1,
         minimum-scale=1, user-scalable=no">
         <title>PDS-Take Image</title>
-        <link rel="stylesheet" href="../../css/bootstrap.min.css">
-        <link rel="stylesheet" href="../../css/main.css">
-        <link rel="stylesheet" href="../../css/take_image_ui.css">
+        <link rel="stylesheet" href="../../assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../../assets/css/main.css">
+        <link rel="stylesheet" href="../../assets/css/take_image_ui.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -57,9 +57,8 @@ if (isset($_SESSION['IS_LOGIN_ADMIN']) || isset($_SESSION['IS_LOGIN_USER']))
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
         <style>
             .selectedImage{
-                height: 150px;
-                width: 150px;
-                border-radius: 50%;
+                height: 250px;
+                width: 250px;
                 margin-top: 15px;
                 margin-bottom: 10px;
             }
@@ -108,12 +107,12 @@ if (isset($_SESSION['IS_LOGIN_ADMIN']) || isset($_SESSION['IS_LOGIN_USER']))
     <body>
     <div class="container col-sm-12 col-md-8 col-lg-8">
         <nav class="d-flex justify-content-between shadow ">
-            <h5 class="text-blueGray p-2">Plant Diagnosis Systems</h5>
+            <h5 class="text-blueGray p-2">Plant Diagnosis System</h5>
             <div class="float-right">
 
                 <p class="pt-2 text-blueGray">
                     <?php if (isset($_SESSION['IS_LOGIN_ADMIN']))  {?>
-                        <a href="../configuration/configurations_ui.php" class="text-blueGray" style="text-decoration: none"><i class="fa fa-cog fa-lg" aria-hidden="true"></i></a>
+                        <a href="../configurations/configurations_ui.php" class="text-blueGray" style="text-decoration: none"><i class="fa fa-cog fa-lg" aria-hidden="true"></i></a>
                     <?php } ?>
 
                     <span class="text-blueGray">
@@ -179,7 +178,7 @@ if (isset($_SESSION['IS_LOGIN_ADMIN']) || isset($_SESSION['IS_LOGIN_USER']))
         <!--    </div>-->
 
         <div class="text-center">
-            <h2 id="pickImagesText" class="d-block">Pick Images</h2>
+            <h2 id="pickImagesText" class="d-block">Pick Image</h2>
         </div>
 
         <!--    <form method="post" action="take_image_ui.php">-->
@@ -189,12 +188,12 @@ if (isset($_SESSION['IS_LOGIN_ADMIN']) || isset($_SESSION['IS_LOGIN_USER']))
             <!--        <img src="" id="selectedImageThree" class="" height="2px;" width="2px">-->
         </div>
         <div  class="text-center d-none" style="text-align: center!important;" id="uploadButton">
-            <button name="upload" style="border: none; background-color: transparent;" class="" data-toggle="modal" data-target="#myModal"><i class="fa fa-upload text-secondary fa-lg" aria-hidden="true"></i></button>
+            <button name="upload" style="border: none; background-color: transparent;" class="" data-toggle="modal" data-target="#myModal"><i class="material-icons text-blueGray" aria-hidden="true" style="font-size: 35px">backup</i></button>
         </div>
         <!--    </form>-->
         <div class="text-center mt-2">
             <input type="file" id="selecteImage" onchange="displayImage(this)" multiple accept="images/*">
-            <label for="files" class="shadow pickImages" onclick="triggerClick()"><span style="padding-right: 10px"></span>Pick Images</label>
+            <label for="files" class="shadow pickImages" onclick="triggerClick()"><span style="padding-right: 10px"></span>Pick Image</label>
         </div>
 
         <!--    <p >Modal</p>-->
@@ -284,7 +283,7 @@ if (isset($_SESSION['IS_LOGIN_ADMIN']) || isset($_SESSION['IS_LOGIN_USER']))
             switch (x) {
                 case 1:
                     document.getElementById('diagnosisResult').innerText = healthy;
-                    document.getElementById('diagnosisResultHeading').innerText = "Healthy";
+                    document.getElementById('diagnosisResultHeading').innerText = "Diseases not found";
                     break;
                 case 2:
                     document.getElementById('diagnosisResult').innerText = earlyBlight;

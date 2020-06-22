@@ -29,7 +29,7 @@ function flashMessage ($name, $text = ''){
 //    }
 //    return '';
 //}
-if (isset($_SESSION['IS_LOGIN_ADMIN']) || isset($_SESSION['IS_LOGIN_USER'])){
+if (isset($_SESSION['IS_LOGIN_ADMIN']) || isset($_SESSION['IS_LOGIN_USER']) || isset($_SESSION['SIGNUP_SUCCESS'])){
 
 ?>
 
@@ -121,7 +121,7 @@ if (isset($_SESSION['IS_LOGIN_ADMIN']) || isset($_SESSION['IS_LOGIN_USER'])){
             // "hideDuration": "1000",
             "hideDuration": "1000",
             // "timeOut": "5000",
-            "timeOut": "3000",
+            "timeOut": "8000",
             // "extendedTimeOut": "1000",
             "extendedTimeOut": "1000",
             "showEasing": "swing",
@@ -135,9 +135,9 @@ if (isset($_SESSION['IS_LOGIN_ADMIN']) || isset($_SESSION['IS_LOGIN_USER'])){
         toastr.success("<?php echo flashMessage('Successfully Login as Admin...'); ?>");
         <?php }elseif (isset($_SESSION['IS_LOGIN_USER'])){ ?>
         toastr.success("<?php echo flashMessage('Successfully Login as User...'); ?>");
+        <?php }elseif (isset($_SESSION['SIGNUP_SUCCESS'])){ ?>
+        toastr.success("<?php echo flashMessage('Sign Up Success and Login as User'); ?>");
         <?php } ?>
-        //toastr.success("<?php //echo flashMessage('message'); ?>//");
-
     </script>
     <script>
         // $(document.readyState)

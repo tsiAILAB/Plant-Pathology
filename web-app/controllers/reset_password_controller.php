@@ -3,15 +3,31 @@
 //require '../models/db.php';
 
 session_start();
+
+function flashMessage ($name, $text = ''){
+    if ($name !=null){
+        return $name;
+    }else{
+        $name = $text;
+    }
+    return '';
+}
 $msg = "";
 if (isset($_POST['submit'])){
+
+    function validate($data){
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
 
     //connect to databse
     $db = mysqli_connect("localhost", "root", "", "pds_web");
 
-    $password = $_POST['password'];
-    $confirmPassword = $_POST['confirmPassword'];
-    $email = $_SESSION['EMAIL'];
+    $password = validate($_POST['password']);
+    $confirmPassword = validate($_POST['confirmPassword']);
+    $email = validate($_SESSION['EMAIL']);
 
     if ($password === $confirmPassword){
 
@@ -19,6 +35,7 @@ if (isset($_POST['submit'])){
 
         $sql = "UPDATE user SET password='$password' WHERE email='$email'";
         mysqli_query($db, $sql);
+        $_SESSION['PASSWORD_RESET_SUCCESSFULLY'] = $email;
 
         header('Location:login_page.php');
     }else{

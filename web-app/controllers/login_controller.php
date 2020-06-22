@@ -1,85 +1,62 @@
 <?php
 
-//require '../models/db.php';
-session_start();
+$emailPasswordEmpty = "";
+$emailEmpty = "";
+$passwordEmpty ="";
+$emailNotRegisteredError = "";
+$invalidCredentials = "";
 
-//function flashMessage ($name, $text = ''){
-//    if (isset($_SESSION[$name])){
-//        $message = $_SESSION[$name];
-//        unset($_SESSION[$name]);
-//        return $message;
-//    }else{
-//        $_SESSION[$name] = $text;
-//    }
-//    return '';
-//}
-function flashMessage ($name, $text = ''){
-    if ($name !=null){
-        return $name;
-    }else{
-        $name = $text;
-    }
-    return '';
-}
-
-//function flashMessage ($name, $text = ''){
-//    if (isset($_SESSION[$name])){
-//        $message = $_SESSION[$name];
-//        unset($_SESSION[$name]);
-//        return $message;
-//    }else{
-//        $_SESSION[$name] = $text;
-//    }
-//    return '';
-//}
-
-//require 'utils/utils.php';
-
-$msg = "";
-$emailError = "";
 if (isset($_POST['signInSubmit'])){
 
-    //connect to databse
-    $db = mysqli_connect("localhost", "root", "", "pds_web");
-
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $password = md5($password);
-
-//    $sql = "INSERT INTO landing_page_crops (crop_icon_image, crop_name) VALUES ('$cropIconImage', '$cropName')";
-    $sqlAdmin = "SELECT * FROM user WHERE email='$email' AND password='$password' AND role='admin_role'";
-    $sqlUser = "SELECT * FROM user WHERE email='$email' AND password='$password' AND role='user_role'";
-    $resultAdmin = mysqli_query($db, $sqlAdmin); //stores the submitted data into the database table : landing_page_crops
-    $resultUser = mysqli_query($db, $sqlUser); //stores the submitted data into the database table : landing_page_crops
-
-
-    $countAdmin = mysqli_num_rows($resultAdmin);
-    $countUser = mysqli_num_rows($resultUser);
-    if ($countAdmin == 1){
-//        $role = mysqli_query($db, "SELECT * FROM user WHERE email='$email' AND role='admin_role'");
-//        $roleCount = mysqli_num_rows($role);
-//        if ($roleCount == 1){
-
-
-        $_SESSION['IS_LOGIN_ADMIN'] = $email;
-        flashMessage("login_as_admin", "Successfully Login as Admin");
-        header('Location: ../landing_page.php');
-//        }else{
-//            $_SESSION['IS_LOGIN_USER'] = $email;
-////            header('Location: ../uis/landing_page.php');
-//        }
-//            header('Location: ../uis/landing_page.php');
-    }elseif ($countUser == 1){
-        flashMessage("login_as_user", "Successfully Login as User");
-        $_SESSION['IS_LOGIN_USER'] = $email;
-        header('Location: ../landing_page.php');
-    }else{
-        $_SESSION['invalid_credintials'] = $email;
-        flashMessage("invalid_credintials", "Invalid Credintials..!!");
-        header('Location: login_page.php');
-//        $emailError = "<p class='text-danger' style='font-size: 14px'>Invalid Credintials.....!!</p>";
-//        echo "<script>toastr.success(flash('$msg'))</script>";
+    function validate($data){
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
     }
 
+    $email = validate($_POST['email']);
+    $password = validate($_POST['password']);
+    $password = md5($password);
+
+    if (empty($email) && empty($passwordEmpty)){
+        $emailPasswordEmpty = "<p class='text-danger'>This field can not ne empty.!</p>";
+    }elseif (empty($email)){
+        $emailEmpty = "<p class='text-danger'>Email field can not ne empty.!</p>";
+    }elseif (empty($password)){
+        $passwordEmpty = "<p class='text-danger'>Password field can not ne empty.!</p>";
+    }else{
+        $db = mysqli_connect("localhost", "root", "", "pds_web");
+
+        $sqlEmailNotRegistered = "SELECT * FROM user WHERE email='$email'";
+        $sqlInvalidCredintial = "SELECT * FROM user WHERE email='$email' AND password !='$password'";
+        $sqlAdmin = "SELECT * FROM user WHERE email='$email' AND password='$password' AND role='admin_role'";
+        $sqlUser = "SELECT * FROM user WHERE email='$email' AND password='$password' AND role='user_role'";
+
+        $resultEmailNotRegistered = mysqli_query($db, $sqlEmailNotRegistered);
+        $resultInvalidCredintial = mysqli_query($db, $sqlInvalidCredintial);
+        $resultAdmin = mysqli_query($db, $sqlAdmin);
+        $resultUser = mysqli_query($db, $sqlUser);
+
+        $countEmailNotRegistered = mysqli_num_rows($resultEmailNotRegistered);
+        $countInvalidCredintial =mysqli_num_rows($resultInvalidCredintial);
+        $countAdmin = mysqli_num_rows($resultAdmin);
+        $countUser = mysqli_num_rows($resultUser);
+
+        if ($countEmailNotRegistered == 0){
+            $emailNotRegisteredError = "<p class='text-danger'>Email not registered.!</p>";
+        }elseif ($countInvalidCredintial >= 1){
+            $invalidCredentials = "<p class='text-danger'>Invalid credentials.!</p>";
+        }elseif ($countAdmin == 1){
+            $_SESSION['IS_LOGIN_ADMIN'] = $email;
+            flashMessage("login_as_admin", "Successfully Login as Admin");
+            header('Location: ../landing_page.php');
+        }elseif ($countUser == 1){
+            flashMessage("login_as_user", "Successfully Login as User");
+            $_SESSION['IS_LOGIN_USER'] = $email;
+            header('Location: ../landing_page.php');
+        }
+    }
 }
+
 ?>
