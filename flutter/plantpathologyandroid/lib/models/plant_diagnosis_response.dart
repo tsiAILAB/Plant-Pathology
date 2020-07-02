@@ -7,7 +7,7 @@ class PlantDiagnosisResponse {
 
   PlantDiagnosisResponse(this._plantName, this._imageUrl, this._diseaseName,
       this._diagnosisResponse);
-
+//  Response='d1=EarlyBlight#p1=92.07%;d2=EarlyBlight#p2=92.07%'
   PlantDiagnosisResponse.fromMap(dynamic obj) {
     this._plantName = obj['name'];
     this._imageUrl = obj['url'];

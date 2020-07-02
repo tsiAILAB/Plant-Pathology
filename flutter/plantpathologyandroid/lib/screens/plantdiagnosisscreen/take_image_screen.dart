@@ -380,7 +380,7 @@ class _TakeImageScreenState extends State<TakeImageScreen> {
           ImageLibrary.decodeImage(imageFile.readAsBytesSync());
       imageHeight = image.height;
       imageWidth = image.width;
-      imageSize = image.length;
+      imageSize = image.length / 1024;
 
       log('Height: $imageHeight');
       log('weidth: $imageWidth');
@@ -431,8 +431,8 @@ class _TakeImageScreenState extends State<TakeImageScreen> {
                         child: OutlineButton(
                           onPressed: () {
                             if (imageFile != null) {
-                              uploadDummyImage(imageFile, plantName);
-//                              uploadImage.uploadImage(imageFile, plantName);
+//                              uploadDummyImage(imageFile, plantName);
+                              uploadImage.uploadImage(imageFile, plantName);
                             } else {
                               Utils.showLongToast("Image upload failed!");
                             }

@@ -3,6 +3,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:pds/models/plant_diagnosis_response.dart';
+import 'package:pds/screens/plantdiagnosisscreen//plant_details_screen.dart';
 import 'package:pds/services/apis/all_apis.dart';
 import 'package:pds/utils/utils.dart';
 
@@ -62,19 +64,44 @@ class _UploadImageState extends State<UploadImage> {
 //      ));
 
       http.post(uploadImageAPI, body: {
-        "image": base64Image,
-        "image_name": fileName,
-        "plant_name": plantName,
-        "image_type": imageType,
-        "image_size": imageSize,
-        "platform": platformName,
-        "no_of_image": '1',
-        "image_contents": 'image file contennts'
+//        IMAGE=contains image
+//        SIZE=1000
+//        SIZE_UNIT='KB'
+//        FORMAT='JPG'
+
+        "IMAGE": base64Image,
+//        "image_name": fileName,
+//        "plant_name": plantName,
+        "FORMAT": imageType,
+        "SIZE": imageSize,
+        "SIZE_UNIT": "KB",
+//        "platform": platformName,
+//        "no_of_image": '1',
+//        "image_contents": 'image file contennts'
       }).then((res) {
         print(res.statusCode);
 //      Utils utils = new Utils();
         utils.saveImage(imageFileForUpload, fileName, plantName);
-
+        if (res != null) {
+          List<String> diagnosisRes = res.body.split(";");
+          for (int i = 0; i < diagnosisRes.length; i++) {
+            List<String> responseSplitByHash = diagnosisRes[i].split("#");
+            for (int j = 0; j < responseSplitByHash.length; j++) {
+              String diseaseName = responseSplitByHash[0].split("=")[1];
+              String diagnosis = responseSplitByHash[1].split("=")[1];
+              PlantDiagnosisResponse plantDiagnosisResponse =
+                  new PlantDiagnosisResponse(
+                      plantName, uploadImageAPI, diseaseName, diagnosis);
+              Navigator.of(context).pop();
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        PlantDetailsScreen(plantDiagnosisResponse)),
+              );
+            }
+          }
+        }
         Utils.showLongToast("Image upload successful!");
       }).catchError((err) {
         print(err);
