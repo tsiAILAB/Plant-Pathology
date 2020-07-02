@@ -21,22 +21,32 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class ImageUploadService {
 
-    public static JSONObject uploadImage(User user, File file, String imageFileName) {
+    public static String uploadImage(User user, File file, String imageFileName, String imageSize, String imageSizeUnit, String imageTypeString) {
 //        "image": base64Image,
 //        "image_name": fileName,
 //        "plant_name": plantName,
 //        "platform": platformName,
 //        "image_type": imageType,
 //        "image_size": imageSize,
+
+//                IMAGE=contains image
+//                SIZE=1000
+//                SIZE_UNIT='KB'
+//                FORMAT='JPG'
+
 //        Utils.showLongToast("Image upload successful!");
 //        Utils.showLongToast("Image upload failed!");
 //        Utils.showLongToast("$imageType type image is not supported!");
         try {
             String API_URL = ApiNameController.getImageUploadApi().getApiUrl();
-            final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
+            final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/jpeg");
 
-            RequestBody req = new MultipartBody.Builder().setType(MultipartBody.FORM).addFormDataPart("user_name", user.getUsername())
-                    .addFormDataPart("image_name",imageFileName, RequestBody.create(MEDIA_TYPE_PNG, file)).build();
+            RequestBody req = new MultipartBody.Builder().setType(MultipartBody.FORM)
+//                    .addFormDataPart("user_name", user.getUsername())
+                    .addFormDataPart("SIZE", imageSize)
+                    .addFormDataPart("SIZE_UNIT", imageSizeUnit)
+                    .addFormDataPart("FORMAT", imageTypeString)
+                    .addFormDataPart("IMAGE",imageFileName, RequestBody.create(MEDIA_TYPE_PNG, file)).build();
 
             Request request = new Request.Builder()
                     .url(API_URL)
@@ -48,7 +58,7 @@ public class ImageUploadService {
 
             Log.d("response", "uploadImage:"+response.body().string());
 //            "Image upload successful!"
-            return new JSONObject(response.body().string());
+            return response.body().string();
 
         } catch (UnknownHostException | UnsupportedEncodingException e) {
             Log.e(TAG, "Error: " + e.getLocalizedMessage());

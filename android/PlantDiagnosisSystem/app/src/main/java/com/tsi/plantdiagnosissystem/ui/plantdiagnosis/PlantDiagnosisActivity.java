@@ -19,8 +19,8 @@ import com.tsi.plantdiagnosissystem.R;
 import com.tsi.plantdiagnosissystem.controller.UserController;
 
 public class PlantDiagnosisActivity extends AppCompatActivity {
-    TextView diseaseName;
-    ImageView sampleImage;
+    TextView diseaseNameTextView;
+    ImageView sampleImageImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +29,9 @@ public class PlantDiagnosisActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         String imageFileName = extras.getString("file_name");
         String imageUri = extras.getString("image_uri");
+        String diseaseName = extras.getString("disease_name");
+        String diagnosisResult = extras.getString("result");
+
 
         //setActionBar
 //        String titleText = "Early Blight";
@@ -37,9 +40,9 @@ public class PlantDiagnosisActivity extends AppCompatActivity {
 //        getSupportActionBar().setTitle(Html.fromHtml("<font color='#6699CC'>" + titleText + "</font>"));
 
 
-        diseaseName = findViewById(R.id.diagnosisResultTextView);
-        sampleImage = findViewById(R.id.imageView);
-        sampleImage.setImageURI(Uri.parse(imageUri));
+        diseaseNameTextView = findViewById(R.id.diagnosisResultTextView);
+        sampleImageImageView = findViewById(R.id.imageView);
+        sampleImageImageView.setImageURI(Uri.parse(imageUri));
 //        try {
 //            InputStream imageStream = getContentResolver().openInputStream(Uri.parse(imageUri));
 //            final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
@@ -47,29 +50,31 @@ public class PlantDiagnosisActivity extends AppCompatActivity {
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
-        setDiagnosisResult(imageFileName);
+//        setDummyDiagnosisResult(imageFileName);
 
 
+        setActionBar(diseaseName);
+        diseaseNameTextView.setText(diagnosisResult);
     }
 
-    private void setDiagnosisResult(String imageFileName) {
+    private void setDummyDiagnosisResult(String imageFileName) {
 
         switch (imageFileName) {
             case "early_blight.JPG":
                 setActionBar("Early Blight");
-                diseaseName.setText("Disease Found, Probability-92.75%");
+                diseaseNameTextView.setText("Disease Found, Probability-92.75%");
                 break;
             case "late_blight.JPG":
                 setActionBar("Late Blight");
-                diseaseName.setText("Disease Found, Probability-98.12%");
+                diseaseNameTextView.setText("Disease Found, Probability-98.12%");
                 break;
             case "healthy_leaf.JPG":
                 setActionBar("Disease not found");
-                diseaseName.setText("Disease Not Found, Probability-92.75%");
+                diseaseNameTextView.setText("Disease Not Found, Probability-92.75%");
                 break;
             default:
                 setActionBar("Not a Plant");
-                diseaseName.setText("This is not a Plant!");
+                diseaseNameTextView.setText("This is not a Plant!");
                 break;
         }
     }

@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -36,6 +35,8 @@ import com.tsi.plantdiagnosissystem.data.model.PlantImage;
 import com.tsi.plantdiagnosissystem.data.model.User;
 import com.tsi.plantdiagnosissystem.ui.plantdiagnosis.PlantDiagnosisActivity;
 
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -52,6 +53,7 @@ public class TakePictureActivity extends AppCompatActivity {
     Context context;
 
     String imageUploadFilePath, uploadImageFileName;
+    String imageSize, imageTypeString;
     PlantImage plantImage = null;
     User user;
     Bitmap selectedImageBitmap;
@@ -128,7 +130,7 @@ public class TakePictureActivity extends AppCompatActivity {
                 uploadImageFileName = Utils.getFileName(TakePictureActivity.this, imageUri);
 
 
-                final String imageTypeString = uploadImageFileName.substring(uploadImageFileName.lastIndexOf("."));
+                imageTypeString = uploadImageFileName.substring(uploadImageFileName.lastIndexOf("."));
                 final InputStream imageStream = getContentResolver().openInputStream(imageUri);
 //                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
 //                selectedImageBitmap = selectedImage;
@@ -144,7 +146,7 @@ public class TakePictureActivity extends AppCompatActivity {
 //                }
 
 
-                String imageSize = String.valueOf(selectedImageBitmap.getByteCount());
+                imageSize = String.valueOf(selectedImageBitmap.getByteCount() / 1024);
 
                 imageDetailsLinearLayout.setVisibility(View.VISIBLE);
                 imageTypeTextView.setText("Type: " + imageTypeString);
@@ -167,10 +169,10 @@ public class TakePictureActivity extends AppCompatActivity {
                                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int which) {
                                             //go to plantDiagnosis
-                                            goToPlantDiagnosis(uploadImageFileName, imageUploadFilePath);
+//                                            goToPlantDiagnosis(uploadImageFileName, imageUploadFilePath);
 
                                             //upload image to the server
-//                                            new UploadToServerAsyncTask().execute();
+                                            new UploadToServerAsyncTask().execute();
 
                                         }
                                     })
@@ -214,9 +216,9 @@ public class TakePictureActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            String imageTypeString = uploadImageFileName.substring(uploadImageFileName.lastIndexOf("."));
+            imageTypeString = uploadImageFileName.substring(uploadImageFileName.lastIndexOf("."));
 
-            String imageSize = String.valueOf(selectedImageBitmap.getByteCount());
+            imageSize = String.valueOf(selectedImageBitmap.getByteCount() / 1024);
 
             imageDetailsLinearLayout.setVisibility(View.VISIBLE);
             imageTypeTextView.setText("Type: " + imageTypeString);
@@ -238,10 +240,10 @@ public class TakePictureActivity extends AppCompatActivity {
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     //go to plantDiagnosis
-                                    goToPlantDiagnosis(uploadImageFileName, imageUploadFilePath);
+//                                    goToPlantDiagnosis(uploadImageFileName, imageUploadFilePath);
 
                                     //upload image to the server
-//                                    new UploadToServerAsyncTask().execute();
+                                    new UploadToServerAsyncTask().execute();
                                 }
                             })
 
@@ -277,6 +279,15 @@ public class TakePictureActivity extends AppCompatActivity {
         Intent plantDiagnosis = new Intent(context, PlantDiagnosisActivity.class);
         plantDiagnosis.putExtra("file_name", filename);
         plantDiagnosis.putExtra("image_uri", imageUri);
+        startActivity(plantDiagnosis);
+    }
+
+    private void goToPlantDiagnosis(String filename, String imageUri, String diseaseName, String result) {
+        Intent plantDiagnosis = new Intent(context, PlantDiagnosisActivity.class);
+        plantDiagnosis.putExtra("file_name", filename);
+        plantDiagnosis.putExtra("image_uri", imageUri);
+        plantDiagnosis.putExtra("disease_name", diseaseName);
+        plantDiagnosis.putExtra("result", result);
         startActivity(plantDiagnosis);
     }
 
@@ -330,15 +341,31 @@ public class TakePictureActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(Void... params) {
-
-            File imageFile = new File(imageUploadFilePath);
-
-            ImageUploadService.uploadImage(user, imageFile, uploadImageFileName);
-            return "Success";
+            if (Utils.isInternetAvailable()) {
+                File imageFile = new File(imageUploadFilePath);
+                String imageSizeUnit = "KB";
+                return ImageUploadService.uploadImage(user, imageFile, uploadImageFileName, imageSize, imageSizeUnit, imageTypeString);
+            } else {
+                Toast.makeText(TakePictureActivity.this, "Please check internet connection and try again!", Toast.LENGTH_LONG).show();
+                return null;
+            }
         }
 
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
+//            Response='d1=EarlyBlight#p1=92.07%;d2=EarlyBlight#p2=92.07%'
+            String[] responseArray = result.split(";");
+
+            for (int i = 0; i < responseArray.length; i++) {
+                String[] responseSplitByHash = responseArray[i].split("#");
+                for (int j = 0; j < responseSplitByHash.length; j++) {
+                    String diseaseName = responseSplitByHash[0].split("=")[1];
+                    String diagnosis = responseSplitByHash[1].split("=")[1];
+                    goToPlantDiagnosis(uploadImageFileName, imageUploadFilePath, diseaseName, diagnosis);
+                }
+            }
+
+
             pd.hide();
             pd.dismiss();
         }
