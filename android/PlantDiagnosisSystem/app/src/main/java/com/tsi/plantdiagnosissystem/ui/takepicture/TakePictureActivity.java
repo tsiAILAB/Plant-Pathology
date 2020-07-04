@@ -264,7 +264,6 @@ public class TakePictureActivity extends AppCompatActivity {
                                     }
                                 }
                             })
-//                            .setIcon(android.R.drawable.ic_dialog_alert)
                             .show();
 
                 }
@@ -288,6 +287,7 @@ public class TakePictureActivity extends AppCompatActivity {
         plantDiagnosis.putExtra("image_uri", imageUri);
         plantDiagnosis.putExtra("disease_name", diseaseName);
         plantDiagnosis.putExtra("result", result);
+//        plantDiagnosis.putExtra("cropName", plantImage.getPlantName());
         startActivity(plantDiagnosis);
     }
 
@@ -344,7 +344,7 @@ public class TakePictureActivity extends AppCompatActivity {
             if (Utils.isInternetAvailable()) {
                 File imageFile = new File(imageUploadFilePath);
                 String imageSizeUnit = "KB";
-                return ImageUploadService.uploadImage(user, imageFile, uploadImageFileName, imageSize, imageSizeUnit, imageTypeString);
+                return ImageUploadService.uploadImage(user, imageFile, uploadImageFileName, imageSize, imageSizeUnit, imageTypeString, plantImage.getPlantName());
             } else {
                 Toast.makeText(TakePictureActivity.this, "Please check internet connection and try again!", Toast.LENGTH_LONG).show();
                 return null;
