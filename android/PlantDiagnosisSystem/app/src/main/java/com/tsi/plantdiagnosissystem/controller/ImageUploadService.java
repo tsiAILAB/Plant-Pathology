@@ -40,7 +40,7 @@ public class ImageUploadService {
             OkHttpClient client = new OkHttpClient();
             Response response = client.newCall(request).execute();
 
-            Log.d("response", "uploadImage:" + response.body().string());
+//            Log.d("response", "uploadImage:" + response.body().string());
 //            "Image upload successful!"
             return response.body().string();
 

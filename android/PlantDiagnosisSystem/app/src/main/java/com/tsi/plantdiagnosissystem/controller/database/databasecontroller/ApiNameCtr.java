@@ -35,7 +35,7 @@ public class ApiNameCtr {
             //close database connection
             sqLiteDatabase.close();
         } else {
-            updateApiName(apiName.getApiName(), apiName.getApiUrl());
+            updateApiName(apiName.getApiName(), url);
         }
     }
 

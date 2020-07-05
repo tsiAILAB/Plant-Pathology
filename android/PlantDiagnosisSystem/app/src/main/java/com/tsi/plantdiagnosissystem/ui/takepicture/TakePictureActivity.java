@@ -376,7 +376,7 @@ public class TakePictureActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 //            Response='d1=EarlyBlight#p1=92.07%;d2=EarlyBlight#p2=92.07%'
-            if (result != null && !"".equalsIgnoreCase(result)) {
+            if (result != null && !"".equalsIgnoreCase(result) && !"NO".equalsIgnoreCase(result)) {
                 String[] responseArray = result.split("_");
                 if (plantImage.getPlantName().equalsIgnoreCase("potato")) {
                     parseResponse(responseArray, potatoDisease);

@@ -36,7 +36,7 @@ public class PlantImageCtr {
             //close database connection
             sqLiteDatabase.close();
         } else {
-            updatePlantImage(plantImage.getPlantName(), plantImage.getImageUrl());
+            updatePlantImage(plantImage.getPlantName(), url);
         }
     }
 
