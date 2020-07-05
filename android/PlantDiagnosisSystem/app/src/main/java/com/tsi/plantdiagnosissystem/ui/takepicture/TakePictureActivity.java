@@ -31,6 +31,7 @@ import com.tsi.plantdiagnosissystem.controller.UserController;
 import com.tsi.plantdiagnosissystem.controller.ImageUploadService;
 import com.tsi.plantdiagnosissystem.controller.PlantImageController;
 import com.tsi.plantdiagnosissystem.controller.Utils;
+import com.tsi.plantdiagnosissystem.data.model.DiagnosisResult;
 import com.tsi.plantdiagnosissystem.data.model.PlantImage;
 import com.tsi.plantdiagnosissystem.data.model.User;
 import com.tsi.plantdiagnosissystem.ui.plantdiagnosis.PlantDiagnosisActivity;
@@ -41,6 +42,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class TakePictureActivity extends AppCompatActivity {
     private static final int CAMERA_REQUEST = 1888;
@@ -278,15 +283,26 @@ public class TakePictureActivity extends AppCompatActivity {
         Intent plantDiagnosis = new Intent(context, PlantDiagnosisActivity.class);
         plantDiagnosis.putExtra("file_name", filename);
         plantDiagnosis.putExtra("image_uri", imageUri);
+        plantDiagnosis.putExtra("plant_name", plantImage.getPlantName());
+
+        ArrayList<DiagnosisResult> diagnosisResults = new ArrayList<>();
+        DiagnosisResult diagnosisResult = new DiagnosisResult();
+        diagnosisResult.setDiseaseName("This is not a Plant!");
+        diagnosisResult.setDiagnosisProbability("100");
+        diagnosisResults.add(diagnosisResult);
+
+        plantDiagnosis.putExtra("diagnosis_results", diagnosisResults);
         startActivity(plantDiagnosis);
     }
 
-    private void goToPlantDiagnosis(String filename, String imageUri, String diseaseName, String result) {
+    //start plant Diagnosis activity
+    private void goToPlantDiagnosis(String filename, String imageUri, ArrayList<DiagnosisResult> diagnosisResults) {
         Intent plantDiagnosis = new Intent(context, PlantDiagnosisActivity.class);
         plantDiagnosis.putExtra("file_name", filename);
         plantDiagnosis.putExtra("image_uri", imageUri);
-        plantDiagnosis.putExtra("disease_name", diseaseName);
-        plantDiagnosis.putExtra("result", result);
+        plantDiagnosis.putExtra("plant_name", plantImage.getPlantName());
+        plantDiagnosis.putExtra("diagnosis_results", diagnosisResults);
+
 //        plantDiagnosis.putExtra("cropName", plantImage.getPlantName());
         startActivity(plantDiagnosis);
     }
@@ -328,6 +344,11 @@ public class TakePictureActivity extends AppCompatActivity {
         }
     }
 
+    /*Array of Diseases. Crops: Potato, Maize, Tomato*/
+    String[] potatoDisease = {"Early Blight", "Late Blight", "Healthy"};
+    String[] maizeDisease = {"Common Rust", "Gray Leaf Spot", "Northern Leaf Blight", "Healthy"};
+    String[] tomatoDisease = {"Early Blight", "Late Blight", "Leaf Curl", "Leaf Mold", "Healthy"};
+
     //imageUpload AsyncTask
     public class UploadToServerAsyncTask extends AsyncTask<Void, Void, String> {
 
@@ -344,7 +365,8 @@ public class TakePictureActivity extends AppCompatActivity {
             if (Utils.isInternetAvailable()) {
                 File imageFile = new File(imageUploadFilePath);
                 String imageSizeUnit = "KB";
-                return ImageUploadService.uploadImage(user, imageFile, uploadImageFileName, imageSize, imageSizeUnit, imageTypeString, plantImage.getPlantName());
+                return ImageUploadService.uploadImage(user, imageFile, uploadImageFileName, imageSize, imageSizeUnit,
+                        imageTypeString, (plantImage.getPlantName()).toUpperCase());
             } else {
                 Toast.makeText(TakePictureActivity.this, "Please check internet connection and try again!", Toast.LENGTH_LONG).show();
                 return null;
@@ -354,20 +376,41 @@ public class TakePictureActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 //            Response='d1=EarlyBlight#p1=92.07%;d2=EarlyBlight#p2=92.07%'
-            String[] responseArray = result.split(";");
-
-            for (int i = 0; i < responseArray.length; i++) {
-                String[] responseSplitByHash = responseArray[i].split("#");
-                for (int j = 0; j < responseSplitByHash.length; j++) {
-                    String diseaseName = responseSplitByHash[0].split("=")[1];
-                    String diagnosis = responseSplitByHash[1].split("=")[1];
-                    goToPlantDiagnosis(uploadImageFileName, imageUploadFilePath, diseaseName, diagnosis);
+            if (result != null && !"".equalsIgnoreCase(result)) {
+                String[] responseArray = result.split("_");
+                if (plantImage.getPlantName().equalsIgnoreCase("potato")) {
+                    parseResponse(responseArray, potatoDisease);
+                } else if (plantImage.getPlantName().equalsIgnoreCase("tomato")) {
+                    parseResponse(responseArray, tomatoDisease);
+                } else if (plantImage.getPlantName().equalsIgnoreCase("maize")) {
+                    parseResponse(responseArray, maizeDisease);
                 }
+            } else {
+                goToPlantDiagnosis(uploadImageFileName, imageUploadFilePath);
             }
-
 
             pd.hide();
             pd.dismiss();
+        }
+
+        /**
+         * Prepare Diagnosis Result with Disease name
+         *
+         * @param responseArray
+         * @param cropDisease
+         */
+        private void parseResponse(String[] responseArray, String[] cropDisease) {
+            ArrayList<DiagnosisResult> diagnosisResults = new ArrayList<>();
+            DiagnosisResult diagnosisResult;
+            for (int i = 0; i < responseArray.length; i++) {
+                diagnosisResult = new DiagnosisResult();
+                String diseaseName = cropDisease[i];
+                String diagnosisProbability = responseArray[i];
+                diagnosisResult.setDiseaseName(diseaseName);
+                diagnosisResult.setDiagnosisProbability(diagnosisProbability);
+                diagnosisResults.add(diagnosisResult);
+            }
+            goToPlantDiagnosis(uploadImageFileName, imageUploadFilePath, diagnosisResults);
         }
     }
 }

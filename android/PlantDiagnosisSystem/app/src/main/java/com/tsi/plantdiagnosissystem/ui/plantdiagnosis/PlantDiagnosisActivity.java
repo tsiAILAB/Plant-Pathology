@@ -17,6 +17,11 @@ import android.widget.TextView;
 
 import com.tsi.plantdiagnosissystem.R;
 import com.tsi.plantdiagnosissystem.controller.UserController;
+import com.tsi.plantdiagnosissystem.data.model.DiagnosisResult;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Map;
 
 public class PlantDiagnosisActivity extends AppCompatActivity {
     TextView diseaseNameTextView;
@@ -29,9 +34,10 @@ public class PlantDiagnosisActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         String imageFileName = extras.getString("file_name");
         String imageUri = extras.getString("image_uri");
-        String diseaseName = extras.getString("disease_name");
-        String diagnosisResult = extras.getString("result");
+        String plantName = extras.getString("plant_name");
+//        String diagnosisResult = extras.getString("result");
 
+        ArrayList<DiagnosisResult> diagnosisResults = (ArrayList<DiagnosisResult>) getIntent().getSerializableExtra("diagnosis_results");
 
         //setActionBar
 //        String titleText = "Early Blight";
@@ -52,8 +58,17 @@ public class PlantDiagnosisActivity extends AppCompatActivity {
 //        }
 //        setDummyDiagnosisResult(imageFileName);
 
+        Collections.sort(diagnosisResults);
 
-        setActionBar(diseaseName);
+        //disease, diagnosis
+        String diagnosisResult = "";
+        for (int i = 0; i < diagnosisResults.size(); i++) {
+            diagnosisResult = diagnosisResult + "Disease Name: " + diagnosisResults.get(i).getDiseaseName() +
+                    "\nProbability: " + diagnosisResults.get(i).getDiagnosisProbability() + "%\n\n";
+        }
+
+
+        setActionBar(plantName);
         diseaseNameTextView.setText(diagnosisResult);
     }
 
@@ -80,7 +95,7 @@ public class PlantDiagnosisActivity extends AppCompatActivity {
     }
 
     //set custom actionBar
-    public void setActionBar(String title){
+    public void setActionBar(String title) {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setTitle(title);
@@ -89,6 +104,7 @@ public class PlantDiagnosisActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(text);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);

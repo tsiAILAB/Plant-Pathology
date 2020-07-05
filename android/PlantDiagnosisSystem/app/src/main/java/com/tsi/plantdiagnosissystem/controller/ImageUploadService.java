@@ -4,8 +4,6 @@ import android.util.Log;
 
 import com.tsi.plantdiagnosissystem.data.model.User;
 
-import org.json.JSONObject;
-
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.UnknownHostException;
@@ -45,6 +43,14 @@ public class ImageUploadService {
             Log.d("response", "uploadImage:" + response.body().string());
 //            "Image upload successful!"
             return response.body().string();
+
+            /*test responses*/
+            //Maize: CLASSES={'CommonRust':0, 'Gray Leaf Spot':1, 'Northern Leaf Blight':2, 'Healthy':3}
+            //Tomato: CLASSES={'Early Blight':0, 'Late Blight':1, 'Leaf Curl':2, 'Leaf Mold':3, 'Healthy':4}
+            //Potato: CLASSES = [b'EarlyBlight', b'LateBlight', b'Healthy']
+//            return "92.07_98.07_94.07_94.07";//Maize
+//            return "92.07_98.07_00.07_94.07_.8";//Tomato
+//            return "92.07_98.07_94.07";//potato
 
         } catch (UnknownHostException | UnsupportedEncodingException e) {
             Log.e(TAG, "Error: " + e.getLocalizedMessage());
