@@ -1,6 +1,8 @@
 <?php
 
 require '../../models/db.php';
+require '../../models/apis/AllApis.php';
+require '../../models/DiagnosisResult.php';
 
 session_start();
 
@@ -177,65 +179,75 @@ if (isset($_SESSION['IS_LOGIN_ADMIN']) || isset($_SESSION['IS_LOGIN_USER']))
         <!--        <p id="cropNameJs" class="text-center" style="font-weight: bold"></p>-->
         <!--    </div>-->
 
-        <div class="text-center">
-            <h2 id="pickImagesText" class="d-block">Pick Image</h2>
-        </div>
+<!--        <form action="take_image_ui.php?id=--><?php //echo $cropId?><!--"  method="post" enctype="multipart/form-data">-->
+        <form action="plant_diagnosis_report.php"  method="post" enctype="multipart/form-data">
+<!--        <form id="diagnosisData" enctype="multipart/form-data">-->
+            <div class="text-center">
+                <h2 id="pickImagesText" class="d-block">Pick Image</h2>
+            </div>
 
-        <!--    <form method="post" action="take_image_ui.php">-->
-        <div class="text-center">
-            <img name="selectedImageForUpload" src="../" id="selectedImageOne" class="" height="2px;" width="2px">
-            <!--        <img src="" id="selectedImageTwo" class="" height="2px;" width="2px">-->
-            <!--        <img src="" id="selectedImageThree" class="" height="2px;" width="2px">-->
-        </div>
-        <div  class="text-center d-none" style="text-align: center!important;" id="uploadButton">
-            <button name="upload" style="border: none; background-color: transparent;" class="" data-toggle="modal" data-target="#myModal"><i class="material-icons text-blueGray" aria-hidden="true" style="font-size: 35px">backup</i></button>
-        </div>
-        <!--    </form>-->
-        <div class="text-center mt-2">
-            <input type="file" id="selecteImage" onchange="displayImage(this)" multiple accept="images/*">
-            <label for="files" class="shadow pickImages" onclick="triggerClick()"><span style="padding-right: 10px"></span>Pick Image</label>
-        </div>
+            <!--    <form method="post" action="take_image_ui.php">-->
+            <div class="text-center">
+                <img name="selectedImageForUpload" src="../" id="selectedImageOne" class="" height="2px;" width="2px">
+                <!--        <img src="" id="selectedImageTwo" class="" height="2px;" width="2px">-->
+                <!--        <img src="" id="selectedImageThree" class="" height="2px;" width="2px">-->
+            </div>
+            <div  class="text-center d-none" style="text-align: center!important;" id="uploadButton">
+                <button type="button" name="upload" style="border: none; background-color: transparent;" class="" data-toggle="modal" data-target="#myModal"><i class="material-icons text-blueGray" aria-hidden="true" style="font-size: 35px">backup</i></button>
+            </div>
+            <!--    </form>-->
 
-        <!--    <p >Modal</p>-->
+            <div class="text-center mt-2">
+                <input type="file" name="imageForDiagnosis" id="selecteImage" onchange="displayImage(this)"  accept="images/*"> <!--multiple-->
+                <label for="files" class="shadow pickImages" onclick="triggerClick()"><span style="padding-right: 10px"></span>Pick Image</label>
+            </div>
+
+            <!--    <p >Modal</p>-->
 
 
-        <!-- Button to Open the Modal -->
-        <!--    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">-->
-        <!--        Open modal-->
-        <!--    </button>-->
+            <!-- Button to Open the Modal -->
+            <!--    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">-->
+            <!--        Open modal-->
+            <!--    </button>-->
 
-        <!-- The Modal -->
-        <div class="modal fade" id="myModal">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
+            <!-- The Modal -->
 
-                    <!-- Modal Header -->
-                    <!--                <div class="modal-header">-->
-                    <!--                    <h4 class="modal-title text-blueGray">Do you want diagnosis of this Image ?</h4>-->
-                    <!--                    <button type="button" class="close" data-dismiss="modal">&times;</button>-->
-                    <!--                </div>-->
+            <div class="modal fade" id="myModal">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
 
-                    <!-- Modal body -->
-                    <div class="modal-body text-center">
-                        <h4 class="modal-title text-blueGray">Do you want diagnosis of this Image ?</h4>
+                        <!-- Modal Header -->
+                        <!--                <div class="modal-header">-->
+                        <!--                    <h4 class="modal-title text-blueGray">Do you want diagnosis of this Image ?</h4>-->
+                        <!--                    <button type="button" class="close" data-dismiss="modal">&times;</button>-->
+                        <!--                </div>-->
+
+                        <!-- Modal body -->
+                        <div class="modal-body text-center">
+                            <h4 class="modal-title text-blueGray">Do you want diagnosis of this Image ?</h4>
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer d-flex justify-content-lg-around">
+                            <button  type="submit"  name="yes" class="btn btn-outline-secondary" style="padding: 0 15px; border-radius: 20px" >Yes</button>
+                            <button type="button" class="btn btn-outline-secondary" style="padding: 0 15px; border-radius: 20px" data-dismiss="modal">No</button>
+                        </div>
+
                     </div>
-
-                    <!-- Modal footer -->
-                    <div class="modal-footer d-flex justify-content-lg-around">
-                        <button id="wantToPlantDiagnosis" type="button" class="btn btn-outline-secondary" onclick="diagnosisCrop()" style="padding: 0 15px; border-radius: 20px" data-dismiss="modal">Yes</button>
-                        <button type="button" class="btn btn-outline-secondary" style="padding: 0 15px; border-radius: 20px" data-dismiss="modal">No</button>
-                    </div>
-
                 </div>
             </div>
-        </div>
+        </form>
 
     </div>
 
     <div class="popup">
         <div class="container col-sm-12 col-md-8 col-lg-8 popup-content">
             <nav class="d-flex justify-content-between shadow ">
-                <h5 class="text-blueGray p-2" id="diagnosisResultHeading"></h5>
+                <h5 class="text-blueGray p-2" id="diagnosisResultHeading">
+<!--                    --><?php
+//                    echo $plantName;
+//                    ?>
+                </h5>
                 <div class="pt-2 float-right">
                     <p class="text-blueGray close">
                         <i class="material-icons pr-2" aria-hidden="true">highlight_off</i>
@@ -251,7 +263,16 @@ if (isset($_SESSION['IS_LOGIN_ADMIN']) || isset($_SESSION['IS_LOGIN_USER']))
                     <h3 class="text-blueGray">Diagnosis Result</h3>
                 </div>
                 <div>
-                    <p class="text-blueGray" id="diagnosisResult"></p>
+                    <p class="text-blueGray"> <!--id="diagnosisResult"-->
+<!--                        --><?php
+//
+//                        for ($i=0; $i<count($DisesArray[1]); $i++){
+//                            echo 'Disease Name : '.$DisesArray[0][$i].'</br>';
+//                            echo 'Probability : '.$DisesArray[1][$i].'</br>'.'</br>';
+//                        }
+//
+//                        ?>
+                    </p>
                 </div>
             </div>
         </div>
@@ -325,37 +346,25 @@ if (isset($_SESSION['IS_LOGIN_ADMIN']) || isset($_SESSION['IS_LOGIN_USER']))
                     document.querySelector('#pickImagesText').setAttribute('class', 'd-none');
                     document.querySelector('#uploadButton').setAttribute('class', 'upload-button');
                     // document.querySelector('#uploadButton').setAttribute('class', 'uploadButton');
+                    localStorage.setItem("selectedImageForDiagnosis" , e.target.result);
+
+                    // var fileName = document.getElementById('selecteImage').files[0].name;
+                    // var fileSize = document.getElementById('selecteImage').files[0].size;
+                    // var fileType = document.getElementById('selecteImage').files[0].type;
+                    // var fileExtention = fileName.split('.').pop();
+                    //
+                    // var file_info = fileName+"\n"+fileSize+"\n"+fileType+"\n"+fileExtention;
+                    // alert(file_info);
                 }
-                reader.readAsDataURL(e.files[0])
+                // var image = reader.readAsDataURL(e.files[0])
+                console.log("IMAGE : " +reader.readAsDataURL(e.files[0]));
             }
 
-            // if (e.files[1]){
-            //     var reader1 = new FileReader();
-            //
-            //     reader1.onload = function (e) {
-            //         document.querySelector('#selectedImageTwo').setAttribute('src', e.target.result);
-            //         document.querySelector('#selectedImageTwo').setAttribute('class', 'selectedImage');
-            //         document.querySelector('#pickImagesText').setAttribute('class', 'd-none');
-            //     }
-            //     reader1.readAsDataURL(e.files[1])
-            // }
-            // if (e.files[2]){
-            //     var reader2 = new FileReader();
-            //
-            //     reader2.onload = function (e) {
-            //         document.querySelector('#selectedImageThree').setAttribute('src', e.target.result);
-            //         document.querySelector('#selectedImageThree').setAttribute('class', 'selectedImage');
-            //         document.querySelector('#pickImagesText').setAttribute('class', 'd-none');
-            //     }
-            //     reader2.readAsDataURL(e.files[2])
-            // }
         }
 
         // cropName = localStorage.getItem("cropName");
         // console.log(cropName);
 
-        cropUr = "../../assets/images/tomato.jpg";
-        cropN= "Tomato";
 
         document.getElementById("wantToPlantDiagnosis").addEventListener("click", function () {
             document.querySelector(".popup").style.display = "flex";
@@ -364,6 +373,33 @@ if (isset($_SESSION['IS_LOGIN_ADMIN']) || isset($_SESSION['IS_LOGIN_USER']))
             document.querySelector(".popup").style.display = "none";
         })
     </script>
+
+<!--    <script>-->
+<!--        diagnosisData.onsubmit = async (e) => {-->
+<!--            e.preventDefault();-->
+<!---->
+<!--            var fileName = e.files[0].name;-->
+<!--            var fileSize = e.files[0].size;-->
+<!--            var fileType = e.files[0].type;-->
+<!--            var imageType = fileName.split('.').pop();-->
+<!---->
+<!--            let formData = new FormData();-->
+<!--            formData.append('FORMAT', imageType);-->
+<!--            formData.append('SIZE', fileSize);-->
+<!--            formData.append('SIZE_UNIT', 'KB');-->
+<!---->
+<!--            let response = await fetch('https://localhost:44379/uploadimage' , {-->
+<!--                method : 'POST',-->
+<!--                body : formData;-->
+<!--            });-->
+<!---->
+<!--            let result = await response.json();-->
+<!--            alert(result.message);-->
+<!--            window.location = "/plant_diagnosis_report.php";-->
+<!---->
+<!--        }-->
+<!--    </script>-->
+
     </body>
     </html>
 
