@@ -228,7 +228,7 @@ session_start();
 
                 foreach ($combinedArrays as $disease => $probability){
 //                    arsort($combinedArrays);
-                    echo 'Desease Name : '.$disease.'</br>';
+                    echo 'Disease Name : '.$disease.'</br>';
                     echo 'Probability : '.$probability.'</br>'.'</br>';
                 }
 
