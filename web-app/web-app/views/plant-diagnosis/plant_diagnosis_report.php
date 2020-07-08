@@ -73,6 +73,8 @@ if (isset($_POST['yes'])){
             $response = curl_exec($curl);
             curl_close($curl);
 
+//Manual Response Report Testing
+
 //            $responseManualPotato = "92.07_98.07_94.07"; //Potato
 //            $responseManualMaize = "92.07_98.07_94.07_94.07"; //Maize
 //            $responseManualTomato = "92.07_98.07_00.07_94.07_.8"; //Tomato
@@ -234,7 +236,7 @@ session_start();
 
 //                for ($i=0; $i<count($DisesArray[1]); $i++){
 //                    ksort($DisesArray[1]);
-//                    echo 'Desease Name : '.$DisesArray[0][$i].'</br>';
+//                    echo 'Disease Name : '.$DisesArray[0][$i].'</br>';
 //                    echo 'Probability : '.$DisesArray[1][$i].'</br>'.'</br>';
 //                }
 
