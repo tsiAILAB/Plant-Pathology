@@ -22,6 +22,14 @@ Please start reading in the folowing order to understand the project and executi
 5. Readme_4_Model_Inferencing_intel_dev_cloud_edge_computing.docx
 (How to optimize and inference using OpenVino in intel dev cloud edge to verify reference implementation for selective platforms)
 
+Inference through client app:
+
+Android app: https://github.com/tsiAILAB/Plant-Pathology-Android
+
+Flutter app: https://github.com/tsiAILAB/Plant-Pathology-Flutter
+
+Web app: https://github.com/tsiAILAB/Plant-Pathology-Web
+
 For any query, please contact
 MD fakrul Islam
 General Manager, Technology
